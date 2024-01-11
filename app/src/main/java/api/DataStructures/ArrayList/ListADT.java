@@ -1,5 +1,7 @@
 package api.DataStructures.ArrayList;
 
+import Exceptions.EmptyCollectionException;
+import Exceptions.ElementNotFoundException;
 import java.util.Iterator;
 
 public abstract interface ListADT<T> extends Iterable<T> {
