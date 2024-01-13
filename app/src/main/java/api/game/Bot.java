@@ -5,32 +5,19 @@ import api.algorithms.interfaces.MovementAlgorithm;
 /**
  * Representa um bot no jogo, caracterizado por suas coordenadas e algoritmo de movimentação.
  */
-public class Bot {
+public class Bot extends Entity{
 
     private MovementAlgorithm movementAlgorithm;
-    private Position currentPosition;
     private String name;
 
     public Bot(Position initialPosition) {
-        this.currentPosition = initialPosition;
+        super(initialPosition);
     }
 
     public void setMovementAlgorithm(MovementAlgorithm algorithm) {
         this.movementAlgorithm = algorithm;
     }
 
-    public Position getCurrentPosition() {
-        return currentPosition;
-    }
-
-    /**
-     * Define a posição atual do bot.
-     *
-     * @param newPosition A nova posição do bot.
-     */
-    public void setCurrentPosition(Position newPosition) {
-        this.currentPosition = newPosition;
-    }
 
     public String getName() {
         return name;
@@ -54,7 +41,7 @@ public class Bot {
      */
     private boolean canMoveTo(int newX, int newY, Bot[] bots) {
         for (Bot currentBot : bots) {
-            if (currentBot.getCurrentPosition().getX() == newX && currentBot.getCurrentPosition().getY() == newY) {
+            if (currentBot.getPosition().getX() == newX && currentBot.getPosition().getY() == newY) {
                 // Colisão com outro bot
                 return false;
             }
@@ -71,12 +58,12 @@ public class Bot {
     public void move(Bot[] otherBots) {
         if (movementAlgorithm != null) {
             // Calcula o próximo movimento usando o algoritmo atribuído
-            Position nextMove = movementAlgorithm.calculateNextMove(currentPosition);
+            Position nextMove = movementAlgorithm.calculateNextMove(getPosition());
 
             // Verifica se o movimento é válido
             if (canMoveTo(nextMove.getX(), nextMove.getY(), otherBots)) {
                 // Atualiza a posição atual
-                currentPosition = nextMove;
+                setPosition(nextMove);
             } else {
                 System.out.println("Movimento inicial inválido. Tentando recalcular...");
 
@@ -95,13 +82,13 @@ public class Bot {
     private void recalculateMove(Bot[] otherBots, Position invalidPosition) {
         if (movementAlgorithm != null) {
             // Calcula uma nova posição usando o mesmo algoritmo
-            Position recalculatedMove = movementAlgorithm.calculateNextMove(currentPosition);
+            Position recalculatedMove = movementAlgorithm.calculateNextMove(getPosition());
 
             // Verifica se o novo movimento é válido, evitando a posição inválida
             if (canMoveTo(recalculatedMove.getX(), recalculatedMove.getY(), otherBots) &&
                     !recalculatedMove.equals(invalidPosition)) {
                 // Atualiza a posição atual com o novo movimento
-                currentPosition = recalculatedMove;
+                setPosition(recalculatedMove);
                 System.out.println("Movimento recalculado com sucesso. Nova posição: " + recalculatedMove);
             } else {
                 System.out.println("Movimento inválido mesmo após recálculo. Ignorando movimento.");
@@ -111,11 +98,11 @@ public class Bot {
 
     // Métodos auxiliares para obter as coordenadas X e Y da posição atual
     private int getX() {
-        return currentPosition.getX();
+        return getPosition().getX();
     }
 
     private int getY() {
-        return currentPosition.getY();
+        return getPosition().getY();
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import api.DataStructures.Graph.WeightedGraph;
 import api.game.Bot;
+import api.game.Entity;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
 
@@ -14,11 +15,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GameMap extends WeightedGraph<String> implements IGameMap {
+public class GameMap extends WeightedGraph<Entity> implements IGameMap {
 
     private final int MIN_DISTANCE = 1;
     private final int MAX_DISTANCE = 15;
-
 
     public GameMap() {
         super();
@@ -34,8 +34,8 @@ public class GameMap extends WeightedGraph<String> implements IGameMap {
 
         initializeGraph(numVertices);
 
-        // Preenche os vértices, se calhar nem precisa disto
-        fillVertices(numVertices);
+        // fillVertices(numVertices); // Preenche os vértices, se calhar nem precisa
+        // disto
 
         // Calcula o número total de arestas com base na densidade para um grafo
         // direcionado
@@ -44,18 +44,21 @@ public class GameMap extends WeightedGraph<String> implements IGameMap {
         // Preenche a matriz de adjacências com arestas baseadas na densidade
         fillAdjacencyMatrix(numVertices, bidirectional, density, totalEdges);
 
+        // TODO VERIFICAR SE ESTÁ CONECTADO
+
     }
 
     private void initializeGraph(int numVertices) {
-        this.vertices = new String[numVertices];
+        this.vertices = new Entity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
     }
 
-    private void fillVertices(int numVertices) {
-        for (int i = 0; i < numVertices; i++) {
-            this.vertices[i] = String.valueOf(i); // TODO: reformular isto maybe para ficar com bots
-        }
-    }
+    // private void fillVertices(int numVertices) {
+    // for (int i = 0; i < numVertices; i++) {
+    // this.vertices[i] = String.valueOf(i); // TODO: reformular isto maybe para
+    // ficar com bots
+    // }
+    // }
 
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
         double totalEdges;

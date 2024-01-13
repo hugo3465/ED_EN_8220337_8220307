@@ -3,7 +3,6 @@ package api.game;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
-
 import java.util.Iterator;
 import java.util.Random;
 
@@ -82,7 +81,7 @@ public class Player {
      */
     private void assignInitialPosition(Bot bot, Flag flag) {
         Position flagPosition = flag.getPosition();
-        bot.setCurrentPosition(flagPosition);
+        bot.setPosition(flagPosition);
     }
 
     /**
@@ -120,7 +119,7 @@ public class Player {
      */
     public boolean checkEndGame(Bot bot) {
         Position enemyFlagPosition = enemyFlag.getPosition();
-        return bot.getCurrentPosition().equals(enemyFlagPosition);
+        return bot.getPosition().equals(enemyFlagPosition);
     }
     
 }
