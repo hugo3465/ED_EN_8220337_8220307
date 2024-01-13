@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class PlayerTest {
 
     private static Flag flag;
+    private static Flag enemyFlag;
     private static Player player;
 
     /**
@@ -17,8 +18,9 @@ public class PlayerTest {
     public static void init() {
         // Cria uma bandeira com coordenadas (0, 0)
          flag = new Flag(0, 0);
+         enemyFlag = new Flag(1, 2);
         // Cria um jogador com a bandeira criada
-         player = new Player(flag);
+         player = new Player(flag, enemyFlag);
     }
 
     /**

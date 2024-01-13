@@ -1,6 +1,8 @@
 package api.map.interfaces;
 
-import api.DataStructures.Graph.NetworkADT;
+import java.io.FileNotFoundException;
+
+import exceptions.InvalidMapException;
 
 public interface IGameMap {
     /**
@@ -19,13 +21,17 @@ public interface IGameMap {
      * Importa mapa de um ficheiro
      * @param path
      */
-    public void importMap(String path);
+    public void importMap(String path) throws InvalidMapException, FileNotFoundException;
 
     /**
      * Exporta mapa para um ficheiro
      * @param path
      */
-    public void exportMap(String path);
+    public void exportMap(String path) throws FileNotFoundException;
 
-    public NetworkADT<Integer> getMap();
+    /**
+     * Recebe uma String com o mapa em forma de matriz
+     * @return mapa em formato de string
+     */
+    public String getMap();
 }

@@ -1,10 +1,11 @@
 package api.DataStructures.Graph;
+
 import java.util.Iterator;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Exceptions.EmptyCollectionException;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Stack.LinkedStack.LinkedStack;
+import api.DataStructures.Exceptions.EmptyCollectionException;
 
 /**
  * Graph represents an adjacency matrix implementation of a graph.
@@ -36,7 +37,7 @@ public class NonWeightedGraph<T> implements GraphADT<T> {
         this.addEdgeByIndex(this.getIndex(vertex1), this.getIndex(vertex2));
     }
 
-    private int getIndex(T vertex1) {
+    protected int getIndex(T vertex1) {
         for (int i = 0; i < numVertices; i++) {
             if (vertices[i].equals(vertex1)) {
                 return i;
@@ -59,7 +60,7 @@ public class NonWeightedGraph<T> implements GraphADT<T> {
         }
     }
 
-    private boolean indexIsValid(int index) {
+    protected boolean indexIsValid(int index) {
         return index >= 0 && index <= this.size();
     }
 
@@ -164,24 +165,24 @@ public class NonWeightedGraph<T> implements GraphADT<T> {
         if (!this.indexIsValid(startIndex)) {
             return resultList.iterator();
         }
-        boolean[] visited = new boolean[this.size()];
-        for (int i = 0; i < this.size(); i++) {
+        boolean[] visited = new boolean[numVertices];
+        for (int i = 0; i < numVertices; i++) {
             visited[i] = false;
         }
 
-        traversalQueue.enqueue(startIndex);
+        traversalQueue.enqueue(new Integer(startIndex));
         visited[startIndex] = true;
 
         while (!traversalQueue.isEmpty()) {
             x = traversalQueue.dequeue();
-            resultList.addToRear(this.vertices[x]);
+            resultList.addToRear(this.vertices[x.intValue()]);
             /**
              * Find all vertices adjacent to x that have not been visited
              * and queue them up
              */
-            for (int i = 0; i < this.size(); i++) {
-                if (this.adjMatrix[x][i] && !visited[i]) {
-                    traversalQueue.enqueue(i);
+            for (int i = 0; i < numVertices; i++) {
+                if (this.adjMatrix[x.intValue()][i] && !visited[i]) {
+                    traversalQueue.enqueue(new Integer(i));
                     visited[i] = true;
                 }
             }
@@ -204,42 +205,40 @@ public class NonWeightedGraph<T> implements GraphADT<T> {
     private Iterator<T> iteratorDFS(int startIndex) {
         Integer x;
         boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack<>();
-        UnorderedArrayList<T> resultList = new UnorderedArrayList<>();
-        boolean[] visited = new boolean[this.size()];
+        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
+        UnorderedArrayList<T> resultList = new UnorderedArrayList<T>();
+        boolean[] visited = new boolean[numVertices];
 
         if (!indexIsValid(startIndex)) {
             return resultList.iterator();
         }
 
-        for (int i = 0; i < this.size(); i++) {
+        for (int i = 0; i < numVertices; i++) {
             visited[i] = false;
         }
-        traversalStack.push(startIndex);
-        resultList.addToRear(this.vertices[startIndex]);
+        traversalStack.push(new Integer(startIndex));
+        resultList.addToRear(vertices[startIndex]);
         visited[startIndex] = true;
 
         while (!traversalStack.isEmpty()) {
-            try {
-                x = traversalStack.peek();
 
-                found = false;
-                /**
-                 * Find a vertex adjacent to x that has not been visited and
-                 * push it on the stack
-                 */
-                for (int i = 0; (i < this.size()) && !found; i++) {
-                    if (this.adjMatrix[x][i] && !visited[i]) {
-                        traversalStack.push(i);
-                        resultList.addToRear(this.vertices[i]);
-                        visited[i] = true;
-                        found = true;
-                    }
+            x = traversalStack.peek();
+
+            found = false;
+            /**
+             * Find a vertex adjacent to x that has not been visited and
+             * push it on the stack
+             */
+            for (int i = 0; (i < numVertices) && !found; i++) {
+                if (adjMatrix[x.intValue()][i] && !visited[i]) {
+                    traversalStack.push(new Integer(i));
+                    resultList.addToRear(vertices[i]);
+                    visited[i] = true;
+                    found = true;
                 }
-                if (!found && !traversalStack.isEmpty()) {
-                    traversalStack.pop();
-                }
-            } catch (EmptyCollectionException ignored) {
+            }
+            if (!found && !traversalStack.isEmpty()) {
+                traversalStack.pop();
             }
         }
         return resultList.iterator();

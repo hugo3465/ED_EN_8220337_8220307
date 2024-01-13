@@ -4,9 +4,6 @@ import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.BotAlgorithm;
 
-import java.util.Iterator;
-import java.util.Random;
-
 /**
  * Representa um jogador no jogo Capture the Flag.
  */
@@ -66,4 +63,5 @@ public class Player {
     public boolean checkEndGame(Bot bot) {
         return (bot.getX() == enemyFlag.getX() && bot.getY() == enemyFlag.getY());
     }
+    
 }

@@ -3,12 +3,19 @@
  */
 package application;
 
+import java.io.FileNotFoundException;
+
+import exceptions.InvalidMapException;
+import api.map.GameMap;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        GameMap map = new GameMap();
+
+        map.generateRandomMap(15, false, 0.95);
+        map.exportMap("C:\\Users\\hugui\\Desktop\\testeImport2.txt");
+        // map.importMap("C:\\Users\\hugui\\Desktop\\testeImport.txt");
+
     }
 }
