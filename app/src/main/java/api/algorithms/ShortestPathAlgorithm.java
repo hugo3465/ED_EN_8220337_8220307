@@ -1,13 +1,12 @@
 package api.algorithms;
 
-import api.algorithms.interfaces.BotAlgorithm;
+import api.algorithms.interfaces.MovementAlgorithm;
+import api.game.Position;
 
-public class ShortestPathAlgorithm implements BotAlgorithm {
+public class ShortestPathAlgorithm<T> implements MovementAlgorithm<T> {
 
     @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+    public Position calculateNextMove(Position currentPosition) {
+        return null;
     }
-    
 }
