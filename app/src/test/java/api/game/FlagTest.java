@@ -1,5 +1,6 @@
 package api.game;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,44 +9,46 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class FlagTest {
 
-    /**
-     * Testa o método getX() e getY() da classe Flag.
-     */
-    @Test
-    public void testGetCoordinates() {
-        // Cria uma bandeira com coordenadas iniciais (3, 7)
-        Flag flag = new Flag(3, 7);
+    private static Position initialPosition;
 
-        // Verifica se as coordenadas retornadas são as esperadas
-        assertEquals(3, flag.getX());
-        assertEquals(7, flag.getY());
+    @BeforeAll
+    public static void setUp() {
+        initialPosition = new Position(2, 4);
     }
 
-    /**
-     * Testa o método setCoordinates() da classe Flag.
-     */
     @Test
-    public void testSetCoordinates() {
-        // Cria uma bandeira
-        Flag flag = new Flag(0, 0);
+    public void test001GetPosition() {
+        Flag flag = new Flag(initialPosition);
 
-        // Define novas coordenadas (5, 10)
-        flag.setCoordinates(5, 10);
-
-        // Verifica se as coordenadas foram definidas corretamente
-        assertEquals(5, flag.getX());
-        assertEquals(10, flag.getY());
+        assertEquals(initialPosition, flag.getPosition());
     }
 
-    /**
-     * Testa o método toString() da classe Flag.
-     */
     @Test
-    public void testToString() {
-        // Cria uma bandeira com coordenadas (1, 2)
-        Flag flag = new Flag(1, 2);
+    public void test002SetPosition() {
+        Flag flag = new Flag(initialPosition);
 
-        // Verifica se a representação em string está correta
-        assertEquals("(1, 2)", flag.toString());
+        Position newPosition = new Position(6, 8);
+        flag.setPosition(newPosition);
+
+        assertEquals(newPosition, flag.getPosition());
+    }
+
+    @Test
+    public void test003SetCoordinates() {
+        Flag flag = new Flag(initialPosition);
+
+        int newX = 10;
+        int newY = 20;
+        flag.setCoordinates(newX, newY);
+
+        assertEquals(newX, flag.getPosition().getX());
+        assertEquals(newY, flag.getPosition().getY());
+    }
+
+    @Test
+    public void test004ToString() {
+        Flag flag = new Flag(initialPosition);
+
+        assertEquals("(" + initialPosition.getX() + ", " + initialPosition.getY() + ")", flag.toString());
     }
 }

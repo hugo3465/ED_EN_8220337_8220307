@@ -1,103 +1,46 @@
 package api.game;
 
-import api.algorithms.interfaces.BotAlgorithm;
+import api.algorithms.interfaces.MovementAlgorithm;
 
 /**
  * Representa um bot no jogo, caracterizado por suas coordenadas e algoritmo de movimentação.
  */
 public class Bot {
 
-    private int x; // Coordenada X do bot
-    private int y; // Coordenada Y do bot
-    private BotAlgorithm algorithm; // Algoritmo de movimentação do bot
+    private MovementAlgorithm movementAlgorithm;
+    private Position currentPosition;
+    private String name;
 
-    /**
-     * Construtor da classe Bot.
-     *
-     * @param x A coordenada X inicial do bot.
-     * @param y A coordenada Y inicial do bot.
-     */
-    public Bot(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Bot(Position initialPosition) {
+        this.currentPosition = initialPosition;
+    }
+
+    public void setMovementAlgorithm(MovementAlgorithm algorithm) {
+        this.movementAlgorithm = algorithm;
+    }
+
+    public Position getCurrentPosition() {
+        return currentPosition;
     }
 
     /**
-     * Construtor da classe Bot.
+     * Define a posição atual do bot.
      *
-     * @param x A coordenada X inicial do bot.
-     * @param y A coordenada Y inicial do bot.
-     * @param algorithm O algoritmo de movimentação inicial do bot.
+     * @param newPosition A nova posição do bot.
      */
-    public Bot(int x, int y, BotAlgorithm algorithm) {
-        this.x = x;
-        this.y = y;
-        this.algorithm = algorithm;
+    public void setCurrentPosition(Position newPosition) {
+        this.currentPosition = newPosition;
     }
 
-    /**
-     * Obtém a coordenada X atual do bot.
-     *
-     * @return A coordenada X do bot.
-     */
-    public int getX() {
-        return x;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Define a coordenada X do bot.
-     *
-     * @param x A nova coordenada X do bot.
-     */
-    public void setX(int x) {
-        this.x = x;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * Obtém a coordenada Y atual do bot.
-     *
-     * @return A coordenada Y do bot.
-     */
-    public int getY() {
-        return y;
-    }
 
-    /**
-     * Define a coordenada Y do bot.
-     *
-     * @param y A nova coordenada Y do bot.
-     */
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
-     * Obtém o algoritmo de movimentação atual do bot.
-     *
-     * @return O algoritmo de movimentação do bot.
-     */
-    public BotAlgorithm getAlgorithm() {
-        return algorithm;
-    }
-
-    /**
-     * Define o algoritmo de movimentação do bot.
-     *
-     * @param algorithm O novo algoritmo de movimentação do bot.
-     */
-    public void setAlgorithm(BotAlgorithm algorithm) {
-        this.algorithm = algorithm;
-    }
-
-    /**
-     * Retorna uma representação em formato de string do bot, incluindo suas coordenadas e algoritmo.
-     *
-     * @return Uma string representando o bot no formato "Bot em (X, Y) com algoritmo: [algoritmo]".
-     */
-    @Override
-    public String toString() {
-        return "Bot em (" + x + ", " + y + ") com algoritmo: " + algorithm;
-    }
 
     /**
      * Verifica se o bot pode se mover para a nova posição especificada.
@@ -106,18 +49,73 @@ public class Bot {
      *
      * @param newX A nova coordenada X desejada.
      * @param newY A nova coordenada Y desejada.
-     * @param otherBots Array de outros bots no jogo.
+     * @param bots Array de outros bots no jogo.
      * @return true se o movimento for válido, false se houver colisão.
      */
-    public boolean canMoveTo(int newX, int newY, /*List<Bot>*/Bot[] otherBots) {
-        for (Bot bot : otherBots) {
-            if (bot.getX() == newX && bot.getY() == newY) {
+    private boolean canMoveTo(int newX, int newY, Bot[] bots) {
+        for (Bot currentBot : bots) {
+            if (currentBot.getCurrentPosition().getX() == newX && currentBot.getCurrentPosition().getY() == newY) {
                 // Colisão com outro bot
                 return false;
             }
         }
         // Movimento válido, sem colisão
         return true;
+    }
+
+    /**
+     * Move o bot usando o algoritmo atribuído, evitando colisões com outros bots.
+     *
+     * @param otherBots Array de outros bots no jogo.
+     */
+    public void move(Bot[] otherBots) {
+        if (movementAlgorithm != null) {
+            // Calcula o próximo movimento usando o algoritmo atribuído
+            Position nextMove = movementAlgorithm.calculateNextMove(currentPosition);
+
+            // Verifica se o movimento é válido
+            if (canMoveTo(nextMove.getX(), nextMove.getY(), otherBots)) {
+                // Atualiza a posição atual
+                currentPosition = nextMove;
+            } else {
+                System.out.println("Movimento inicial inválido. Tentando recalcular...");
+
+                // Recalcula o movimento evitando a posição inicial inválida
+                recalculateMove(otherBots, nextMove);
+            }
+        }
+    }
+
+    /**
+     * Recalcula o movimento usando o mesmo algoritmo, evitando uma posição específica.
+     *
+     * @param otherBots       Array de outros bots no jogo.
+     * @param invalidPosition Posição inválida a ser evitada.
+     */
+    private void recalculateMove(Bot[] otherBots, Position invalidPosition) {
+        if (movementAlgorithm != null) {
+            // Calcula uma nova posição usando o mesmo algoritmo
+            Position recalculatedMove = movementAlgorithm.calculateNextMove(currentPosition);
+
+            // Verifica se o novo movimento é válido, evitando a posição inválida
+            if (canMoveTo(recalculatedMove.getX(), recalculatedMove.getY(), otherBots) &&
+                    !recalculatedMove.equals(invalidPosition)) {
+                // Atualiza a posição atual com o novo movimento
+                currentPosition = recalculatedMove;
+                System.out.println("Movimento recalculado com sucesso. Nova posição: " + recalculatedMove);
+            } else {
+                System.out.println("Movimento inválido mesmo após recálculo. Ignorando movimento.");
+            }
+        }
+    }
+
+    // Métodos auxiliares para obter as coordenadas X e Y da posição atual
+    private int getX() {
+        return currentPosition.getX();
+    }
+
+    private int getY() {
+        return currentPosition.getY();
     }
 
 }

@@ -1,5 +1,6 @@
 package api.game;
 
+
 import api.game.interfaces.ICaptureTheFlag;
 import api.map.GameMap;
 
@@ -8,7 +9,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     private Player player1, player2;
     private int currentPlayerTurn;
 
-    
+
     public CaptureTheFlagGame(GameMap map, Player player1, Player player2) {
         this.map = map;
         this.player1 = player1;
@@ -35,4 +36,5 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     }
 
     // Implemente métodos para iniciar o jogo, avançar rodadas, etc.
+
 }
