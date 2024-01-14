@@ -117,6 +117,28 @@ public class Player {
     }
 
     /**
+     * Define a posição da bandeira do jogador.
+     * Adiconar o local da flag
+     * @param newFlagPosition A nova posição da bandeira.
+     */
+    public void setFlagPosition(Position newFlagPosition) {
+        flag.setPosition(newFlagPosition);
+    }
+
+    /**
+     * Define a posição da bandeira do jogador.
+     * Adiciona o local da flag inimiga como parâmetro.
+     *
+     * @param newFlagPosition      A nova posição da bandeira.
+     * @param newEnemyFlagPosition A nova posição da bandeira inimiga.
+     */
+    public void setFlagPosition(Position newFlagPosition, Position newEnemyFlagPosition) {
+        flag.setPosition(newFlagPosition);
+        enemyFlag.setPosition(newEnemyFlagPosition);
+    }
+
+    // Deve ser no capture the flag
+    /**
      * Verifica se o jogo chegou ao fim, ou seja, se o bot alcançou a bandeira inimiga.
      * Tópico 8 - O jogo termina quando um dos bots chega ao campo do adversário
      *
