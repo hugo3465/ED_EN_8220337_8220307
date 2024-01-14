@@ -181,12 +181,12 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
         throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
     }
 
-    public void placeFlag(Flag flag) {
-        Position flagPosition = flag.getPosition();
-        int flagIndex = getIndex(flagPosition);
+    public void placeFlag(Entity flag) {
+        // Position flagPosition = flag.getPosition();
+        //int flagIndex = getIndex(flag);
 
         // Assumindo que você tem um método para adicionar um vértice (flag) ao mapa
-        addVertex(flagIndex, flag);
+        addVertex(flag);
     }
 
 }

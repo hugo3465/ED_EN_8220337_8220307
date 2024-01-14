@@ -105,4 +105,10 @@ public class Bot extends Entity{
         return getPosition().getY();
     }
 
+    @Override
+    public int compareTo(Entity o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+
 }

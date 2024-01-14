@@ -43,20 +43,20 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         map.placeFlag(player2.getFlag());
 
         // Posicionar os jogadores e seus bots no mapa
-        positionPlayer(player1);
-        positionPlayer(player2);
+        // positionPlayer(player1);
+        // positionPlayer(player2);
     }
 
-    private void positionPlayer(Player player) {
-        // Posicionar o jogador no mapa
-        map.placePlayer(player);
+    // private void positionPlayer(Player player) {
+    //     // Posicionar o jogador no mapa
+    //     map.placePlayer(player);
 
-        // Posicionar os bots do jogador no mapa usando assignInitialPosition
-        for (Bot bot : player.getBots()) {
-            player.assignInitialPosition(bot, player.getFlag());
-            map.placeBot(bot);
-        }
-    }
+    //     // Posicionar os bots do jogador no mapa usando assignInitialPosition
+    //     for (Bot bot : player.getBots()) {
+    //         player.assignInitialPosition(bot, player.getFlag());
+    //         map.placeBot(bot);
+    //     }
+    // }
 
 
     public void nextTurn() {
