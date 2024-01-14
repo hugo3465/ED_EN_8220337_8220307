@@ -24,4 +24,10 @@ public class Flag extends Entity {
         return super.toString();
     }
 
+    @Override
+    public int compareTo(Entity o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+
 }

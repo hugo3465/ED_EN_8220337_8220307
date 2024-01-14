@@ -2,12 +2,7 @@ package api.game;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
-
-import java.util.Iterator;
-import java.util.Random;
 
 /**
  * Representa um jogador no jogo Capture the Flag.
@@ -102,7 +97,7 @@ public class Player {
      * @param bot       O bot a ser adicionado à equipe.
      * @param algorithm O algoritmo escolhido pelo jogador para o bot.
      */
-    public void addBot(Bot bot, MovementAlgorithm algorithm) {
+    public void addBot(Bot bot, MovementAlgorithm<Entity> algorithm) {
         bot.setName(playerName + "_Bot");
         // Atribui o algoritmo escolhido pelo jogador ao bot
         bot.setMovementAlgorithm(algorithm);
@@ -117,7 +112,7 @@ public class Player {
      * @param bot       O bot ao qual o algoritmo será atribuído.
      * @param algorithm O algoritmo a ser atribuído ao bot.
      */
-    public void assignAlgorithmToBot(Bot bot, MovementAlgorithm algorithm) {
+    public void assignAlgorithmToBot(Bot bot, MovementAlgorithm<Entity> algorithm) {
         bot.setMovementAlgorithm(algorithm);
     }
 

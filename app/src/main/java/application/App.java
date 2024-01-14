@@ -3,15 +3,12 @@
  */
 package application;
 
-import java.io.FileNotFoundException;
-
-import exceptions.InvalidMapException;
 import api.map.GameMap;
 
 public class App {
 
     public static void main(String[] args) {
-        GameMap map = new GameMap();
+        GameMap map = new GameMap("Zé da manga");
 
         map.generateRandomMap(15, false, 0.95);
         map.exportMap("C:\\Users\\hugui\\Desktop\\"+map.getMapName()+".txt");
