@@ -3,10 +3,7 @@ package api.map;
 import java.util.Random;
 
 import api.DataStructures.Graph.WeightedGraph;
-import api.game.Bot;
 import api.game.Entity;
-import api.game.Flag;
-import api.game.Position;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
 
@@ -52,19 +49,13 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
             throw new IllegalArgumentException("A densidade deve estar no intervalo de 0 a 1.");
         }
 
-        initializeGraph(numVertices);
-
-        // fillVertices(numVertices); // Preenche os vértices, se calhar nem precisa
-        // disto
-
-        // Calcula o número total de arestas com base na densidade para um grafo
-        // direcionado
-        double totalEdges = calculateTotalEdges(numVertices, bidirectional, density);
-
-        // Preenche a matriz de adjacências com arestas baseadas na densidade
-        fillAdjacencyMatrix(numVertices, bidirectional, density, totalEdges);
-
-        // TODO VERIFICAR SE ESTÁ CONECTADO
+        do {
+            initializeGraph(numVertices);
+            double totalEdges = calculateTotalEdges(numVertices, bidirectional, density);
+            fillAdjacencyMatrix(numVertices, bidirectional, density, totalEdges);
+    
+            // Check if the generated map is connected
+        } while (!isConnected());
 
     }
 
@@ -113,6 +104,8 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
                 generatedEdges++;
             }
         }
+        
+        this.numVertices = numVertices;
     }
 
     @Override
@@ -128,7 +121,7 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
             line = reader.readLine();
 
             String[] values = line.split("\\s+");
-            initializeGraph(numVertices);
+            initializeGraph(values.length); //numVertices era o que estava
 
             for (int i = 0; i < adjMatrix.length; i++) {
 
@@ -147,6 +140,8 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
                     }
                 }
             }
+
+            // TODO falta dar set ao numVertices
         } catch (IOException e) {
             throw new FileNotFoundException("Erro ao ler o ficheiro: " + e.getMessage());
         }
