@@ -20,8 +20,8 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
 
     @Override
     public String getMapPreviw() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMapPreviw'");
+        // Implemente a lógica para obter uma visualização do mapa (pode ser um método na classe GameMap)
+        return map.getMap();  // Substitua por lógica real
     }
 
     /**
@@ -36,5 +36,32 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     }
 
     // Implemente métodos para iniciar o jogo, avançar rodadas, etc.
+
+    public void startGame() {
+        // Posicionar a bandeira de cada jogador no mapa
+        map.placeFlag(player1.getFlag());
+        map.placeFlag(player2.getFlag());
+
+        // Posicionar os jogadores e seus bots no mapa
+        positionPlayer(player1);
+        positionPlayer(player2);
+    }
+
+    private void positionPlayer(Player player) {
+        // Posicionar o jogador no mapa
+        map.placePlayer(player);
+
+        // Posicionar os bots do jogador no mapa usando assignInitialPosition
+        for (Bot bot : player.getBots()) {
+            player.assignInitialPosition(bot, player.getFlag());
+            map.placeBot(bot);
+        }
+    }
+
+
+    public void nextTurn() {
+        // Implemente a lógica para avançar para a próxima rodada, trocar de jogador, etc.
+        currentPlayerTurn = (currentPlayerTurn + 1) % 2;  // Alternar entre jogador 1 e jogador 2
+    }
 
 }

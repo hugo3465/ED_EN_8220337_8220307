@@ -5,6 +5,8 @@ import java.util.Random;
 import api.DataStructures.Graph.WeightedGraph;
 import api.game.Bot;
 import api.game.Entity;
+import api.game.Flag;
+import api.game.Position;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
 
@@ -20,8 +22,26 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
     private final int MIN_DISTANCE = 1;
     private final int MAX_DISTANCE = 15;
 
+    private String mapName; // Adiciona um campo para armazenar o nome do mapa
+
     public GameMap() {
         super();
+        this.mapName = "DefaultMap"; // Define um nome padrão
+    }
+    // Adiciona um construtor para permitir a criação de um mapa com um nome específico
+    public GameMap(String mapName) {
+        super();
+        this.mapName = mapName;
+    }
+
+    // Adiciona um método para obter o nome do mapa
+    public String getMapName() {
+        return mapName;
+    }
+
+    // Adiciona um método para definir o nome do mapa
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
     }
 
     public void generateRandomMap(int numVertices, boolean bidirectional, double density) {
@@ -137,6 +157,7 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
 
+
             for (int i = 0; i < adjMatrix.length; i++) {
                 for (int j = 0; j < adjMatrix.length; j++) {
                     // Convert int to String before writing
@@ -158,6 +179,14 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
     public String getMap() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
+    }
+
+    public void placeFlag(Flag flag) {
+        Position flagPosition = flag.getPosition();
+        int flagIndex = getIndex(flagPosition);
+
+        // Assumindo que você tem um método para adicionar um vértice (flag) ao mapa
+        addVertex(flagIndex, flag);
     }
 
 }

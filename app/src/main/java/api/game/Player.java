@@ -1,8 +1,11 @@
 package api.game;
 
+import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
+
 import java.util.Iterator;
 import java.util.Random;
 
@@ -11,9 +14,9 @@ import java.util.Random;
  */
 public class Player {
     private String playerName;
-    private Bot[] bots;
+    private UnorderedListADT<Bot> bots;
     private Flag flag;
-    private Flag enemyFlag; // Nova adição para representar a bandeira inimiga
+    private Flag enemyFlag;
 
     /**
      * Construtor da classe Player.
@@ -24,19 +27,20 @@ public class Player {
      */
     public Player(String playerName, int numBots, Position flagPosition, Position enemyFlagPosition) {
         this.playerName = playerName;
-        this.bots = new Bot[numBots];
+        this.bots = new UnorderedArrayList<>();
 
         // Define a posição da bandeira
         this.flag = new Flag(flagPosition);
 
         // Define a posição da bandeira inimiga
-        this.enemyFlag = new Flag(enemyFlagPosition);
+        this.enemyFlag = getEnemyFlag();
 
         // Atribuição de nomes aos bots
         for (int i = 0; i < numBots; i++) {
-            bots[i] = new Bot(flagPosition);
-            bots[i].setMovementAlgorithm(null); // Atribua algoritmos posteriormente
-            bots[i].setName(playerName + "_Bot" + (i + 1));
+            Bot bot = new Bot(flagPosition);
+            bot.setMovementAlgorithm(null); // Atribua algoritmos posteriormente
+            bot.setName(playerName + "_Bot" + (i + 1));
+            bots.addToRear(bot); // Adding the bot to the unordered list
         }
     }
 
@@ -55,7 +59,13 @@ public class Player {
      * @return Um array de bots pertencentes ao jogador.
      */
     public Bot[] getBots() {
-        return bots;
+        Bot[] botArray = new Bot[bots.size()]; // Cria um array de Bot com o tamanho da lista
+
+        int index = 0;
+        for (Bot bot : bots) {
+            botArray[index++] = bot;
+        }
+        return botArray;
     }
 
     /**
@@ -89,7 +99,7 @@ public class Player {
      * Tópico 4 - Atribuir a cada um deles um algoritmo proveniente das diversas opções que cada
      * grupo de trabalho deve disponibilizar.
      *
-     * @param bot      O bot a ser adicionado à equipe.
+     * @param bot       O bot a ser adicionado à equipe.
      * @param algorithm O algoritmo escolhido pelo jogador para o bot.
      */
     public void addBot(Bot bot, MovementAlgorithm algorithm) {
@@ -98,6 +108,7 @@ public class Player {
         bot.setMovementAlgorithm(algorithm);
         // Atribui a posição inicial do bot à posição da bandeira
         assignInitialPosition(bot, flag);
+        bots.addToRear(bot); // Adding the bot to the unordered
     }
 
     /**
@@ -121,5 +132,5 @@ public class Player {
         Position enemyFlagPosition = enemyFlag.getPosition();
         return bot.getPosition().equals(enemyFlagPosition);
     }
-    
+
 }

@@ -1,51 +1,36 @@
 package api.algorithms;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
-import api.DataStructures.Graph.NetworkADT;
-import api.DataStructures.Graph.WeightedGraph;
+
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Position;
-
-import java.util.Iterator;
 
 public class EvenNumberPathAlgorithm<T> implements MovementAlgorithm<T> {
     @Override
     public Position calculateNextMove(Position currentPosition) {
-        return null;
+        Position nextMove;
+        // Verifique se as coordenadas atuais são pares
+        if (isEven(currentPosition.getX()) && isEven(currentPosition.getY())) {
+            nextMove = findNearestEvenPosition(currentPosition);
+            return nextMove;
+        } else {
+            // Se as coordenadas não são pares, mova-se para a posição mais próxima com coordenadas pares
+            nextMove = findNearestEvenPosition(currentPosition);
+            return nextMove;
+        }
     }
-//    private NetworkADT<T> graph;
-//    private UnorderedListADT<T> evenNumberPath;
-//
-//    public EvenNumberPathAlgorithm(NetworkADT<T> graph, UnorderedListADT<T> evenNumberPath) {
-//        this.graph = graph;
-//        this.evenNumberPath = evenNumberPath;
-//    }
-//
-//    public UnorderedListADT<T> findEvenNumberPath(T startVertex) {
-//        evenNumberPath.removeAll();
-//        boolean[] visited = new boolean[graph.size()];
-//        int startIndex = graph.getIndex(startVertex);
-//        dfs(startIndex, visited);
-//        return evenNumberPath;
-//    }
-//
-//    private void dfs(int vertex, boolean[] visited) {
-//        visited[vertex] = true;
-//        evenNumberPath.addToRear(graph.getVertex(vertex));
-//
-//        Iterator<T> neighbors = graph.iteratorDFS(vertex);
-//        while (neighbors.hasNext()) {
-//            T neighbor = neighbors.next();
-//            int neighborIndex = graph.getIndex(neighbor);
-//
-//            if (!visited[neighborIndex] && isEven(neighborIndex)) {
-//                dfs(neighborIndex, visited);
-//            }
-//        }
-//    }
-//
-//    private boolean isEven(int number) {
-//        return number % 2 == 0;
-//    }
+
+    // Método auxiliar para verificar se um número é par
+    private boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+
+    // Método auxiliar para encontrar a posição mais próxima com coordenadas pares
+    private Position findNearestEvenPosition(Position currentPosition) {
+        // Implemente lógica para encontrar a posição mais próxima com coordenadas pares
+        // Este é apenas um exemplo, você pode substituir por sua própria lógica
+        int newX = (currentPosition.getX() % 2 == 0) ? currentPosition.getX() : currentPosition.getX() + 1;
+        int newY = (currentPosition.getY() % 2 == 0) ? currentPosition.getY() : currentPosition.getY() + 1;
+
+        return new Position(newX, newY);
+    }
 }

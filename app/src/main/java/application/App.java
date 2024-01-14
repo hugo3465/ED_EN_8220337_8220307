@@ -14,7 +14,7 @@ public class App {
         GameMap map = new GameMap();
 
         map.generateRandomMap(15, false, 0.95);
-        map.exportMap("C:\\Users\\hugui\\Desktop\\testeImport2.txt");
+        map.exportMap("C:\\Users\\hugui\\Desktop\\"+map.getMapName()+".txt");
         // map.importMap("C:\\Users\\hugui\\Desktop\\testeImport.txt");
 
     }
