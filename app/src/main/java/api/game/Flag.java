@@ -1,23 +1,23 @@
 package api.game;
 
 /**
- * Representa a bandeira no jogo, definida por suas coordenadas X e Y.
+ * Representa a bandeira no jogo, definida pelo seu índice no grafo.
  */
 public class Flag extends Entity {
 
     /**
      * Construtor da classe Flag.
      *
-     * @param position A posição inicial da bandeira.
+     * @param position O índice inicial da bandeira no grafo.
      */
     public Flag(Position position) {
         super(position);
     }
 
     /**
-     * Retorna uma representação em formato de string das coordenadas da bandeira.
+     * Retorna uma representação em formato de string do índice da bandeira no grafo.
      *
-     * @return Uma string representando as coordenadas da bandeira no formato "(X, Y)".
+     * @return Uma string representando o índice da bandeira.
      */
     @Override
     public String toString() {
@@ -25,9 +25,12 @@ public class Flag extends Entity {
     }
 
     @Override
-    public int compareTo(Entity o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    public int compareTo(Entity otherEntity) {
+        if (otherEntity instanceof Flag) {
+            Flag otherFlag = (Flag) otherEntity;
+            return Integer.compare(this.getPosition().getIndex(), otherFlag.getPosition().getIndex());
+        }
+        throw new IllegalArgumentException("Cannot compare Flag with a different entity type.");
     }
 
 }

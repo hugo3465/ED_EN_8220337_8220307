@@ -1,17 +1,32 @@
 package api.game;
 
+import java.util.Iterator;
+
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.algorithms.interfaces.MovementAlgorithm;
+
 
 /**
  * Representa um jogador no jogo Capture the Flag.
  */
 public class Player {
     private String playerName;
-    private UnorderedListADT<Bot> bots;
+    private UnorderedListADT<Bot> bots; // TODO: Maybe fazer uma queue
     private Flag flag;
     private Flag enemyFlag;
+
+    public Player(String playerName, Position flagPosition, Position enemyFlagPosition, Bot[] bots) {
+        this.playerName = playerName;
+        this.bots = new UnorderedArrayList<>();
+        this.flag = new Flag(flagPosition);
+        this.enemyFlag = new Flag(enemyFlagPosition);
+
+        for (Bot bot : bots) {
+            assignInitialPosition(bot, flag);
+            this.bots.addToRear(bot);
+        }
+    }
 
     /**
      * Construtor da classe Player.
@@ -23,45 +38,32 @@ public class Player {
     public Player(String playerName, int numBots, Position flagPosition, Position enemyFlagPosition) {
         this.playerName = playerName;
         this.bots = new UnorderedArrayList<>();
-
-        // Define a posição da bandeira
         this.flag = new Flag(flagPosition);
+        this.enemyFlag = new Flag(enemyFlagPosition);
 
-        // Define a posição da bandeira inimiga
-        this.enemyFlag = getEnemyFlag();
-
-        // Atribuição de nomes aos bots
         for (int i = 0; i < numBots; i++) {
             Bot bot = new Bot(flagPosition);
-            bot.setMovementAlgorithm(null); // Atribua algoritmos posteriormente
+            bot.setMovementAlgorithm(null);
             bot.setName(playerName + "_Bot" + (i + 1));
-            bots.addToRear(bot); // Adding the bot to the unordered list
+            bot.setEnemyFlagPosition(enemyFlag); // Adicione este método
+            assignInitialPosition(bot, flag);
+            this.bots.addToRear(bot);
         }
     }
 
-    /**
-     * Obtém o nome do jogador.
-     *
-     * @return O nome do jogador.
-     */
     public String getPlayerName() {
         return playerName;
     }
 
-    /**
-     * Obtém os bots pertencentes ao jogador.
-     *
-     * @return Um array de bots pertencentes ao jogador.
-     */
     public Bot[] getBots() {
-        Bot[] botArray = new Bot[bots.size()]; // Cria um array de Bot com o tamanho da lista
-
+        Bot[] botArray = new Bot[bots.size()];
         int index = 0;
         for (Bot bot : bots) {
             botArray[index++] = bot;
         }
         return botArray;
     }
+
 
     /**
      * Obtém a bandeira do jogador.
@@ -78,7 +80,8 @@ public class Player {
 
     /**
      * Atribui a posição inicial do bot à posição da bandeira.
-     * Tópico 5 - No início da partida todos os bots deverão estar localizados na mesma posição que a
+     * Tópico 5 - No início da partida todos os bots deverão estar localizados na
+     * mesma posição que a
      * bandeira do seu jogador.
      *
      * @param bot  O bot ao qual a posição será atribuída.
@@ -91,13 +94,15 @@ public class Player {
 
     /**
      * Adiciona um bot à equipe e atribui o algoritmo escolhido pelo jogador.
-     * Tópico 4 - Atribuir a cada um deles um algoritmo proveniente das diversas opções que cada
+     * Tópico 4 - Atribuir a cada um deles um algoritmo proveniente das diversas
+     * opções que cada
      * grupo de trabalho deve disponibilizar.
      *
      * @param bot       O bot a ser adicionado à equipe.
      * @param algorithm O algoritmo escolhido pelo jogador para o bot.
      */
-    public void addBot(Bot bot, MovementAlgorithm<Entity> algorithm) {
+    public void addBot(Bot bot, MovementAlgorithm<Position> algorithm) {
+        // Atribui o nome ao BOT
         bot.setName(playerName + "_Bot");
         // Atribui o algoritmo escolhido pelo jogador ao bot
         bot.setMovementAlgorithm(algorithm);
@@ -112,13 +117,14 @@ public class Player {
      * @param bot       O bot ao qual o algoritmo será atribuído.
      * @param algorithm O algoritmo a ser atribuído ao bot.
      */
-    public void assignAlgorithmToBot(Bot bot, MovementAlgorithm<Entity> algorithm) {
+    public void assignAlgorithmToBot(Bot bot, MovementAlgorithm<Position> algorithm) {
         bot.setMovementAlgorithm(algorithm);
     }
 
     /**
      * Define a posição da bandeira do jogador.
      * Adiconar o local da flag
+     * 
      * @param newFlagPosition A nova posição da bandeira.
      */
     public void setFlagPosition(Position newFlagPosition) {
@@ -137,9 +143,9 @@ public class Player {
         enemyFlag.setPosition(newEnemyFlagPosition);
     }
 
-    // Deve ser no capture the flag
     /**
-     * Verifica se o jogo chegou ao fim, ou seja, se o bot alcançou a bandeira inimiga.
+     * Verifica se o jogo chegou ao fim, ou seja, se o bot alcançou a bandeira
+     * inimiga.
      * Tópico 8 - O jogo termina quando um dos bots chega ao campo do adversário
      *
      * @param bot O bot cuja posição será verificada em relação à bandeira inimiga.
@@ -148,6 +154,27 @@ public class Player {
     public boolean checkEndGame(Bot bot) {
         Position enemyFlagPosition = enemyFlag.getPosition();
         return bot.getPosition().equals(enemyFlagPosition);
+    }
+
+    /**
+     * @param playerName the playerName to set
+     */
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    /**
+     * @param bots the bots to set
+     */
+    public void setBots(UnorderedListADT<Bot> bots) {
+        this.bots = bots;
+    }
+
+    /**
+     * @param enemyFlag the enemyFlag to set
+     */
+    public void setEnemyFlag(Flag enemyFlag) {
+        this.enemyFlag = enemyFlag;
     }
 
 }

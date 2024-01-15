@@ -6,25 +6,27 @@ import api.algorithms.interfaces.MovementAlgorithm;
 
 import java.util.Iterator;
 
-public class ShortestPathAlgorithm<T> implements MovementAlgorithm<T> {
+public class BreadthFirstSearchAlgorithm<T> implements MovementAlgorithm<T> {
 
     private NetworkADT<T> graph;
 
-    public ShortestPathAlgorithm(WeightedGraph<T> graph) {
+    public BreadthFirstSearchAlgorithm(WeightedGraph<T> graph) {
         this.graph = graph;
     }
 
     @Override
     public Iterator<T> search(T startVertex) {
-        return null;
+        return graph.iteratorBFS(startVertex);
     }
 
     @Override
     public double shortestPathWeight(T startVertex, T targetVertex) {
-        return graph.shortestPathWeight(startVertex, targetVertex);
+        return 0;
     }
+
     @Override
     public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) {
-        return graph.iteratorShortestPath(startVertex, targetVertex);
+        return null;
     }
+
 }

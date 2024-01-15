@@ -4,6 +4,7 @@ import java.util.Random;
 
 import api.DataStructures.Graph.WeightedGraph;
 import api.game.Entity;
+import api.game.Position;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
 
@@ -19,8 +20,12 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
     private final int MIN_DISTANCE = 1;
     private final int MAX_DISTANCE = 15;
 
-    private String mapName; // Adiciona um campo para armazenar o nome do mapa
+    
 
+    private String mapName; // Adiciona um campo para armazenar o nome do mapa
+    private Position[] indexToPosition;  // Array para mapear índice para Position
+    private int[] positionToIndex;       // Array para mapear Position para índice
+    
     public GameMap() {
         super();
         this.mapName = "DefaultMap"; // Define um nome padrão
@@ -59,10 +64,43 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
 
     }
 
+    // private void initializeGraph(int numVertices) {
+    //     this.vertices = new Entity[numVertices];
+    //     this.adjMatrix = new double[numVertices][numVertices];
+    //     //TODO PEDRO
+    //     this.indexToPosition = new Position[numVertices];
+    //     this.positionToIndex = new int[numVertices];
+    // }
     private void initializeGraph(int numVertices) {
         this.vertices = new Entity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
+        this.indexToPosition = new Position[numVertices];
+        this.positionToIndex = new int[numVertices];
+    
+        Random random = new Random();  // Declare a variável Random localmente
+    
+        for (int i = 0; i < numVertices; i++) {
+            Position position = new Position(i);  // Crie posições únicas para cada vértice
+            indexToPosition[i] = position;
+            positionToIndex[i] = i;
+    
+            // Adicione uma aresta de entrada para cada vértice (exceto o primeiro)
+            if (i > 0) {
+                int sourceIndex = i - 1;
+                int distance = random.nextInt(MAX_DISTANCE) + MIN_DISTANCE;
+                adjMatrix[sourceIndex][i] = distance;
+            }
+    
+            // Adicione uma aresta de saída para cada vértice (exceto o último)
+            if (i < numVertices - 1) {
+                int targetIndex = i + 1;
+                int distance = random.nextInt(MAX_DISTANCE) + MIN_DISTANCE;
+                adjMatrix[i][targetIndex] = distance;
+            }
+        }
+        this.numVertices = numVertices;
     }
+    
 
     // private void fillVertices(int numVertices) {
     // for (int i = 0; i < numVertices; i++) {
@@ -174,14 +212,6 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
     public String getMap() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
-    }
-
-    public void placeFlag(Entity flag) {
-        // Position flagPosition = flag.getPosition();
-        //int flagIndex = getIndex(flag);
-
-        // Assumindo que você tem um método para adicionar um vértice (flag) ao mapa
-        addVertex(flag);
     }
 
 }

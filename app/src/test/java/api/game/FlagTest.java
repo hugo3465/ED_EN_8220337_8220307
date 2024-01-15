@@ -2,53 +2,55 @@ package api.game;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Testes unitários para a classe Flag.
  */
 public class FlagTest {
 
-    private static Position initialPosition;
+    private static Position position1;
+    private static Position position2;
 
     @BeforeAll
     public static void setUp() {
-        initialPosition = new Position(2, 4);
+        position1 = new Position(5);
+        position2 = new Position(8);
     }
 
     @Test
-    public void test001GetPosition() {
-        Flag flag = new Flag(initialPosition);
+    public void testToString() {
+        Flag flag = new Flag(position1);
+        assertEquals(position1.toString(), flag.toString());
+    }
+    @Test
+    public void test(){
+        Flag flag1 = new Flag(position1);
+        Flag flag2 = new Flag(position1);
 
-        assertEquals(initialPosition, flag.getPosition());
+        assertEquals(flag1.getPosition().getIndex(), flag2.getPosition().getIndex());
     }
 
     @Test
-    public void test002SetPosition() {
-        Flag flag = new Flag(initialPosition);
+    public void testCompareToEqualFlags() {
+        Position position = new Position(5);
+        Flag flag1 = new Flag(position);
+        Flag flag2 = new Flag(position);
 
-        Position newPosition = new Position(6, 8);
-        flag.setPosition(newPosition);
-
-        assertEquals(newPosition, flag.getPosition());
+        assertEquals(0, flag1.compareTo(flag2));
     }
 
     @Test
-    public void test003SetCoordinates() {
-        Flag flag = new Flag(initialPosition);
+    public void testCompareToDifferentFlags() {
+        Position position1 = new Position(10);
+        Position position2 = new Position(15);
+        Flag flag1 = new Flag(position1);
+        Flag flag2 = new Flag(position2);
 
-        int newX = 10;
-        int newY = 20;
-        flag.setCoordinates(newX, newY);
-
-        assertEquals(newX, flag.getPosition().getX());
-        assertEquals(newY, flag.getPosition().getY());
+        assertEquals(Integer.compare(position1.getIndex(), position2.getIndex()), flag1.compareTo(flag2));
     }
 
-    @Test
-    public void test004ToString() {
-        Flag flag = new Flag(initialPosition);
 
-        assertEquals("(" + initialPosition.getX() + ", " + initialPosition.getY() + ")", flag.toString());
-    }
 }

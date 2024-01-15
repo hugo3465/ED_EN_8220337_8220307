@@ -1,12 +1,33 @@
 package api.algorithms.interfaces;
-import api.game.Position;
-
+import java.util.Iterator;
 public interface MovementAlgorithm<T> {
+
     /**
-     * Calcula o próximo movimento com base na posição atual.
+     * Realiza a busca em largura (BFS), em profundidade (DFS) ou o caminho mais curto
+     * dependendo da implementação específica.
      *
-     * @param currentPosition A posição atual do bot.
-     * @return A próxima posição calculada pelo algoritmo.
+     * @param startVertex o vértice de início da busca
+     * @return um iterador representando o resultado da busca
      */
-    Position calculateNextMove(Position currentPosition);
+    Iterator<T> search(T startVertex);
+
+    /**
+     * Retorna o peso do caminho mais curto entre dois vértices.
+     *
+     * @param startVertex  o vértice de origem
+     * @param targetVertex o vértice de destino
+     * @return o peso do caminho mais curto
+     */
+    double shortestPathWeight(T startVertex, T targetVertex);
+
+    /**
+     * Retorna um iterador que contém o caminho mais curto entre dois vértices.
+     *
+     * @param startVertex  o vértice de origem
+     * @param targetVertex o vértice de destino
+     * @return um iterador que contém o caminho mais curto
+     */
+    Iterator<T> iteratorShortestPath(T startVertex, T targetVertex);
+
+
 }

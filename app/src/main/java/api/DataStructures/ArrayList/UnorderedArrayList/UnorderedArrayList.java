@@ -61,5 +61,4 @@ public class UnorderedArrayList<T> extends ArrayList<T> implements UnorderedList
         rear++;
         modCount++;
     }
-
 }
