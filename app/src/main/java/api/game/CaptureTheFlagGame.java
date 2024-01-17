@@ -1,5 +1,7 @@
 package api.game;
 
+import java.util.Scanner;
+
 import api.DataStructures.ArrayList.ArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
@@ -8,6 +10,7 @@ import api.algorithms.BreadthFirstSearchAlgorithm;
 import api.algorithms.DepthFirstSearchAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.game.interfaces.GameEntity;
 import api.game.interfaces.ICaptureTheFlag;
 import api.map.GameMap;
 
@@ -57,7 +60,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
             playRound();
 
             // Imprimir visualização do mapa após cada rodada
-            System.out.println(getMapPreviw());
+            //System.out.println(getMapPreviw());
 
             // Avançar para a próxima rodada
             nextTurn();
@@ -68,32 +71,44 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     }
 
     private void initializeGame() {
-        Position flagPositionPlayer1 = new Position(0); // Substitua com a lógica real para posicionar a bandeira do
-                                                        // jogador 1
-        Position flagPositionPlayer2 = new Position(3); // Substitua com a lógica real para posicionar a bandeira do
-                                                         // jogador 2
-        // Posicione as bandeiras dos jogadores
-        player1.setFlagPosition(flagPositionPlayer1);
-        player1.setEnemyFlag(flagPositionPlayer2);
+        
+        //chooseAlgorithms(player1, player2);
+    }
 
-        player2.setFlagPosition(flagPositionPlayer2);
-        player2.setEnemyFlag(flagPositionPlayer1);
+    /*
+     * Player... é uma sintaxe conhecida como varargs em Java. Ela permite que você passe um número variável de argumentos para um método. No contexto do método chooseAlgorithms, 
+     * Player... players significa que você pode passar zero ou mais objetos do tipo Player como argumentos.
+     */
+    private void chooseAlgorithms(Player... players)  {
+        Scanner in = new Scanner(System.in);
 
-        // // Atribua algoritmos diferentes aos bots de cada jogador
-        // QueueADT<Object> algorithmsPlayer1 = new LinkedQueue<>();
-        // algorithmsPlayer1.enqueue(new BreadthFirstSearchAlgorithm<>(map));
-        // algorithmsPlayer1.enqueue(new DepthFirstSearchAlgorithm<>(map));
+        for (Player player : players) {
+            System.out.println("Escolha os algoritmos para os bots do jogador " + player.getname() + ":");
+            for (int i = 0; i < player.getBots().length; i++) {
+                System.out.println("Escolha o algoritmo para o Bot " + (i + 1) + ":");
+                System.out.println("1. Shortest Path Algorithm");
+                System.out.println("2. Outro Algoritmo (adicione opções conforme necessário)");
 
-        // QueueADT<Object> algorithmsPlayer2 = new LinkedQueue<>();
-        // algorithmsPlayer2.enqueue(new ShortestPathAlgorithm<>(map));
-        // algorithmsPlayer2.enqueue(new BreadthFirstSearchAlgorithm<>(map));
+                int escolha = in.nextInt();
+                MovementAlgorithm<GameEntity> algorithm = null;
 
-        // player1.assignAlgorithmToBots(algorithmsPlayer1);
-        // player2.assignAlgorithmToBots(algorithmsPlayer2);
+                switch (escolha) {
+                    case 1:
+                        algorithm = new ShortestPathAlgorithm<>(map);
+                        break;
+                    // Adicione mais casos conforme necessário para outros algoritmos
+                    // case 2:
+                    // algorithm = new OutroAlgoritmo<>(map);
+                    // break;
+                    // ...
+                    default:
+                        System.out.println("Escolha inválida. Usando o algoritmo padrão.");
+                        algorithm = new ShortestPathAlgorithm<>(map);
+                }
 
-        // Posicione os bots na posição inicial
-        player1.assignInitialPositions();
-        player2.assignInitialPositions();
+                player.getBots()[i].setMovementAlgorithm(algorithm);
+            }
+        }
     }
 
     private boolean isGameOver(Player player) {
