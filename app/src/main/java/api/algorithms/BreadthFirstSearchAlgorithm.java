@@ -29,4 +29,9 @@ public class BreadthFirstSearchAlgorithm<T> implements MovementAlgorithm<T> {
         return null;
     }
 
+    @Override
+    public AlgorithmType getAlgorithmType() {
+        return AlgorithmType.BFS;
+    }
+
 }

@@ -1,5 +1,6 @@
 package api.game;
 
+import api.algorithms.AlgorithmType;
 import api.algorithms.BreadthFirstSearchAlgorithm;
 import api.algorithms.DepthFirstSearchAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
@@ -8,15 +9,15 @@ import api.algorithms.interfaces.MovementAlgorithm;
 import java.util.Iterator;
 
 /**
- * Representa um bot no jogo, caracterizado pelo seu índice no grafo e algoritmo de movimentação.
+ * Representa um bot no jogo, caracterizado pelo seu índice no grafo e algoritmo
+ * de movimentação.
  */
-public class Bot extends Entity{
+public class Bot extends Entity {
 
-    //Todo Colocar a Entity
+    // Todo Colocar a Entity
     private String name;
-    private MovementAlgorithm<Position> movementAlgorithm;
+    private MovementAlgorithm<Entity> movementAlgorithm;
     private Flag enemyFlagPosition;
-    
 
     public Bot(Position initialPosition) {
         super(initialPosition);
@@ -27,11 +28,11 @@ public class Bot extends Entity{
         this.name = name;
     }
 
-    public MovementAlgorithm<Position> getMovementAlgorithm() {
+    public MovementAlgorithm<Entity> getMovementAlgorithm() {
         return movementAlgorithm;
     }
 
-    public void setMovementAlgorithm(MovementAlgorithm<Position> algorithm) {
+    public void setMovementAlgorithm(MovementAlgorithm<Entity> algorithm) {
         this.movementAlgorithm = algorithm;
     }
 
@@ -49,7 +50,8 @@ public class Bot extends Entity{
 
     /**
      * Verifica se o bot pode se mover para a nova posição especificada.
-     * Tópico 7 - Excetuando na localização das bandeiras, um bot não se pode movimentar para uma posição
+     * Tópico 7 - Excetuando na localização das bandeiras, um bot não se pode
+     * movimentar para uma posição
      * em que esteja outro bot.
      *
      * @param newPosition A nova posição desejada.
@@ -74,33 +76,58 @@ public class Bot extends Entity{
      */
     public void move(Bot[] otherBots) {
         if (movementAlgorithm != null) {
+            AlgorithmType algorithmType = movementAlgorithm.getAlgorithmType();
             Position currentPosition = getPosition();
-
-            // Verifica o tipo de algoritmo e chama o método apropriado
-            if (movementAlgorithm instanceof BreadthFirstSearchAlgorithm) {
-                moveWithBFS_DFS(currentPosition, otherBots);
-            } else if (movementAlgorithm instanceof ShortestPathAlgorithm) {
-                moveWithShortestPath(currentPosition, otherBots);
-            } else if (movementAlgorithm instanceof DepthFirstSearchAlgorithm){
-                moveWithBFS_DFS(currentPosition, otherBots);
-            }else {
-                // Lógica para outros tipos de algoritmos, se necessário
-                System.out.println("Algoritmo não reconhecido. Movimento não realizado.");
+            switch (algorithmType) {
+                case BFS:
+                    moveWithBFS_DFS(currentPosition, otherBots);
+                case DFS:
+                    moveWithBFS_DFS(currentPosition, otherBots);
+                    break;
+                case SHORTEST_PATH:
+                    moveWithShortestPath(currentPosition, otherBots);
+                    break;
+                default:
+                    System.out.println("Algoritmo não reconhecido. Movimento não realizado.");
             }
         }
     }
 
+    // /**
+    // * Move o bot usando o algoritmo atribuído, evitando colisões com outros bots.
+    // *
+    // * @param otherBots Array de outros bots no jogo.
+    // */
+    // public void move(Bot[] otherBots) {
+    // if (movementAlgorithm != null) {
+    // Position currentPosition = getPosition();
+
+    // // Verifica o tipo de algoritmo e chama o método apropriado
+    // if (movementAlgorithm instanceof BreadthFirstSearchAlgorithm) {
+    // moveWithBFS_DFS(currentPosition, otherBots);
+    // } else if (movementAlgorithm instanceof ShortestPathAlgorithm) {
+    // moveWithShortestPath(currentPosition, otherBots);
+    // } else if (movementAlgorithm instanceof DepthFirstSearchAlgorithm){
+    // moveWithBFS_DFS(currentPosition, otherBots);
+    // }else {
+    // // Lógica para outros tipos de algoritmos, se necessário
+    // System.out.println("Algoritmo não reconhecido. Movimento não realizado.");
+    // }
+    // }
+    // }
+
     private void moveWithShortestPath(Position currentPosition, Bot[] otherBots) {
         if (movementAlgorithm instanceof ShortestPathAlgorithm) {
-            ShortestPathAlgorithm<Position> shortestPathAlgorithm = (ShortestPathAlgorithm<Position>) movementAlgorithm;
+            ShortestPathAlgorithm<Entity> shortestPathAlgorithm = (ShortestPathAlgorithm<Entity>) movementAlgorithm;
 
             Flag targetPosition = enemyFlagPosition; // Já é a posição, não o índice
 
             // Verifica se há um próximo vértice no caminho mais curto
-            Iterator<Position> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition, targetPosition.getPosition());
+            Iterator<Entity> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition,
+                    targetPosition.getPosition());
 
             if (shortestPathIterator.hasNext()) {
-                Position nextMove = shortestPathIterator.next();
+                Position nextMove = shortestPathIterator.next().getPosition();
 
                 if (canMoveTo(nextMove, otherBots)) {
                     setPosition(nextMove);
@@ -108,7 +135,7 @@ public class Bot extends Entity{
                     recalculateMove(otherBots, nextMove);
                 }
             } else {
-                System.out.println("Não há próximo vértice no caminho mais curto. Movimento não realizado.");
+                setPosition(currentPosition);
             }
         } else {
             System.out.println("Algoritmo não reconhecido como Shortest Path. Movimento não realizado.");
@@ -133,10 +160,11 @@ public class Bot extends Entity{
     }
 
     /**
-     * Recalcula o movimento usando o mesmo algoritmo, evitando uma posição específica.
+     * Recalcula o movimento usando o mesmo algoritmo, evitando uma posição
+     * específica.
      *
-     * @param otherBots       Array de outros bots no jogo.
-     * @param avoidPosition   Posição a ser evitada durante o recálculo.
+     * @param otherBots     Array de outros bots no jogo.
+     * @param avoidPosition Posição a ser evitada durante o recálculo.
      */
     protected void recalculateMove(Bot[] otherBots, Position avoidPosition) {
         if (movementAlgorithm != null) {
@@ -145,7 +173,8 @@ public class Bot extends Entity{
             if (movementAlgorithm instanceof ShortestPathAlgorithm) {
                 // Se for ShortestPathAlgorithm, use iteratorShortestPath
                 ShortestPathAlgorithm<Position> shortestPathAlgorithm = (ShortestPathAlgorithm<Position>) movementAlgorithm;
-                Iterator<Position> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition, enemyFlagPosition.getPosition());
+                Iterator<Position> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition,
+                        enemyFlagPosition.getPosition());
 
                 handleNextMove(shortestPathIterator, otherBots, avoidPosition);
             } else if (movementAlgorithm instanceof BreadthFirstSearchAlgorithm) {
@@ -167,11 +196,12 @@ public class Bot extends Entity{
     }
 
     /**
-     * Lida com o próximo movimento com base no iterador, verificações de colisão e posição a ser evitada.
+     * Lida com o próximo movimento com base no iterador, verificações de colisão e
+     * posição a ser evitada.
      *
-     * @param iterator       Iterador para obter o próximo movimento.
-     * @param otherBots      Array de outros bots no jogo.
-     * @param avoidPosition  Posição a ser evitada durante o movimento.
+     * @param iterator      Iterador para obter o próximo movimento.
+     * @param otherBots     Array de outros bots no jogo.
+     * @param avoidPosition Posição a ser evitada durante o movimento.
      */
     private void handleNextMove(Iterator<Position> iterator, Bot[] otherBots, Position avoidPosition) {
         if (iterator.hasNext()) {
@@ -180,7 +210,7 @@ public class Bot extends Entity{
             if (canMoveTo(nextMove, otherBots) && !nextMove.equals(avoidPosition)) {
                 setPosition(nextMove);
             } else {
-                System.out.println("Movimento inválido. Ignorando movimento.");
+                setPosition(getPosition());
             }
         } else {
             System.out.println("Não há próximo vértice. Movimento não realizado.");

@@ -27,4 +27,9 @@ public class ShortestPathAlgorithm<T> implements MovementAlgorithm<T> {
     public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) {
         return graph.iteratorShortestPath(startVertex, targetVertex);
     }
+
+    @Override
+    public AlgorithmType getAlgorithmType() {
+        return AlgorithmType.SHORTEST_PATH;
+    }
 }

@@ -1,5 +1,7 @@
 package api.algorithms.interfaces;
 import java.util.Iterator;
+
+import api.algorithms.AlgorithmType;
 public interface MovementAlgorithm<T> {
 
     /**
@@ -28,6 +30,9 @@ public interface MovementAlgorithm<T> {
      * @return um iterador que contém o caminho mais curto
      */
     Iterator<T> iteratorShortestPath(T startVertex, T targetVertex);
+
+
+    AlgorithmType getAlgorithmType(); // Adicione este método
 
 
 }

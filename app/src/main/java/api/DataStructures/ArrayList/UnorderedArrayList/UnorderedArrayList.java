@@ -61,4 +61,30 @@ public class UnorderedArrayList<T> extends ArrayList<T> implements UnorderedList
         rear++;
         modCount++;
     }
+
+    /**
+     * Remove e retorna o elemento na posição especificada.
+     * 
+     * @param index a posição do elemento a ser removido
+     * @return o elemento removido
+     * @throws ElementNotFoundException se a posição não contiver um elemento
+     */
+    public T removeIndex(int index) throws ElementNotFoundException {
+        if (index < 0 || index >= rear) {
+            throw new ElementNotFoundException("Index out of bounds: " + index);
+        }
+
+        T removedElement = items[index];
+
+        // Desloca os elementos após a posição especificada uma posição para frente
+        for (int i = index; i < rear - 1; i++) {
+            items[i] = items[i + 1];
+        }
+
+        items[rear - 1] = null; // Remove a referência ao último elemento duplicado
+        rear--;
+        modCount++;
+
+        return removedElement;
+    }
 }

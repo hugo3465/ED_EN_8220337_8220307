@@ -28,4 +28,9 @@ public class DepthFirstSearchAlgorithm<T> implements MovementAlgorithm<T> {
     public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) {
         return null;
     }
+
+    @Override
+    public AlgorithmType getAlgorithmType() {
+        return AlgorithmType.DFS;
+    }
 }

@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
-
 
 /**
  * Representa um jogador no jogo Capture the Flag.
@@ -43,13 +43,32 @@ public class Player {
 
         for (int i = 0; i < numBots; i++) {
             Bot bot = new Bot(flagPosition);
-            bot.setMovementAlgorithm(null);
             bot.setName(playerName + "_Bot" + (i + 1));
-            bot.setEnemyFlagPosition(enemyFlag); // Adicione este método
-            assignInitialPosition(bot, flag);
+
+            // Agora, os bots são criados sem algoritmo atribuído
+            // bot.setMovementAlgorithm(null);
+
+            // Atribui a posição inicial do bot à posição da bandeira
+            // assignInitialPosition(bot, flag);
             this.bots.addToRear(bot);
         }
     }
+    // public Player(String playerName, int numBots, Position flagPosition, Position
+    // enemyFlagPosition) {
+    // this.playerName = playerName;
+    // this.bots = new UnorderedArrayList<>();
+    // this.flag = new Flag(flagPosition);
+    // this.enemyFlag = new Flag(enemyFlagPosition);
+
+    // for (int i = 0; i < numBots; i++) {
+    // Bot bot = new Bot(flagPosition);
+    // bot.setMovementAlgorithm(null);
+    // bot.setName(playerName + "_Bot" + (i + 1));
+    // bot.setEnemyFlagPosition(enemyFlag); // Adicione este método
+    // assignInitialPosition(bot, flag);
+    // this.bots.addToRear(bot);
+    // }
+    // }
 
     public String getPlayerName() {
         return playerName;
@@ -63,7 +82,6 @@ public class Player {
         }
         return botArray;
     }
-
 
     /**
      * Obtém a bandeira do jogador.
@@ -101,9 +119,12 @@ public class Player {
      * @param bot       O bot a ser adicionado à equipe.
      * @param algorithm O algoritmo escolhido pelo jogador para o bot.
      */
-    public void addBot(Bot bot, MovementAlgorithm<Position> algorithm) {
-        // Atribui o nome ao BOT
-        bot.setName(playerName + "_Bot");
+    public void addBot(Bot bot, MovementAlgorithm<Entity> algorithm) {
+        if (bot.getName() == null || bot.getName().isEmpty()) {
+            // Atribui o nome ao BOT
+            bot.setName(playerName + "_Bot: " + bot.getName());
+        }
+
         // Atribui o algoritmo escolhido pelo jogador ao bot
         bot.setMovementAlgorithm(algorithm);
         // Atribui a posição inicial do bot à posição da bandeira
@@ -111,15 +132,16 @@ public class Player {
         bots.addToRear(bot); // Adding the bot to the unordered
     }
 
-    /**
-     * Atribui um algoritmo a um bot específico.
-     *
-     * @param bot       O bot ao qual o algoritmo será atribuído.
-     * @param algorithm O algoritmo a ser atribuído ao bot.
-     */
-    public void assignAlgorithmToBot(Bot bot, MovementAlgorithm<Position> algorithm) {
-        bot.setMovementAlgorithm(algorithm);
-    }
+    // /**
+    // * Atribui um algoritmo a um bot específico.
+    // *
+    // * @param bot O bot ao qual o algoritmo será atribuído.
+    // * @param algorithm O algoritmo a ser atribuído ao bot.
+    // */
+    // public void assignAlgorithmToBot(Bot bot, MovementAlgorithm<Position>
+    // algorithm) {
+    // bot.setMovementAlgorithm(algorithm);
+    // }
 
     /**
      * Define a posição da bandeira do jogador.
@@ -173,8 +195,20 @@ public class Player {
     /**
      * @param enemyFlag the enemyFlag to set
      */
-    public void setEnemyFlag(Flag enemyFlag) {
-        this.enemyFlag = enemyFlag;
+    public void setEnemyFlag(Position enemyFlag) {
+        this.enemyFlag.setPosition(enemyFlag);
+    }
+
+    /**
+     * Atribui a posição inicial a todos os bots do jogador com base na posição da
+     * bandeira.
+     */
+    public void assignInitialPositions() {
+        Position flagPosition = flag.getPosition();
+
+        for (Bot bot : bots) {
+            bot.setPosition(flagPosition);
+        }
     }
 
 }
