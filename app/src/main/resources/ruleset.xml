@@ -43,5 +43,9 @@
         </properties>
     </rule>
 
+    <!-- Para comentários -->
+    <rule ref="category/java/documentation.xml/CommentContent" />
+    <rule ref="category/java/documentation.xml/CommentRequired" />
+
    
 </ruleset>
