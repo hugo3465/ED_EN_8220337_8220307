@@ -199,4 +199,12 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
         throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
     }
 
+    public double[][] getAdjacencyMatrix() {
+        return adjMatrix;
+    }
+    @Override
+    public GameEntity[] getVertices() {
+        return this.vertices;
+    }
+
 }

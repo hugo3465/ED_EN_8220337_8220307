@@ -14,7 +14,7 @@ public class App {
         System.out.println("LASFLKAHDFI");
 
         map.generateRandomMap(15, false, 0.95);
-        // map.exportMap("C:\\Users\\User\\Desktop\\"+map.getMapName()+".txt");
+        map.exportMap("C:\\Users\\User\\Desktop\\"+map.getMapName()+".txt");
         // map.exportMap("C:\\Users\\pedro\\Desktop\\"+map.getMapName()+".txt");
         // map.importMap("C:\\Users\\User\\Desktop\\testeImport.txt");
 

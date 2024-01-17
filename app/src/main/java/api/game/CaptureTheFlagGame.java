@@ -1,13 +1,5 @@
 package api.game;
 
-import api.DataStructures.ArrayList.ArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
-import api.algorithms.BreadthFirstSearchAlgorithm;
-import api.algorithms.DepthFirstSearchAlgorithm;
-import api.algorithms.ShortestPathAlgorithm;
-import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.interfaces.ICaptureTheFlag;
 import api.map.GameMap;
 
@@ -73,11 +65,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         Position flagPositionPlayer2 = new Position(3); // Substitua com a lógica real para posicionar a bandeira do
                                                          // jogador 2
         // Posicione as bandeiras dos jogadores
-        player1.setFlagPosition(flagPositionPlayer1);
-        player1.setEnemyFlag(flagPositionPlayer2);
-
-        player2.setFlagPosition(flagPositionPlayer2);
-        player2.setEnemyFlag(flagPositionPlayer1);
 
         // // Atribua algoritmos diferentes aos bots de cada jogador
         // QueueADT<Object> algorithmsPlayer1 = new LinkedQueue<>();
@@ -92,8 +79,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         // player2.assignAlgorithmToBots(algorithmsPlayer2);
 
         // Posicione os bots na posição inicial
-        player1.assignInitialPositions();
-        player2.assignInitialPositions();
     }
 
     private boolean isGameOver(Player player) {

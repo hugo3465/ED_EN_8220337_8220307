@@ -1,6 +1,7 @@
 package api.DataStructures.Tree.Heap;
 
 import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.DataStructures.Tree.BinaryTreeADT;
 
 public interface HeapADT<T> extends BinaryTreeADT<T> {
 
