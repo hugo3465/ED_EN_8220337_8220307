@@ -2,8 +2,6 @@ package api.game;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
-import api.algorithms.interfaces.MovementAlgorithm;
 
 /**
  * Representa um jogador no jogo Capture the Flag.

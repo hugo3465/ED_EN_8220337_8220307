@@ -2,6 +2,7 @@ package api.map.interfaces;
 
 import java.io.FileNotFoundException;
 
+import api.game.interfaces.GameEntity;
 import exceptions.InvalidMapException;
 
 public interface IGameMap {
@@ -34,4 +35,8 @@ public interface IGameMap {
      * @return mapa em formato de string
      */
     public String getMap();
+
+    public double[][] getAdjacencyMatrix();
+
+    public GameEntity[] getVertices();
 }

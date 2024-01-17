@@ -214,4 +214,12 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
         return mapRepresentation.toString();
     }
 
+    public double[][] getAdjacencyMatrix() {
+        return adjMatrix;
+    }
+    @Override
+    public GameEntity[] getVertices() {
+        return this.vertices;
+    }
+
 }

@@ -1,4 +1,4 @@
-package api.DataStructures.Tree.Heap;
+package api.DataStructures.Tree;
 
 public class HeapNode<T> extends BinaryTreeNode<T> {
 

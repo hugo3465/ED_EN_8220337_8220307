@@ -39,7 +39,7 @@ public class FlagTest {
         Flag flag1 = new Flag(position);
         Flag flag2 = new Flag(position);
 
-        assertEquals(0, flag1.compareTo(flag2));
+        assertEquals(0, flag1.equals(flag2));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class FlagTest {
         Flag flag1 = new Flag(position1);
         Flag flag2 = new Flag(position2);
 
-        assertEquals(Integer.compare(position1.getIndex(), position2.getIndex()), flag1.compareTo(flag2));
+        assertEquals(Integer.compare(position1.getIndex(), position2.getIndex()), flag1.equals(flag2)); // ACHO QUE TEM DE SER COMPARETO E NÃO EQUALS
     }
 
 

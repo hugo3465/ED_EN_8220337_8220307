@@ -1,11 +1,10 @@
 package api.algorithms.interfaces;
 import java.util.Iterator;
 
-import api.algorithms.AlgorithmType;
 public interface MovementAlgorithm<T> {
 
     /**
-     * Realiza a busca em largura (BFS), em profundidade (DFS) ou o caminho mais curto
+     * Realiza a procura em largura (BFS), em profundidade (DFS) ou o caminho mais curto
      * dependendo da implementação específica.
      *
      * @param startVertex o vértice de início da busca
@@ -13,26 +12,7 @@ public interface MovementAlgorithm<T> {
      */
     Iterator<T> search(T startVertex);
 
-    /**
-     * Retorna o peso do caminho mais curto entre dois vértices.
-     *
-     * @param startVertex  o vértice de origem
-     * @param targetVertex o vértice de destino
-     * @return o peso do caminho mais curto
-     */
-    double shortestPathWeight(T startVertex, T targetVertex);
-
-    /**
-     * Retorna um iterador que contém o caminho mais curto entre dois vértices.
-     *
-     * @param startVertex  o vértice de origem
-     * @param targetVertex o vértice de destino
-     * @return um iterador que contém o caminho mais curto
-     */
-    Iterator<T> iteratorShortestPath(T startVertex, T targetVertex);
-
-
-    AlgorithmType getAlgorithmType(); // Adicione este método
+    int getNextMovement(T currentPosition, T target); // retorna o index para onde ir
 
 
 }

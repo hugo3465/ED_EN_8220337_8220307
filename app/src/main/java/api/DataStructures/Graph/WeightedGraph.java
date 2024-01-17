@@ -5,8 +5,8 @@ import java.util.Iterator;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Stack.LinkedStack.LinkedStack;
+import api.DataStructures.Tree.LinkedHeap;
 import api.DataStructures.Tree.Heap.HeapADT;
-import api.DataStructures.Tree.Heap.LinkedHeap;
 import api.DataStructures.Exceptions.EmptyCollectionException;
 
 public class WeightedGraph<T> extends NonWeightedGraph<T> implements NetworkADT<T> {

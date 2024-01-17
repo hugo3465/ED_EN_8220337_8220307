@@ -71,8 +71,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     }
 
     private void initializeGame() {
-        
-        //chooseAlgorithms(player1, player2);
+         //chooseAlgorithms(player1, player2);
     }
 
     /*
