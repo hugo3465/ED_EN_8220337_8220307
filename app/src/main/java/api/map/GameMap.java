@@ -217,9 +217,28 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     public double[][] getAdjacencyMatrix() {
         return adjMatrix;
     }
+
     @Override
     public GameEntity[] getVertices() {
         return this.vertices;
+    }
+
+    @Override
+    public GameEntity getVertice(int index) {
+        if (index >= 0 && index < vertices.length) {
+            return vertices[index];
+        }
+        throw new IndexOutOfBoundsException("Index is out of bounds.");
+    }
+
+    @Override
+    public int getIndex(GameEntity entity) {
+        for (int i = 0; i < vertices.length; i++) {
+            if (vertices[i] != null && vertices[i].equals(entity)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("O GameEntity especificado não foi encontrado no mapa.");
     }
 
 }

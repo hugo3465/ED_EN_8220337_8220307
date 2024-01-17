@@ -6,8 +6,6 @@ import api.DataStructures.ArrayList.ArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
-import api.algorithms.BreadthFirstSearchAlgorithm;
-import api.algorithms.DepthFirstSearchAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.interfaces.GameEntity;
@@ -93,7 +91,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
 
                 switch (escolha) {
                     case 1:
-                        algorithm = new ShortestPathAlgorithm<>(map);
+                        //algorithm = new ShortestPathAlgorithm<>(map);
                         break;
                     // Adicione mais casos conforme necessário para outros algoritmos
                     // case 2:
@@ -102,7 +100,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
                     // ...
                     default:
                         System.out.println("Escolha inválida. Usando o algoritmo padrão.");
-                        algorithm = new ShortestPathAlgorithm<>(map);
+                        //algorithm = new ShortestPathAlgorithm<>(map);
                 }
 
                 player.getBots()[i].setMovementAlgorithm(algorithm);

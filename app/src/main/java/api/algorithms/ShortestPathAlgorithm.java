@@ -1,15 +1,12 @@
 package api.algorithms;
 
-import api.DataStructures.Graph.NetworkADT;
-import api.DataStructures.Graph.WeightedGraph;
+import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.algorithms.interfaces.MovementAlgorithm;
-import api.game.Position;
+import api.game.Bot;
 import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
-import java.util.Iterator;
-
-public class ShortestPathAlgorithm<T> implements MovementAlgorithm<T> {
+public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
 
     private GameMap graph;
 
@@ -17,37 +14,107 @@ public class ShortestPathAlgorithm<T> implements MovementAlgorithm<T> {
         this.graph = graph;
     }
 
-    public int getNextMovement(T currentPosition, T target) {
+    // Function that implements Dijkstra's
+    // single source shortest path
+    // algorithm for a graph represented
+    // using adjacency matrix
+    // representation
+    private UnorderedArrayList<Integer> dijkstra(double[][] adjacencyMatrix, int startVertex, int endVertex) {
+        final int NO_PARENT = -1;
 
-        // // Obtém um iterador para o caminho mais curto do vértice atual ao vértice de destino
-        // Iterator<T> shortestPathIterator = graph.iteratorShortestPath(currentPosition, target);
+        int numVertices = adjacencyMatrix[0].length;
 
-        // // Se houver um próximo vértice no caminho mais curto, mova-se para ele
-        // if (shortestPathIterator.hasNext()) {
-        //     T nextVertex = shortestPathIterator.next();
+        // shortestDistances[i] will hold the
+        // shortest distance from src to i
+        double[] shortestDistances = new double[numVertices];
 
-        //     // TODO: Converta nextVertex para Position, se necessário
-        //     // Por exemplo, se T for Position, você pode usar Position nextPosition = (Position) nextVertex;
+        // added[i] will true if vertex i is
+        // included / in the shortest path tree
+        // or the shortest distance from src to
+        // i is finalized
+        boolean[] added = new boolean[numVertices];
 
-        //     // Aqui você pode calcular a direção ou movimento necessário
-        //     // com base na posição atual e próxima, e retornar a direção desejada.
-        //     // Por exemplo, se T for Position e você deseja saber a direção em termos de linhas e colunas:
-        //     // int rowDifference = nextPosition.getRow() - currentPosition.getRow();
-        //     // int colDifference = nextPosition.getCol() - currentPosition.getCol();
-        //     // A partir dessas diferenças, você pode determinar a direção do movimento.
+        // Initialize all distances as
+        // INFINITE and added[] as false
+        for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
+            shortestDistances[vertexIndex] = Double.POSITIVE_INFINITY;
+            added[vertexIndex] = false;
+        }
 
-        //     // Substitua a linha abaixo com a lógica real para obter a próxima direção/movimento
-        //     return 0;
-        // } else {
-        //     // Não há próximo vértice no caminho mais curto, então nenhum movimento
-        //     return 0;
-        // }
+        // Distance of the source vertex from
+        // itself is always 0
+        shortestDistances[startVertex] = 0.0;
 
-        Iterator<T> path = graph.shortestPathWeight(currentPosition, target);
+        // Parent array to store the shortest
+        // path tree
+        int[] parents = new int[numVertices];
+
+        // The starting vertex does not
+        // have a parent
+        parents[startVertex] = NO_PARENT;
+
+        // Find the shortest path for all
+        // vertices
+        for (int i = 1; i < numVertices; i++) {
+
+            // Pick the minimum distance vertex
+            // from the set of vertices not yet
+            // processed. nearestVertex is
+            // always equal to startNode in
+            // the first iteration.
+            int nearestVertex = -1;
+            double shortestDistance = Double.POSITIVE_INFINITY;
+            for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
+                if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance && !hasBot(vertexIndex)) {
+                    nearestVertex = vertexIndex;
+                    shortestDistance = shortestDistances[vertexIndex];
+                }
+            }
+
+            // Mark the picked vertex as processed
+            added[nearestVertex] = true;
+
+            // Update the distance value of the
+            // adjacent vertices of the
+            // picked vertex.
+            for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
+                double edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex];
+
+                if (!hasBot(vertexIndex) && edgeDistance > 0 && (shortestDistance + edgeDistance) < shortestDistances[vertexIndex]) {
+                    parents[vertexIndex] = nearestVertex;
+                    shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
+                }
+            }
+        }
+
+        // Build the path from endVertex to startVertex, it caontains the indices of the vertices, not the vertice content
+        UnorderedArrayList<Integer> path = new UnorderedArrayList<>();
+        int currentVertexIndex = endVertex;
+        while (currentVertexIndex != NO_PARENT) {
+            //path.addToFront(graph.getVertice(currentVertex));
+            path.addToFront(currentVertexIndex);
+            // acho que se for addToRear não preciso fazer o reverse
+            currentVertexIndex = parents[currentVertexIndex];
+        }
+
+        return path;
     }
 
     @Override
-    public Iterator<T> search(T startVertex) {
-        return null;
+    public int getNextMovement(int currentIndex, int endIndex) {
+        UnorderedArrayList<Integer> indexList = new UnorderedArrayList<>();
+        indexList = dijkstra(graph.getAdjacencyMatrix(), currentIndex, endIndex);
+
+        for(Integer i : indexList) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\n");
+        
+        return indexList.removeFirst();
+    }
+
+    @Override
+    public boolean hasBot(int vertex) {
+        return (graph.getVertices()[vertex] != null && graph.getVertices()[vertex] instanceof Bot);
     }
 }

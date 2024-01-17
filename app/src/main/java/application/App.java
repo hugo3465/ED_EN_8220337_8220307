@@ -21,8 +21,6 @@ public class App {
 
         GameMap map = new GameMap("unidirecional");
 
-        System.out.println("LASFLKAHDFI");
-
         map.generateRandomMap(8, false, 0.95);
         map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
         Position positionPlayer1 = new Position(1);
@@ -53,14 +51,14 @@ public class App {
 
             switch (escolha) {
                 case 1:
-                    algorithm = new ShortestPathAlgorithm<>(map);
+                    algorithm = new ShortestPathAlgorithm(map);
                     break;
                 case 2:
-                    algorithm = new RandomMovementAlgorithm<>(map);
+                    //algorithm = new RandomMovementAlgorithm(map);
                     break;
                 default:
                     System.out.println("Escolha inválida. Usando o algoritmo padrão.");
-                    algorithm = new ShortestPathAlgorithm<>(map);
+                    algorithm = new ShortestPathAlgorithm(map);
             }
 
             boolean algoritmoRepetido = false;
@@ -88,14 +86,14 @@ public class App {
 
         switch (escolhaUltimoBotPlayer1) {
             case 1:
-                algorithmUltimoBotPlayer1 = new ShortestPathAlgorithm<>(map);
+                algorithmUltimoBotPlayer1 = new ShortestPathAlgorithm(map);
                 break;
             case 2:
-                algorithmUltimoBotPlayer1 = new RandomMovementAlgorithm<>(map);
+                //algorithmUltimoBotPlayer1 = new RandomMovementAlgorithm(map);
                 break;
             default:
                 System.out.println("Escolha inválida. Usando o algoritmo padrão.");
-                algorithmUltimoBotPlayer1 = new ShortestPathAlgorithm<>(map);
+                algorithmUltimoBotPlayer1 = new ShortestPathAlgorithm(map);
         }
 
         botsPlayer1[numBots - 1] = new Bot("John Mendes", algorithmUltimoBotPlayer1, flagPlayer2);
@@ -117,14 +115,14 @@ public class App {
 
             switch (escolha) {
                 case 1:
-                    algorithm = new ShortestPathAlgorithm<>(map);
+                    algorithm = new ShortestPathAlgorithm(map);
                     break;
                 case 2:
-                    algorithm = new RandomMovementAlgorithm<>(map);
+                    //algorithm = new RandomMovementAlgorithm(map);
                     break;
                 default:
                     System.out.println("Escolha inválida. Usando o algoritmo padrão.");
-                    algorithm = new ShortestPathAlgorithm<>(map);
+                    algorithm = new ShortestPathAlgorithm(map);
             }
 
             boolean algoritmoRepetidoPlayer2 = false;
@@ -152,14 +150,14 @@ public class App {
 
         switch (escolhaUltimoBotPlayer2) {
             case 1:
-                algorithmUltimoBotPlayer2 = new ShortestPathAlgorithm<>(map);
+                algorithmUltimoBotPlayer2 = new ShortestPathAlgorithm(map);
                 break;
             case 2:
-                algorithmUltimoBotPlayer2 = new RandomMovementAlgorithm<>(map);
+                //algorithmUltimoBotPlayer2 = new RandomMovementAlgorithm(map);
                 break;
             default:
                 System.out.println("Escolha inválida. Usando o algoritmo padrão.");
-                algorithmUltimoBotPlayer2 = new ShortestPathAlgorithm<>(map);
+                algorithmUltimoBotPlayer2 = new ShortestPathAlgorithm(map);
         }
 
         botsPlayer2[numBots - 1] = new Bot("Bot Player 2", algorithmUltimoBotPlayer2, flagPlayer1);

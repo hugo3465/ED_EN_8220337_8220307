@@ -39,4 +39,8 @@ public interface IGameMap {
     public double[][] getAdjacencyMatrix();
 
     public GameEntity[] getVertices();
+
+    public GameEntity getVertice(int index);
+
+    public int getIndex(GameEntity entity);
 }

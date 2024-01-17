@@ -1,8 +1,5 @@
 package api.game;
 
-import api.algorithms.AlgorithmType;
-import api.algorithms.BreadthFirstSearchAlgorithm;
-import api.algorithms.DepthFirstSearchAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.interfaces.GameEntity;
@@ -58,7 +55,7 @@ public class Bot implements GameEntity {
         if (movementAlgorithm != null) {
             Position currentPosition = getPosition();
 
-            System.out.println(movementAlgorithm.getNextMovement(currentPosition, enemyFlag.getPosition()));
+            System.out.println(movementAlgorithm.getNextMovement(currentPosition.getIndex(), enemyFlag.getPosition().getIndex()));
 
         }
     }

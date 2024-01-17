@@ -1,13 +1,5 @@
 package api.game;
 
-import api.algorithms.BreadthFirstSearchAlgorithm;
-import api.algorithms.DepthFirstSearchAlgorithm;
-import api.algorithms.ShortestPathAlgorithm;
-import api.algorithms.interfaces.MovementAlgorithm;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testes unitários para a classe Bot.

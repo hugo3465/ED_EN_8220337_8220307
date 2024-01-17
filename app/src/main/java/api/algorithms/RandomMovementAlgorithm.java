@@ -15,7 +15,6 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<Position> {
         this.map = map;
     }
 
-    @Override
     public Iterator<Position> search(Position startVertex) {
         UnorderedArrayList<Position> availableMoves = getAvailableMoves(startVertex);
 
@@ -52,19 +51,8 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<Position> {
     }
 
     @Override
-    public double shortestPathWeight(Position startVertex, Position targetVertex) {
-        // Este algoritmo não calcula o caminho mais curto, apenas retorna um movimento aleatório
-        return 0;
-    }
-
-    @Override
-    public Iterator<Position> iteratorShortestPath(Position startVertex, Position targetVertex) {
-        // Este algoritmo não calcula o caminho mais curto, apenas retorna um movimento aleatório
-        return search(startVertex);
-    }
-
-    @Override
-    public AlgorithmType getAlgorithmType() {
-        return AlgorithmType.RANDOM;
+    public int getNextMovement(int currentIndex, int endIndex) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNextMovement'");
     }
 }
