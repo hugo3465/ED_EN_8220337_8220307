@@ -5,6 +5,7 @@ import api.algorithms.BreadthFirstSearchAlgorithm;
 import api.algorithms.DepthFirstSearchAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.game.interfaces.GameEntity;
 
 import java.util.Iterator;
 
@@ -12,40 +13,18 @@ import java.util.Iterator;
  * Representa um bot no jogo, caracterizado pelo seu índice no grafo e algoritmo
  * de movimentação.
  */
-public class Bot extends Entity {
+public class Bot implements GameEntity {
 
     // Todo Colocar a Entity
     private String name;
-    private MovementAlgorithm<Entity> movementAlgorithm;
-    private Flag enemyFlagPosition;
+    private Position position;
+    private MovementAlgorithm<GameEntity> movementAlgorithm;
+    private Flag enemyFlag;
 
-    public Bot(Position initialPosition) {
-        super(initialPosition);
-    }
-
-    public Bot(Position initialPosition, String name) {
-        super(initialPosition);
+    public Bot(String name, MovementAlgorithm<GameEntity> movementAlgorithm, Flag enemyFlag) {
         this.name = name;
-    }
-
-    public MovementAlgorithm<Entity> getMovementAlgorithm() {
-        return movementAlgorithm;
-    }
-
-    public void setMovementAlgorithm(MovementAlgorithm<Entity> algorithm) {
-        this.movementAlgorithm = algorithm;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEnemyFlagPosition(Flag enemyFlagPosition) {
-        this.enemyFlagPosition = enemyFlagPosition;
+        this.movementAlgorithm = movementAlgorithm;
+        this.enemyFlag = enemyFlag;
     }
 
     /**
@@ -55,16 +34,17 @@ public class Bot extends Entity {
      * em que esteja outro bot.
      *
      * @param newPosition A nova posição desejada.
-     * @param otherBots   Array de outros bots no jogo.
-     * @return true se o movimento for válido, false se houver colisão.
+     * @param bots   Array de todos os bots do jogo.
+     * @return true se não houver colisão no movimento, false se houver colisão.
      */
-    protected boolean canMoveTo(Position newPosition, Bot[] otherBots) {
-        for (Bot currentBot : otherBots) {
-            if (currentBot.getPosition().equals(newPosition)) {
-                // Colisão com outro bot
+    protected boolean canMoveTo(Position newPosition, Bot[] bots) {
+        for (Bot bot : bots) {
+            if (bot.position.equals(newPosition) && newPosition != bot.position) {
+                // Houve colisão com outro bot
                 return false;
             }
         }
+
         // Movimento válido, sem colisão
         return true;
     }
@@ -72,58 +52,37 @@ public class Bot extends Entity {
     /**
      * Move o bot usando o algoritmo atribuído, evitando colisões com outros bots.
      *
-     * @param otherBots Array de outros bots no jogo.
+     * @param bots Array de todos os bots no jogo.
      */
-    public void move(Bot[] otherBots) {
+    public void move(Bot[] bots) {
         if (movementAlgorithm != null) {
+
             AlgorithmType algorithmType = movementAlgorithm.getAlgorithmType();
             Position currentPosition = getPosition();
+
             switch (algorithmType) {
                 case BFS:
-                    moveWithBFS_DFS(currentPosition, otherBots);
+                    moveWithBFS_DFS(currentPosition, bots);
                 case DFS:
-                    moveWithBFS_DFS(currentPosition, otherBots);
+                    moveWithBFS_DFS(currentPosition, bots);
                     break;
                 case SHORTEST_PATH:
-                    moveWithShortestPath(currentPosition, otherBots);
+                    moveWithShortestPath(currentPosition, bots);
                     break;
                 default:
-                    System.out.println("Algoritmo não reconhecido. Movimento não realizado.");
+                    throw new RuntimeException("Algoritmo não reconhecido. Movimento não realizado.");
             }
         }
     }
 
-    // /**
-    // * Move o bot usando o algoritmo atribuído, evitando colisões com outros bots.
-    // *
-    // * @param otherBots Array de outros bots no jogo.
-    // */
-    // public void move(Bot[] otherBots) {
-    // if (movementAlgorithm != null) {
-    // Position currentPosition = getPosition();
-
-    // // Verifica o tipo de algoritmo e chama o método apropriado
-    // if (movementAlgorithm instanceof BreadthFirstSearchAlgorithm) {
-    // moveWithBFS_DFS(currentPosition, otherBots);
-    // } else if (movementAlgorithm instanceof ShortestPathAlgorithm) {
-    // moveWithShortestPath(currentPosition, otherBots);
-    // } else if (movementAlgorithm instanceof DepthFirstSearchAlgorithm){
-    // moveWithBFS_DFS(currentPosition, otherBots);
-    // }else {
-    // // Lógica para outros tipos de algoritmos, se necessário
-    // System.out.println("Algoritmo não reconhecido. Movimento não realizado.");
-    // }
-    // }
-    // }
-
     private void moveWithShortestPath(Position currentPosition, Bot[] otherBots) {
         if (movementAlgorithm instanceof ShortestPathAlgorithm) {
-            ShortestPathAlgorithm<Entity> shortestPathAlgorithm = (ShortestPathAlgorithm<Entity>) movementAlgorithm;
+            ShortestPathAlgorithm<GameEntity> shortestPathAlgorithm = (ShortestPathAlgorithm<GameEntity>) movementAlgorithm;
 
-            Flag targetPosition = enemyFlagPosition; // Já é a posição, não o índice
+            Flag targetPosition = enemyFlag; // Já é a posição, não o índice
 
             // Verifica se há um próximo vértice no caminho mais curto
-            Iterator<Entity> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition,
+            Iterator<GameEntity> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition,
                     targetPosition.getPosition());
 
             if (shortestPathIterator.hasNext()) {
@@ -174,7 +133,7 @@ public class Bot extends Entity {
                 // Se for ShortestPathAlgorithm, use iteratorShortestPath
                 ShortestPathAlgorithm<Position> shortestPathAlgorithm = (ShortestPathAlgorithm<Position>) movementAlgorithm;
                 Iterator<Position> shortestPathIterator = shortestPathAlgorithm.iteratorShortestPath(currentPosition,
-                        enemyFlagPosition.getPosition());
+                        enemyFlag.getPosition());
 
                 handleNextMove(shortestPathIterator, otherBots, avoidPosition);
             } else if (movementAlgorithm instanceof BreadthFirstSearchAlgorithm) {
@@ -217,10 +176,30 @@ public class Bot extends Entity {
         }
     }
 
+    public MovementAlgorithm<GameEntity> getMovementAlgorithm() {
+        return movementAlgorithm;
+    }
+
+    public void setMovementAlgorithm(MovementAlgorithm<GameEntity> algorithm) {
+        this.movementAlgorithm = algorithm;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setEnemyFlag(Flag enemyFlag) {
+        this.enemyFlag = enemyFlag;
+    }
+
     @Override
-    public int compareTo(Entity o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 }

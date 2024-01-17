@@ -3,13 +3,6 @@
  */
 package application;
 
-import api.algorithms.ShortestPathAlgorithm;
-import api.algorithms.interfaces.MovementAlgorithm;
-import api.game.Bot;
-import api.game.CaptureTheFlagGame;
-import api.game.Flag;
-import api.game.Player;
-import api.game.Position;
 import api.map.GameMap;
 
 public class App {
@@ -18,32 +11,30 @@ public class App {
 
         GameMap map = new GameMap("unidirecional_Correto");
 
+        System.out.println("LASFLKAHDFI");
+
         map.generateRandomMap(15, false, 0.95);
-        //map.exportMap("C:\\Users\\hugui\\Desktop\\"+map.getMapName()+".txt");
-        map.exportMap("C:\\Users\\pedro\\Desktop\\"+map.getMapName()+".txt");
-        // map.importMap("C:\\Users\\hugui\\Desktop\\testeImport.txt");
+        // map.exportMap("C:\\Users\\User\\Desktop\\"+map.getMapName()+".txt");
+        // map.exportMap("C:\\Users\\pedro\\Desktop\\"+map.getMapName()+".txt");
+        // map.importMap("C:\\Users\\User\\Desktop\\testeImport.txt");
 
         //MovementAlgorithm<Position> evenAlgorithm = new ShortestPathAlgorithm<>(map);
 
 
-        Position position1 = new Position(2);
+        /*Position position1 = new Position(2);
         Position position2 = new Position(15);
         Flag flagPlayer1 = new Flag(position1);
-        Flag flagPlayer2 = new Flag(position2);
+        Flag flagPlayer2 = new Flag(position2);*/
 
-        Player player1 = new Player("Pedro", 3, flagPlayer1.getPosition(), flagPlayer2.getPosition());
-        Player player2 = new Player("Hugo", 3, flagPlayer2.getPosition(), flagPlayer1.getPosition());
+        // Player player1 = new Player("Pedro", 3, flagPlayer1.getPosition(), flagPlayer2.getPosition());
+        // Player player2 = new Player("Hugo", 3, flagPlayer2.getPosition(), flagPlayer1.getPosition());
 
-        Bot bot1Player1 = player1.getBots()[0];
-        Bot bot2Player1 = player1.getBots()[1];
-        Bot bot3Player1 = player1.getBots()[2];
-
-//        player1.assignAlgorithmToBot(bot1Player1, evenAlgorithm);
-//        player1.assignAlgorithmToBot(bot2Player1, evenAlgorithm);
-//        player1.assignAlgorithmToBot(bot3Player1, evenAlgorithm);
+        // Bot bot1Player1 = player1.getBots()[0];
+        // Bot bot2Player1 = player1.getBots()[1];
+        // Bot bot3Player1 = player1.getBots()[2];
 
         //player1.assignAlgorithmToBot(bot1Player1,evenAlgorithm );
-        CaptureTheFlagGame CaptureTheFlagGame = new CaptureTheFlagGame(map, player1, player2);
+        // CaptureTheFlagGame CaptureTheFlagGame = new CaptureTheFlagGame(map, player1, player2);
 
     }
 

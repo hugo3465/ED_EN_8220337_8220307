@@ -1,9 +1,13 @@
 package api.game;
 
+import api.game.interfaces.GameEntity;
+
 /**
  * Representa a bandeira no jogo, definida pelo seu índice no grafo.
  */
-public class Flag extends Entity {
+public class Flag implements GameEntity {
+
+    private Position position;
 
     /**
      * Construtor da classe Flag.
@@ -11,7 +15,7 @@ public class Flag extends Entity {
      * @param position O índice inicial da bandeira no grafo.
      */
     public Flag(Position position) {
-        super(position);
+        this.position = position;
     }
 
     /**
@@ -25,12 +29,13 @@ public class Flag extends Entity {
     }
 
     @Override
-    public int compareTo(Entity otherEntity) {
-        if (otherEntity instanceof Flag) {
-            Flag otherFlag = (Flag) otherEntity;
-            return Integer.compare(this.getPosition().getIndex(), otherFlag.getPosition().getIndex());
-        }
-        throw new IllegalArgumentException("Cannot compare Flag with a different entity type.");
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 }

@@ -3,8 +3,8 @@ package api.map;
 import java.util.Random;
 
 import api.DataStructures.Graph.WeightedGraph;
-import api.game.Entity;
 import api.game.Position;
+import api.game.interfaces.GameEntity;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
 
@@ -15,7 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GameMap extends WeightedGraph<Entity> implements IGameMap {
+public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
     private final int MIN_DISTANCE = 1;
     private final int MAX_DISTANCE = 15;
@@ -64,15 +64,8 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
 
     }
 
-    // private void initializeGraph(int numVertices) {
-    //     this.vertices = new Entity[numVertices];
-    //     this.adjMatrix = new double[numVertices][numVertices];
-    //     //TODO PEDRO
-    //     this.indexToPosition = new Position[numVertices];
-    //     this.positionToIndex = new int[numVertices];
-    // }
     private void initializeGraph(int numVertices) {
-        this.vertices = new Entity[numVertices];
+        this.vertices = new GameEntity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
         this.indexToPosition = new Position[numVertices];
         this.positionToIndex = new int[numVertices];
@@ -100,14 +93,6 @@ public class GameMap extends WeightedGraph<Entity> implements IGameMap {
         }
         this.numVertices = numVertices;
     }
-    
-
-    // private void fillVertices(int numVertices) {
-    // for (int i = 0; i < numVertices; i++) {
-    // this.vertices[i] = String.valueOf(i); // TODO: reformular isto maybe para
-    // ficar com bots
-    // }
-    // }
 
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
         double totalEdges;
