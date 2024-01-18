@@ -2,7 +2,6 @@ package application;
 
 import java.util.Scanner;
 
-import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;

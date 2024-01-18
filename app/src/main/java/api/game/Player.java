@@ -2,46 +2,76 @@ package api.game;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.DataStructures.Queue.LinkedQueue.QueueADT;
 
 /**
  * Representa um jogador no jogo Capture the Flag.
  */
 public class Player {
     private String name;
-    private UnorderedListADT<Bot> bots; // TODO: Trocar para queue
+    private QueueADT<Bot> bots; // TODO: Trocar para queue
     private Flag flag;
     private Flag enemyFlag;
 
     public Player(String name, Flag myflag, Flag enemyFlag, Bot[] bots) {
         this.name = name;
-        this.bots = new UnorderedArrayList<>();
+        this.bots = new LinkedQueue<>();
         this.flag = myflag;
         this.enemyFlag = enemyFlag;
 
         assignBotInitialPositions(bots);
+
+        enqueueBots(bots);
     }
 
+    
     public Player(String name, int flagPosition, int enemyFlagPosition, Bot[] bots) {
         this.name = name;
-        this.bots = new UnorderedArrayList<>();
+        this.bots = new LinkedQueue<>();
         this.flag = new Flag(flagPosition);
         this.enemyFlag = new Flag(enemyFlagPosition);
-
+        
         assignBotInitialPositions(bots);
+        
+        enqueueBots(bots);
     }
 
+    /**
+     * Atribui a posição inicial a todos os bots do jogador com base na posição da
+     * bandeira.
+     * 
+     * Tópico 5 - No início da partida todos os bots deverão estar localizados na
+     * mesma posição que a bandeira do seu jogador.
+     */
+    private void assignBotInitialPositions(Bot[] bots) {
+        int flagPosition = flag.getPosition();
+
+        for (Bot bot : bots) {
+            bot.setPosition(flagPosition);
+        }
+    }
+
+    private void enqueueBots(Bot[] bots) {
+        for(Bot bot : bots) {
+            this.bots.enqueue(bot);
+        }
+    }
+    
     public String getname() {
         return name;
     }
 
-    public Bot[] getBots() {
-        Bot[] botArray = new Bot[bots.size()];
-        int index = 0;
-        for (Bot bot : bots) {
-            botArray[index++] = bot;
-        }
-        return botArray;
-    }
+    // public Bot[] getBots() {
+    //     Bot[] botArray = new Bot[bots.size()];
+    //     int index = 0;
+    //     for (Bot bot : bots) {
+    //         botArray[index++] = bot;
+    //     }
+    //     return botArray;
+
+    //     Iterator<Bot> bots = this.bots.
+    // }
 
     /**
      * Obtém a bandeira do jogador.
@@ -61,20 +91,7 @@ public class Player {
         return enemyFlag;
     }
 
-    /**
-     * Atribui a posição inicial a todos os bots do jogador com base na posição da
-     * bandeira.
-     * 
-     * Tópico 5 - No início da partida todos os bots deverão estar localizados na
-     * mesma posição que a bandeira do seu jogador.
-     */
-    public void assignBotInitialPositions(Bot[] bots) {
-        int flagPosition = flag.getPosition();
-
-        for (Bot bot : bots) {
-            bot.setPosition(flagPosition);
-        }
-    }
+    
 
     /**
      * Verifica se o jogo chegou ao fim, ou seja, se o bot alcançou a bandeira
@@ -88,6 +105,14 @@ public class Player {
         int enemyFlagPosition = enemyFlag.getPosition();
 
         return bot.getPosition() == enemyFlagPosition;
+    }
+
+    public Bot getNextBot() {
+       Bot currenBot = this.bots.dequeue();
+
+       this.bots.enqueue(currenBot);
+
+       return currenBot;
     }
 
     /**
