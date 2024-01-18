@@ -1,10 +1,19 @@
 package application;
 
+import com.google.common.math.Quantiles.ScaleAndIndex;
+
 import api.algorithms.ShortestPathAlgorithm;
+import api.game.Bot;
+import api.game.Flag;
+import api.game.Position;
 import api.map.GameMap;
+import java.util.*;
 
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        Scanner scanner = new Scanner(System.in);
+
         GameMap map = new GameMap("Meu mapa");
         map.generateRandomMap(10, true, 0.8);
         map.exportMap("C:/Users/User/Desktop/export.txt");
@@ -12,6 +21,15 @@ public class Demo {
         ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
 
         
-        System.out.println(algorithm.getNextMovement(0, 5));
+        Bot bot = new Bot("Raul", algorithm, new Flag(new Position(5)));
+        bot.setPosition(new Position(0));
+
+        do {
+            //System.out.println(algorithm.getNextMovement(0, 5));
+            bot.move();
+            scanner.nextLine();
+            Thread.sleep(1000);
+        } while (true);
+        
     }
 }

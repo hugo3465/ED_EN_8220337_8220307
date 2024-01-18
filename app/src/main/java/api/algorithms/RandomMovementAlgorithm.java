@@ -55,4 +55,10 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<Position> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getNextMovement'");
     }
+
+    @Override
+    public boolean hasBot(int vertex) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasBot'");
+    }
 }

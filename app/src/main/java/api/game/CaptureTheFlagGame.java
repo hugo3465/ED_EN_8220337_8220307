@@ -138,7 +138,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         // Implemente a lógica de movimento dos bots
         for (Bot bot : currentPlayerBots) {
             // Lógica de movimento para cada bot
-            bot.move(otherPlayerBots);
+            //bot.move(otherPlayerBots);
         }
     }
 

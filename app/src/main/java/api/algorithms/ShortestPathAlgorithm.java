@@ -1,6 +1,7 @@
 package api.algorithms;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.DataStructures.Exceptions.EmptyCollectionException;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.game.interfaces.GameEntity;
@@ -21,7 +22,6 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
     // representation
     private UnorderedArrayList<Integer> dijkstra(double[][] adjacencyMatrix, int startVertex, int endVertex) {
         final int NO_PARENT = -1;
-
         int numVertices = adjacencyMatrix[0].length;
 
         // shortestDistances[i] conterá a distância mais curta de startVertex para i
@@ -33,8 +33,6 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
         // i estiver finalizada
         boolean[] added = new boolean[numVertices];
 
-        // Initialize all distances as
-        // INFINITE and added[] as false
         // inicializa todas as distâncias com INFINITO e added[] como false
         for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
             shortestDistances[vertexIndex] = Double.POSITIVE_INFINITY;
@@ -104,16 +102,33 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
         UnorderedArrayList<Integer> indexList = new UnorderedArrayList<>();
         indexList = dijkstra(graph.getAdjacencyMatrix(), currentIndex, endIndex);
 
+        System.out.println("Caminho Calculado: ");
         for (Integer i : indexList) {
             System.out.print(i + " ");
         }
         System.out.println("\n");
 
-        return indexList.removeFirst();
+        int myIndex = indexList.removeFirst();
+        int nextIndex;
+
+        try {
+            System.out.println("MyIndex: " + myIndex);
+
+            nextIndex = indexList.removeFirst();
+
+            System.out.println("nextIndex: " + nextIndex);
+        } catch (EmptyCollectionException e) {
+            nextIndex = myIndex;
+        }
+
+        return nextIndex;
     }
 
     @Override
     public boolean hasBot(int vertex) {
+        // Tópico 7 - Excetuando na localização das bandeiras, um bot não se pode
+        // movimentar para uma posição em que esteja outro bot.
+
         // se o vértice for diferente de null, e o que estiver lá for um bot e não uma
         // flag, ent retorna True
         return (graph.getVertices()[vertex] != null && graph.getVertices()[vertex] instanceof Bot);
