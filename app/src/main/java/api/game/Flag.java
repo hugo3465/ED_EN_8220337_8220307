@@ -7,14 +7,14 @@ import api.game.interfaces.GameEntity;
  */
 public class Flag implements GameEntity {
 
-    private Position position;
+    private int position;
 
     /**
      * Construtor da classe Flag.
      *
      * @param position O índice inicial da bandeira no grafo.
      */
-    public Flag(Position position) {
+    public Flag(int position) {
         this.position = position;
     }
 
@@ -29,12 +29,12 @@ public class Flag implements GameEntity {
     }
 
     @Override
-    public Position getPosition() {
+    public int getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(Position position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 

@@ -1,11 +1,8 @@
 package application;
 
-import com.google.common.math.Quantiles.ScaleAndIndex;
-
 import api.algorithms.ShortestPathAlgorithm;
 import api.game.Bot;
 import api.game.Flag;
-import api.game.Position;
 import api.map.GameMap;
 import java.util.*;
 
@@ -21,8 +18,8 @@ public class Demo {
         ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
 
         
-        Bot bot = new Bot("Raul", algorithm, new Flag(new Position(5)));
-        bot.setPosition(new Position(0));
+        Bot bot = new Bot("Raul", algorithm, new Flag(5));
+        bot.setPosition(0);
 
         do {
             //System.out.println(algorithm.getNextMovement(0, 5));

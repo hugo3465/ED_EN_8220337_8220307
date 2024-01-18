@@ -9,7 +9,6 @@ import api.game.Bot;
 import api.game.CaptureTheFlagGame;
 import api.game.Flag;
 import api.game.Player;
-import api.game.Position;
 import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
@@ -23,8 +22,8 @@ public class App {
 
         map.generateRandomMap(8, false, 0.95);
         map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
-        Position positionPlayer1 = new Position(1);
-        Position positionPlayer2 = new Position(7);
+        int positionPlayer1 = 1;
+        int positionPlayer2 = 7;
 
         Flag flagPlayer1 = new Flag(positionPlayer1);
         Flag flagPlayer2 = new Flag(positionPlayer2);

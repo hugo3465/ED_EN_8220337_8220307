@@ -3,7 +3,6 @@ package api.map;
 import java.util.Random;
 
 import api.DataStructures.Graph.WeightedGraph;
-import api.game.Position;
 import api.game.interfaces.GameEntity;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
@@ -21,7 +20,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private final int MAX_DISTANCE = 15;
 
     private String mapName; // Adiciona um campo para armazenar o nome do mapa
-    private Position[] indexToPosition; // Array para mapear índice para Position
+    private int[] indexToPosition; // Array para mapear índice para Position
     private int[] positionToIndex; // Array para mapear Position para índice
 
     public GameMap() {
@@ -67,13 +66,13 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private void initializeGraph(int numVertices) {
         this.vertices = new GameEntity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
-        this.indexToPosition = new Position[numVertices];
+        this.indexToPosition = new int[numVertices];
         this.positionToIndex = new int[numVertices];
 
         Random random = new Random();
 
         for (int i = 0; i < numVertices; i++) {
-            Position position = new Position(i);
+            int position = i;
             indexToPosition[i] = position;
             positionToIndex[i] = i;
 

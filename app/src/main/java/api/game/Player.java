@@ -12,7 +12,16 @@ public class Player {
     private Flag flag;
     private Flag enemyFlag;
 
-    public Player(String name, Position flagPosition, Position enemyFlagPosition, Bot[] bots) {
+    public Player(String name, Flag myflag, Flag enemyFlag, Bot[] bots) {
+        this.name = name;
+        this.bots = new UnorderedArrayList<>();
+        this.flag = myflag;
+        this.enemyFlag = enemyFlag;
+
+        assignBotInitialPositions(bots);
+    }
+
+    public Player(String name, int flagPosition, int enemyFlagPosition, Bot[] bots) {
         this.name = name;
         this.bots = new UnorderedArrayList<>();
         this.flag = new Flag(flagPosition);
@@ -60,7 +69,7 @@ public class Player {
      * mesma posição que a bandeira do seu jogador.
      */
     public void assignBotInitialPositions(Bot[] bots) {
-        Position flagPosition = flag.getPosition();
+        int flagPosition = flag.getPosition();
 
         for (Bot bot : bots) {
             bot.setPosition(flagPosition);
@@ -76,8 +85,9 @@ public class Player {
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
     public boolean checkEndGame(Bot bot) {
-        Position enemyFlagPosition = enemyFlag.getPosition();
-        return bot.getPosition().equals(enemyFlagPosition);
+        int enemyFlagPosition = enemyFlag.getPosition();
+
+        return bot.getPosition() == enemyFlagPosition;
     }
 
     /**

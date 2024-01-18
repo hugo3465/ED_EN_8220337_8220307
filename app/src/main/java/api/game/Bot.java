@@ -11,7 +11,7 @@ public class Bot implements GameEntity {
 
     // Todo Colocar a Entity
     private String name;
-    private Position position;
+    private int position;
     private MovementAlgorithm<GameEntity> movementAlgorithm;
     private Flag enemyFlag;
 
@@ -23,20 +23,24 @@ public class Bot implements GameEntity {
 
     /**
      * Move o bot usando o algoritmo atribuído, evitando colisões com outros bots.
+     * @return devolve o indíce para onde foi atribuída a nova posição do bot
      */
-    public void move() {
+    public int move() {
         if (movementAlgorithm != null) {
-            Position currentPosition = getPosition();
 
-            int newLocation = movementAlgorithm.getNextMovement(currentPosition.getIndex(),
-                    enemyFlag.getPosition().getIndex());
+            int newLocation = movementAlgorithm.getNextMovement(position,
+                    enemyFlag.getPosition());
 
 
-            this.position.setIndex(newLocation);
+            this.position = newLocation;
 
-            System.out.println("Onde Estou agora: " + getPosition().getIndex());
+            System.out.println("Onde Estou agora: " + position);
+
+            return position;
 
         }
+
+        return -1;
     }
 
     public MovementAlgorithm<GameEntity> getMovementAlgorithm() {
@@ -56,12 +60,12 @@ public class Bot implements GameEntity {
     }
 
     @Override
-    public Position getPosition() {
+    public int getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(Position position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 

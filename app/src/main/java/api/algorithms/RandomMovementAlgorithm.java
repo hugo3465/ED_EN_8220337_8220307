@@ -1,13 +1,10 @@
 package api.algorithms;
 
 import api.algorithms.interfaces.MovementAlgorithm;
-import api.game.Position;
+import api.game.interfaces.GameEntity;
 import api.map.GameMap;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 
-import java.util.Iterator;
-
-public class RandomMovementAlgorithm implements MovementAlgorithm<Position> {
+public class RandomMovementAlgorithm implements MovementAlgorithm<GameEntity> {
 
     private GameMap map;
 
@@ -15,40 +12,40 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<Position> {
         this.map = map;
     }
 
-    public Iterator<Position> search(Position startVertex) {
-        UnorderedArrayList<Position> availableMoves = getAvailableMoves(startVertex);
+    // public Iterator<Position> search(Position startVertex) {
+    //     UnorderedArrayList<Position> availableMoves = getAvailableMoves(startVertex);
 
-        // Embaralha a lista de movimentos disponíveis para obter um movimento aleatório
-        shuffleList(availableMoves);
+    //     // Embaralha a lista de movimentos disponíveis para obter um movimento aleatório
+    //     shuffleList(availableMoves);
 
-        return availableMoves.iterator();
-    }
+    //     return availableMoves.iterator();
+    // }
 
-    private UnorderedArrayList<Position> getAvailableMoves(Position currentPosition) {
-        UnorderedArrayList<Position> availableMoves = new UnorderedArrayList<>();
+    // private UnorderedArrayList<Position> getAvailableMoves(Position currentPosition) {
+    //     UnorderedArrayList<Position> availableMoves = new UnorderedArrayList<>();
 
-        // Adicione lógica para obter posições vizinhas válidas no mapa
-        // Certifique-se de verificar limites do mapa, obstáculos, etc.
+    //     // Adicione lógica para obter posições vizinhas válidas no mapa
+    //     // Certifique-se de verificar limites do mapa, obstáculos, etc.
 
-        // Exemplo simplificado: Adiciona posições vizinhas (acima, abaixo, esquerda, direita)
-        availableMoves.addToRear(new Position(currentPosition.getIndex() - 1));
-        availableMoves.addToRear(new Position(currentPosition.getIndex() + 1));
+    //     // Exemplo simplificado: Adiciona posições vizinhas (acima, abaixo, esquerda, direita)
+    //     availableMoves.addToRear(new Position(currentPosition.getIndex() - 1));
+    //     availableMoves.addToRear(new Position(currentPosition.getIndex() + 1));
 
-        return availableMoves;
-    }
+    //     return availableMoves;
+    // }
 
-    private void shuffleList(UnorderedArrayList<Position> list) {
-        int n = list.size();
+    // private void shuffleList(UnorderedArrayList<Position> list) {
+    //     int n = list.size();
 
-        for (int i = n - 1; i > 0; i--) {
-            int j = (int) (Math.random() * (i + 1));
+    //     for (int i = n - 1; i > 0; i--) {
+    //         int j = (int) (Math.random() * (i + 1));
 
-            // Troca os elementos
-            Position temp = list.removeLast();
-            list.addToRear(list.removeIndex(j));
-            list.addToRear(temp);
-        }
-    }
+    //         // Troca os elementos
+    //         Position temp = list.removeLast();
+    //         list.addToRear(list.removeIndex(j));
+    //         list.addToRear(temp);
+    //     }
+    // }
 
     @Override
     public int getNextMovement(int currentIndex, int endIndex) {
