@@ -3,7 +3,7 @@ package api.DataStructures.ArrayList.OrderedArrayList;
 import api.DataStructures.ArrayList.ArrayList;
 
 public class OrderedArrayList<T> extends ArrayList<T> implements OrderedListADT<T>  {
-    OrderedArrayList() {
+    public OrderedArrayList() {
         super();
     }
 

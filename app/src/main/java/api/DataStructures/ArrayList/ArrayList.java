@@ -45,7 +45,7 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
     protected int find(T element) {
         for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(element)) {
+            if (items[i] != null && items[i].equals(element)) {
                 return i;
             }
         }

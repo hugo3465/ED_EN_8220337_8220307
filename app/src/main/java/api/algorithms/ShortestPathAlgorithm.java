@@ -2,6 +2,8 @@ package api.algorithms;
 
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.DataStructures.Stack.LinkedStack.LinkedStack;
+import api.DataStructures.Stack.LinkedStack.StackADT;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.game.interfaces.GameEntity;
@@ -9,10 +11,13 @@ import api.map.GameMap;
 
 public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
 
-    private GameMap graph;
+    private GameMap map;
+    private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão
+                                              // sei se o professor Óscar aprova
 
-    public ShortestPathAlgorithm(GameMap graph) {
-        this.graph = graph;
+    public ShortestPathAlgorithm(GameMap map) {
+        this.map = map;
+        calculatedPath = new LinkedStack<>();
     }
 
     // Function that implements Dijkstra's
@@ -20,7 +25,9 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    private UnorderedArrayList<Integer> dijkstra(double[][] adjacencyMatrix, int startVertex, int endVertex) {
+    private void dijkstra(int startVertex, int endVertex) { // TODO secalhar remover a
+                                                            // adjacencyMatrix
+        double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
         int numVertices = adjacencyMatrix[0].length;
 
@@ -85,46 +92,56 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
             }
         }
 
-        // Construir o caminho de endVertex para startVertex, ele contém os índices dos
+        // Construir o caminho de endVertex para startVertex ele contém os índices dos
         // vértices, não o conteúdo do vértice.
-        UnorderedArrayList<Integer> path = new UnorderedArrayList<>();
+        // Como usa o addToFront ent o caminho é construído do startVertex para o
+        // endVertex
+        // UnorderedArrayList<Integer> path = new UnorderedArrayList<>(); // TODO ACHO
+        // QUE ISTO DEVIA SER UMA
+        // UNORDEREDLINKEDLIST ou uma LinkedStack
         int currentVertexIndex = endVertex;
         while (currentVertexIndex != NO_PARENT) {
-            path.addToFront(currentVertexIndex);
+            // path.addToFront(currentVertexIndex);
+            this.calculatedPath.push(currentVertexIndex);
             currentVertexIndex = parents[currentVertexIndex];
         }
 
-        return path;
+        // return path;
     }
 
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
-        UnorderedArrayList<Integer> indexList = new UnorderedArrayList<>();
-        indexList = dijkstra(graph.getAdjacencyMatrix(), currentIndex, endIndex);
-
-        System.out.println("Caminho Calculado: ");
-        for (Integer i : indexList) {
-            System.out.print(i + " ");
-        }
-        System.out.println("\n");
-
-        int myIndex = indexList.removeFirst();
-        int nextIndex;
-
-        try {
-            System.out.println("MyIndex: " + myIndex);
-
-            nextIndex = indexList.removeFirst();
-
-            System.out.println("nextIndex: " + nextIndex);
-        } catch (EmptyCollectionException e) {
-            nextIndex = myIndex;
+        if (calculatedPath.isEmpty()) {
+            // Se o caminho calculado estiver vazio, recalcule o caminho
+            dijkstra(currentIndex, endIndex);
         }
 
-        graph.setVertice(currentIndex, null);
-        graph.setVertice(nextIndex, currentBot);
+        // TODO while para testes para saber se fez bem o caminho
+        // while (!this.calculatedPath.isEmpty()) {
+        //     System.out.print(calculatedPath.pop() + " ");
+        // }
+        // System.out.println("\n");
 
-        return nextIndex;
+        int nextIndex = -1;
+        if(!calculatedPath.isEmpty()) {
+            int dequeuedIndex = calculatedPath.pop();
+
+            // Verifica se o vértice removido contém um bot
+            if (hasBot(dequeuedIndex)) {
+                // Recalcula o caminho se o vértice removido contiver um bot
+                dijkstra(dequeuedIndex, endIndex);
+            } else {
+                // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
+                // para onde ele foi
+                nextIndex = dequeuedIndex;
+                map.setVertice(currentIndex, null);
+                map.setVertice(nextIndex, currentBot);
+                return nextIndex;
+            }
+        }
+
+        // Se não houver mais movimentos disponíveis, retorna o índice atual
+        return currentIndex;
     }
 
     @Override
@@ -134,6 +151,6 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
 
         // se o vértice for diferente de null, e o que estiver lá for um bot e não uma
         // flag, ent retorna True
-        return (graph.getVertices()[vertex] != null && graph.getVertices()[vertex] instanceof Bot);
+        return (map.getVertices()[vertex] != null && map.getVertices()[vertex] instanceof Bot);
     }
 }
