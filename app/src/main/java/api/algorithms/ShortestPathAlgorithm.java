@@ -9,7 +9,7 @@ import api.game.Bot;
 import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
-public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
+public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> { // TODO se calha tirar o genérico do movementAlgorithm
 
     private GameMap map;
     private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão

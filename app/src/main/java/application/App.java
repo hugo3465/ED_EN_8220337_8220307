@@ -21,8 +21,8 @@ public class App {
         GameMap map = new GameMap("unidirecional");
 
         map.generateRandomMap(15, false, 0.60);
-        map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
-        int positionPlayer1 = 1;
+        map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
+        int positionPlayer1 = 0;
         int positionPlayer2 = 12;
 
         Flag flagPlayer1 = new Flag(positionPlayer1);
@@ -42,14 +42,14 @@ public class App {
         for (int i = 0; i < numBots - 1; i++) {
             System.out.println("Qual o nome que você deseja para o Bot " + (i + 1) + "?");
             botName = in.next(); // Solicita o nome do bot
-            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer1, i, numBots);
+            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer1, i, numBots, map);
             botsPlayer1[i] = new Bot(botName, algorithm, flagPlayer2);
         }
 
         // Solicita o nome do último bot do Player 1
         System.out.println("Qual o nome que você deseja para o último Bot do Player 1?");
         botName = in.next();
-        botsPlayer1[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer1, numBots - 1, numBots), flagPlayer2);
+        botsPlayer1[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer1, numBots - 1, numBots, map), flagPlayer2);
 
         System.out.println("Qual o nome que você deseja para o Player 1");
         String nameplayer1 = in.next();
@@ -61,14 +61,14 @@ public class App {
         for (int i = 0; i < numBots - 1; i++) {
             System.out.println("Qual o nome que você deseja para o Bot " + (i + 1) + "?");
             botName = in.next(); // Solicita o nome do bot
-            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer2, i, numBots);
+            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer2, i, numBots, map);
             botsPlayer2[i] = new Bot(botName, algorithm, flagPlayer1);
         }
 
         // Solicita o nome do último bot do Player 2
         System.out.println("Qual o nome que você deseja para o último Bot do Player 2?");
         botName = in.next();
-        botsPlayer2[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer2, numBots - 1, numBots), flagPlayer1);
+        botsPlayer2[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer2, numBots - 1, numBots, map), flagPlayer1);
 
         System.out.println("Qual o nome que você deseja para o Player 2?");
         String nameplayer2 = in.next();
@@ -81,7 +81,7 @@ public class App {
         game.startGame(player1, player2);
     }
 
-    private static MovementAlgorithm<GameEntity> chooseAlgorithm(Scanner in, Bot[] bots, int botIndex, int numBots) {
+    private static MovementAlgorithm<GameEntity> chooseAlgorithm(Scanner in, Bot[] bots, int botIndex, int numBots, GameMap map) {
         MovementAlgorithm<GameEntity> algorithm = null;
         boolean algoritmoRepetido;
 
@@ -110,10 +110,10 @@ public class App {
 
             switch (escolha) {
                 case 1:
-                    algorithm = new ShortestPathAlgorithm(new GameMap("unidirecional"));
+                    algorithm = new ShortestPathAlgorithm(map);
                     break;
                 case 2:
-                    // algorithm = new RandomMovementAlgorithm(new GameMap("unidirecional"));
+                    // algorithm = new RandomMovementAlgorithm(map);
                     break;
                 default:
                     System.out.println("Escolha inválida. Tente novamente.");
