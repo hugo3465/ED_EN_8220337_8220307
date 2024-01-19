@@ -1,5 +1,7 @@
 package api.game;
 
+import java.util.concurrent.TimeUnit;
+
 import api.game.interfaces.ICaptureTheFlag;
 import api.map.GameMap;
 
@@ -50,6 +52,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         // Imprimir visualização do mapa inicial
         System.out.println(getMapPreviw());
 
+        int rodada = 1;
         // Enquanto o jogo não terminar, continuar rodadas
         while (winner == null) {
 
@@ -57,24 +60,42 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
             currentBot = playerTurn.getNextBot();
 
             // Realizar a lógica da rodada
-            //playRound(currentBot);
+            // playRound(currentBot);
             currentBot.move();
 
             // Imprimir visualização do mapa após cada rodada
+            System.out.println("-------------Rodada " + rodada + ": -------------");
+            System.out.println(
+                    player1.getname() + ": " + currentBot.getName() + " encontra-se em " + currentBot.getPosition());
+            System.out.println(
+                    player2.getname() + ": " + currentBot.getName() + " encontra-se em " + currentBot.getPosition());
+            System.out.println();
+
+            try {
+                // Aguardar 2 segundos antes da próxima rodada
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // Imprimir visualização do mapa após cada rodada
             // System.out.println(getMapPreviw());
 
-            if(checkEndGame(currentBot)) {
+            if (checkEndGame(currentBot)) {
                 winner = playerTurn;
                 break;
             }
-            
+
             // Avançar para a próxima rodada
             playerTurn = nextTurn();
+            // Avançar para a próxima rodada
+            playerTurn = nextTurn();
+            rodada++;
 
         }
 
         // Exibir mensagem de fim de jogo
-        System.out.println("Fim de jogo!" + playerTurn.getname() + " ganhou");
+        System.out.println("Fim de jogo!!!");
+        System.out.println("--------------WINNER: " + winner.getname() + " ---------------");
     }
 
     // private boolean isGameOver(Player player) {
