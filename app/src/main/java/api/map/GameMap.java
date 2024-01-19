@@ -240,4 +240,9 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
         throw new IllegalArgumentException("O GameEntity especificado não foi encontrado no mapa.");
     }
 
+    @Override
+    public void setVertice(int index, GameEntity entety) {
+        vertices[index] = entety;
+    }
+
 }

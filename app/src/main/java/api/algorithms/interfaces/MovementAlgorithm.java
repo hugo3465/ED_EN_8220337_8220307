@@ -1,5 +1,7 @@
 package api.algorithms.interfaces;
 
+import api.game.Bot;
+
 public interface MovementAlgorithm<T> {
 
     // /**
@@ -11,7 +13,7 @@ public interface MovementAlgorithm<T> {
     //  */
     // Iterator<T> search(T startVertex);
 
-    public int getNextMovement(int currentIndex, int endIndex);
+    public int getNextMovement(int currentIndex, int endIndex, Bot currentBot);
 
     public boolean hasBot(int vertex);
 }

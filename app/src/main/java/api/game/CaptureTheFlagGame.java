@@ -50,26 +50,26 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         Bot currentBot = null;
 
         // Imprimir visualização do mapa inicial
-        System.out.println(getMapPreviw());
+        //System.out.println(getMapPreviw());
 
-        int rodada = 1;
+        int round = 1;
         // Enquanto o jogo não terminar, continuar rodadas
         while (winner == null) {
+            System.out.println("-------------Rodada " + round + ": -------------");
 
             // remover o bot da queue do player
             currentBot = playerTurn.getNextBot();
+
+            System.out.println(playerTurn.getname() + " tinha o bot " + currentBot.getName() + " na posicao "
+                    + currentBot.getPosition() + '\n');
 
             // Realizar a lógica da rodada
             // playRound(currentBot);
             currentBot.move();
 
             // Imprimir visualização do mapa após cada rodada
-            System.out.println("-------------Rodada " + rodada + ": -------------");
-            System.out.println(
-                    player1.getname() + ": " + currentBot.getName() + " encontra-se em " + currentBot.getPosition());
-            System.out.println(
-                    player2.getname() + ": " + currentBot.getName() + " encontra-se em " + currentBot.getPosition());
-            System.out.println();
+            System.out.println(playerTurn.getname() + " moveu o bot " + currentBot.getName() + " para a posicao "
+                    + currentBot.getPosition() + '\n');
 
             try {
                 // Aguardar 2 segundos antes da próxima rodada
@@ -87,9 +87,8 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
 
             // Avançar para a próxima rodada
             playerTurn = nextTurn();
-            // Avançar para a próxima rodada
-            playerTurn = nextTurn();
-            rodada++;
+
+            round++;
 
         }
 

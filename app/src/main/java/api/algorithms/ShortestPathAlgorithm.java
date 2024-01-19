@@ -98,7 +98,7 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
     }
 
     @Override
-    public int getNextMovement(int currentIndex, int endIndex) {
+    public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
         UnorderedArrayList<Integer> indexList = new UnorderedArrayList<>();
         indexList = dijkstra(graph.getAdjacencyMatrix(), currentIndex, endIndex);
 
@@ -120,6 +120,9 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> {
         } catch (EmptyCollectionException e) {
             nextIndex = myIndex;
         }
+
+        graph.setVertice(currentIndex, null);
+        graph.setVertice(nextIndex, currentBot);
 
         return nextIndex;
     }

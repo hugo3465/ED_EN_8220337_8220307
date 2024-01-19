@@ -29,7 +29,7 @@ public class Bot implements GameEntity {
         if (movementAlgorithm != null) {
 
             int newLocation = movementAlgorithm.getNextMovement(position,
-                    enemyFlag.getPosition());
+                    enemyFlag.getPosition(), this);
 
 
             this.position = newLocation;

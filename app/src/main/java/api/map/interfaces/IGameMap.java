@@ -43,4 +43,6 @@ public interface IGameMap {
     public GameEntity getVertice(int index);
 
     public int getIndex(GameEntity entity);
+
+    public void setVertice(int index, GameEntity entety);
 }

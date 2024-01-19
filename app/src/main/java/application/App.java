@@ -19,10 +19,10 @@ public class App {
 
         GameMap map = new GameMap("unidirecional");
 
-        map.generateRandomMap(8, false, 0.95);
-        map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
+        map.generateRandomMap(15, false, 0.60);
+        map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
         int positionPlayer1 = 1;
-        int positionPlayer2 = 7;
+        int positionPlayer2 = 12;
 
         Flag flagPlayer1 = new Flag(positionPlayer1);
         Flag flagPlayer2 = new Flag(positionPlayer2);
@@ -163,7 +163,7 @@ public class App {
         System.out.println("Qual o nome que você deseja para o Player 2?");
         String nameplayer2 = in.next();
 
-        Player player2 = new Player(nameplayer2, flagPlayer1.getPosition(), flagPlayer2.getPosition(), botsPlayer2);
+        Player player2 = new Player(nameplayer2, flagPlayer2.getPosition(), flagPlayer1.getPosition(), botsPlayer2);
 
         CaptureTheFlagGame game = new CaptureTheFlagGame(map, player1, player2);
 

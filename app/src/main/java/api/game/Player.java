@@ -1,7 +1,5 @@
 package api.game;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
 
@@ -32,7 +30,7 @@ public class Player {
         this.flag = new Flag(flagPosition);
         this.enemyFlag = new Flag(enemyFlagPosition);
         
-        assignBotInitialPositions(bots);
+        bots = assignBotInitialPositions(bots);
         
         enqueueBots(bots);
     }
@@ -44,12 +42,14 @@ public class Player {
      * Tópico 5 - No início da partida todos os bots deverão estar localizados na
      * mesma posição que a bandeira do seu jogador.
      */
-    private void assignBotInitialPositions(Bot[] bots) {
+    private Bot[] assignBotInitialPositions(Bot[] bots) {
         int flagPosition = flag.getPosition();
 
         for (Bot bot : bots) {
             bot.setPosition(flagPosition);
         }
+
+        return bots;
     }
 
     private void enqueueBots(Bot[] bots) {
