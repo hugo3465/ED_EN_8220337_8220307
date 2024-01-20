@@ -20,8 +20,6 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private final int MAX_DISTANCE = 15;
 
     private String mapName; // Adiciona um campo para armazenar o nome do mapa
-    private int[] indexToPosition; // Array para mapear índice para Position
-    private int[] positionToIndex; // Array para mapear Position para índice
 
     public GameMap() {
         super();
@@ -66,39 +64,6 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private void initializeGraph(int numVertices) {
         this.vertices = new GameEntity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
-        this.indexToPosition = new int[numVertices];
-        this.positionToIndex = new int[numVertices];
-
-        Random random = new Random();
-
-        for (int i = 0; i < numVertices; i++) {
-            int position = i;
-            indexToPosition[i] = position;
-            positionToIndex[i] = i;
-
-            // Adicione arestas aleatórias para garantir conectividade
-            if (i == 0) {
-                // Para o primeiro vértice, adicione uma aresta de saída aleatória
-                int targetIndex = random.nextInt(numVertices);
-                int distance = random.nextInt(MAX_DISTANCE) + MIN_DISTANCE;
-                adjMatrix[i][targetIndex] = distance;
-            } else if (i == numVertices - 1) {
-                // Para o último vértice, adicione uma aresta de entrada aleatória
-                int sourceIndex = random.nextInt(numVertices - 1);
-                int distance = random.nextInt(MAX_DISTANCE) + MIN_DISTANCE;
-                adjMatrix[sourceIndex][i] = distance;
-            } else {
-                // Para vértices intermediários, adicione uma aresta de entrada e uma de saída
-                // aleatórias
-                int sourceIndex = random.nextInt(i);
-                int targetIndex = i + 1;
-                int distance = random.nextInt(MAX_DISTANCE) + MIN_DISTANCE;
-                adjMatrix[sourceIndex][i] = distance;
-                adjMatrix[i][targetIndex] = distance;
-            }
-        }
-
-        this.numVertices = numVertices;
     }
 
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
@@ -106,11 +71,16 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
         if (bidirectional) {
             totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
         } else {
-            totalEdges = (numVertices - 1) * density;
+            // totalEdges = (numVertices - 1) * density;
 
-            if (numVertices > 2) {
-                totalEdges += (numVertices - 2) * density;
-            }
+            // if (numVertices > 2) {
+            // totalEdges += (numVertices - 2) * density;
+            // }
+
+            totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
+
+            // Garante que cada vértice tenha pelo menos uma aresta
+            totalEdges += numVertices * density;
         }
         return totalEdges;
     }
@@ -145,19 +115,19 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
     @Override
     public void importMap(String path) throws InvalidMapException, FileNotFoundException {
-        String line;
-
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            line = reader.readLine();
 
-            String[] values = line.split("\\s+");
-            initializeGraph(values.length); // numVertices era o que estava
+            String line;
+            int i = 0;
 
-            for (int i = 0; i < adjMatrix.length; i++) {
+            while ((line = reader.readLine()) != null) {
 
-                // TODO fazer a revisão lá com aquela fórmula do stor
-                if (line == null) {
-                    throw new InvalidMapException("O ficheiro é muito curto. Esperava mais linhas.");
+                String[] values = line.split("\\s+");
+
+                // initializeGraph(numVertices); // numVertices era o que estava
+
+                if (i >= adjMatrix.length) {
+                    throw new InvalidMapException("O ficheiro é muito curto. Esperava menos linhas.");
                 }
 
                 for (int j = 0; j < adjMatrix[i].length; j++) {
@@ -169,9 +139,17 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
                                         + (j + 1));
                     }
                 }
+
+                i++;
             }
 
-            // TODO falta dar set ao numVertices
+            if (i < adjMatrix.length) {
+                throw new InvalidMapException("O ficheiro é muito curto. Esperava mais linhas.");
+            }
+
+            // Define numero de vertices depois de ler todas as linhas
+            this.numVertices = adjMatrix.length;
+
         } catch (IOException e) {
             throw new FileNotFoundException("Erro ao ler o ficheiro: " + e.getMessage());
         }
@@ -184,13 +162,14 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
             for (int i = 0; i < adjMatrix.length; i++) {
                 for (int j = 0; j < adjMatrix.length; j++) {
-                    // Convert int to String before writing
-                    writer.write(String.valueOf((int) adjMatrix[i][j])); // TODO COLOCAR PARA DOUBLE
+                    // Converte o número para String antes de escrever
+                    writer.write(String.valueOf(adjMatrix[i][j]));
 
-                    // Add a space or delimiter if needed
+                    // Adiciona um espaço ou delimitador, se necessário
                     writer.write(" ");
                 }
-                // Add a new line after each row
+
+                // Adiciona uma nova linha após cada linha da matriz
                 writer.newLine();
             }
 
@@ -201,18 +180,11 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
     @Override
     public String getMap() {
-        StringBuilder mapRepresentation = new StringBuilder();
-
-        for (int i = 0; i < adjMatrix.length; i++) {
-            for (int j = 0; j < adjMatrix[i].length; j++) {
-                mapRepresentation.append(adjMatrix[i][j]).append(" ");
-            }
-            mapRepresentation.append("\n");
-        }
-
-        return mapRepresentation.toString();
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
     }
 
+    @Override
     public double[][] getAdjacencyMatrix() {
         return adjMatrix;
     }

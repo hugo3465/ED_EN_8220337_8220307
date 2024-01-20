@@ -98,16 +98,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         System.out.println("--------------WINNER: " + winner.getname() + " ---------------");
     }
 
-    // private boolean isGameOver(Player player) {
-    // Bot[] playerBots = player.getBots();
-    // for (Bot bot : playerBots) {
-    // if (player.checkEndGame(bot)) {
-    // return true;
-    // }
-    // }
-    // return false;
-    // }
-
     private void playRound(Bot bot) {
         // Implemente a lógica da rodada aqui, como movimento de bots, verificação de
         // vitória, etc.

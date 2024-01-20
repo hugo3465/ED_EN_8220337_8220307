@@ -1,7 +1,5 @@
 package api.algorithms;
 
-import api.DataStructures.ArrayList.OrderedArrayList.OrderedArrayList;
-import api.DataStructures.ArrayList.OrderedArrayList.OrderedListADT;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
@@ -114,8 +112,8 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
                     // se não conseguiu calcular o caminho vai devolver o vertice atual
                     // break;
                     return currentIndex;
-
                 }
+                continue; // isto funciona mas é espargette
 
             } else {
                 // Se não contiver um bot, define a lógica padrão

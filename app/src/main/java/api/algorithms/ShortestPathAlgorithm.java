@@ -1,12 +1,9 @@
 package api.algorithms;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Exceptions.EmptyCollectionException;
 import api.DataStructures.Stack.LinkedStack.LinkedStack;
 import api.DataStructures.Stack.LinkedStack.StackADT;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
-import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
 public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se calha tirar o genérico do
@@ -145,8 +142,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
                     // se não conseguiu calcular o caminho vai devolver o vertice atual
                     // break;
                     return currentIndex;
-
                 }
+                continue; // isto funciona mas é espargette
             } else {
                 // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
                 // para onde ele foi
