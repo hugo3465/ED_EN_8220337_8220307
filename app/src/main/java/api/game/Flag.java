@@ -11,11 +11,11 @@ public class Flag implements GameEntity {
 
     /**
      * Construtor da classe Flag.
-     *
+     * Passamos o número de vertices logo temos de converter para o indice
      * @param position O índice inicial da bandeira no grafo.
      */
     public Flag(int position) {
-        this.position = position;
+        this.position = position - 1;
     }
 
     /**
