@@ -94,14 +94,14 @@ public class App {
         System.out.println("-----------------------------------------------------");
         System.out.println("----------------------Player 1:----------------------");
         System.out.println("-----------------------------------------------------");
-        System.out.println("Escolha o local para a sua bandeira de 0 até  " + (numVertices - 1));
+        System.out.println("Escolha o local para a sua bandeira de 1 até  " + (numVertices));
         positionPlayer1 = in.nextInt();
 
         do {
             System.out.println("-----------------------------------------------------");
             System.out.println("----------------------Player 2:----------------------");
             System.out.println("-----------------------------------------------------");
-            System.out.println("Escolha o local para a sua bandeira de 0 até  " + (numVertices - 1));
+            System.out.println("Escolha o local para a sua bandeira de 1 até  " + (numVertices ));
             positionPlayer2 = in.nextInt();
 
             if (positionPlayer2 == positionPlayer1) {
