@@ -40,8 +40,6 @@ public class Bot implements GameEntity {
                 this.position = newLocation;
             }
 
-            System.out.println("Onde Estou agora: " + position);
-
             return position;
 
         }

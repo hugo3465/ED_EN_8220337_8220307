@@ -23,7 +23,7 @@ public class App {
 
         map.generateRandomMap(15, false, 0.60);
         // map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
-        map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
+        map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
         int positionPlayer1 = 0;
         int positionPlayer2 = 12;
 

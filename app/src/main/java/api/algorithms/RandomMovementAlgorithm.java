@@ -1,7 +1,5 @@
 package api.algorithms;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import api.DataStructures.ArrayList.OrderedArrayList.OrderedArrayList;
 import api.DataStructures.ArrayList.OrderedArrayList.OrderedListADT;
 import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
@@ -15,16 +13,17 @@ import api.map.GameMap;
 public class RandomMovementAlgorithm implements MovementAlgorithm {
 
     private GameMap map;
-    private QueueADT<Integer> calculatedPath; // guardda os índices para onde o bot tem de se deslocar
+    private QueueADT<Integer> calculatedPath; // guarda os índices para onde o bot tem de se deslocar
 
     public RandomMovementAlgorithm(GameMap map) {
         this.map = map;
         calculatedPath = new LinkedQueue<>();
     }
 
-    private void calculatePath(int startVertex, int endVertex) {
-        // OrderedListADT<Integer> visitedIndexes = new OrderedArrayList<>(); // serve
+    private boolean calculatePath(int startVertex, int endVertex) {
+        //OrderedListADT<Integer> visitedIndexes = new OrderedArrayList<>(); // serve
         // para não repetir vértices
+
         int currentIndex = startVertex;
 
         // Adiciona o vértice inicial na fila e nos vértices visitados
@@ -35,17 +34,24 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
             int[] neighbors = getNeighbors(currentIndex);
             int randomNeighbor = getRandomNeighbor(neighbors);
 
+            // System.out.println(neighbors.length);
+
             if (randomNeighbor != -1) { // && !visitedIndexes.contains(randomNeighbor)
                 currentIndex = randomNeighbor;
                 calculatedPath.enqueue(currentIndex);
-                // visitedIndexes.add(currentIndex);
+                //visitedIndexes.add(currentIndex);
             } else {
-                // Se não houver vizinhos disponíveis, o cálculo vai parar
-                break;
+                // Se não houver vizinhos disponíveis, o cálculo vai parar e vai limpar o
+                // caminho que calculou
+                // break;
+                calculatedPath = new LinkedQueue<>();
+                return false;
             }
         }
 
         calculatedPath.dequeue(); // remover do caminho o index onde o bot se encontra
+
+        return true;
 
     }
 
@@ -84,24 +90,33 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
 
         if (calculatedPath.isEmpty()) {
-            // Se o caminho calculado estiver vazio, recalcule o caminho
+            // Se o caminho calculado estiver vazio, calcula o caminho
             calculatePath(currentIndex, endIndex);
         }
 
         // TODO while para testes para saber se fez bem o caminho
         // while (!this.calculatedPath.isEmpty()) {
-        //     System.out.print(calculatedPath.dequeue() + " ");
+        // System.out.print(calculatedPath.dequeue() + " ");
         // }
         // System.out.println("\n");
 
-        int nextIndex = -1;
+        int nextIndex = currentIndex;
         while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.dequeue();
 
-            // Verifica se o vértice desenfileirado contém um bot
+            // Verifica se o vértice retirado contém um bot
             if (hasBot(dequeuedIndex)) {
-                // Recalcula o caminho se o vértice desenfileirado contiver um bot
-                calculatePath(dequeuedIndex, endIndex);
+                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                        + " mas tem lá um bot, então vai ter de se recalcular o caminho");
+
+                // Recalcula o caminho se o vértice retirado contiver um bot
+                if (!calculatePath(currentIndex, endIndex)) {
+                    // se não conseguiu calcular o caminho vai devolver o vertice atual
+                    // break;
+                    return currentIndex;
+
+                }
+
             } else {
                 // Se não contiver um bot, define a lógica padrão
                 nextIndex = dequeuedIndex;

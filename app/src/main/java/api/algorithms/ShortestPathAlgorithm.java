@@ -26,8 +26,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    private void dijkstra(int startVertex, int endVertex) { // TODO secalhar remover a
-                                                            // adjacencyMatrix
+    private boolean dijkstra(int startVertex, int endVertex) { // TODO secalhar remover a
+                                                               // adjacencyMatrix
         double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
         int numVertices = adjacencyMatrix[0].length;
@@ -76,6 +76,11 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
                 }
             }
 
+            if (nearestVertex == -1) {
+                // se o nearestVertex não saiar do -1, ent não conseguiu encontrar um caminho
+                return false;
+            }
+
             // Marcar o vértice escolhido como processado
             added[nearestVertex] = true;
 
@@ -109,29 +114,39 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
 
         // remover do caminho o index onde o bot se encontra
         this.calculatedPath.pop();
+
+        return true;
     }
 
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
         if (calculatedPath.isEmpty()) {
-            // Se o caminho calculado estiver vazio, recalcule o caminho
+            // Se o caminho calculado estiver vazio, calcula o caminho
             dijkstra(currentIndex, endIndex);
         }
 
         // TODO while para testes para saber se fez bem o caminho
         // while (!this.calculatedPath.isEmpty()) {
-        // System.out.print(calculatedPath.pop() + " ");
+        //     System.out.print(calculatedPath.pop() + " ");
         // }
         // System.out.println("\n");
 
-        int nextIndex = -1;
+        int nextIndex = currentIndex;
         while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.pop();
 
             // Verifica se o vértice removido contém um bot
             if (hasBot(dequeuedIndex)) {
-                // Recalcula o caminho se o vértice removido contiver um bot
-                dijkstra(dequeuedIndex, endIndex);
+                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                        + " mas tem lá um bot, então vai ter de se recalcular o caminho");
+
+                // Recalcula o caminho se o vértice retirado contiver um bot
+                if (!dijkstra(currentIndex, endIndex)) {
+                    // se não conseguiu calcular o caminho vai devolver o vertice atual
+                    // break;
+                    return currentIndex;
+
+                }
             } else {
                 // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
                 // para onde ele foi

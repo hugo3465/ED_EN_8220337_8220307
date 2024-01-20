@@ -34,10 +34,11 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * Tópico 8 - O jogo termina quando um dos bots chega ao campo do adversário
      *
      * @param bot O bot cuja posição será verificada em relação à bandeira inimiga.
+     * @param player o player a quem o bot pertence
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
-    public boolean checkEndGame(Bot bot) {//TODO não está a fazer muito sentido
-        return (player1.checkEndGame(bot) || player2.checkEndGame(bot));
+    public boolean checkEndGame(Bot bot, Player player) {//TODO não está a fazer muito sentido
+        return player.checkEndGame(bot);
     }
 
     // Implemente métodos para iniciar o jogo, avançar rodadas, etc.
@@ -60,16 +61,16 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
             // remover o bot da queue do player
             currentBot = playerTurn.getNextBot();
 
-            System.out.println(playerTurn.getname() + " tinha o bot " + currentBot.getName() + " na posicao "
-                    + currentBot.getPosition() + '\n');
+            System.out.println(playerTurn.getname() + " tinha o bot " + currentBot.getName() + " no vertice "
+                    + (currentBot.getPosition() + 1) + '\n');
 
             // Realizar a lógica da rodada
             // playRound(currentBot);
             currentBot.move();
 
             // Imprimir visualização do mapa após cada rodada
-            System.out.println(playerTurn.getname() + " moveu o bot " + currentBot.getName() + " para a posicao "
-                    + currentBot.getPosition() + '\n');
+            System.out.println(playerTurn.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+                    + (currentBot.getPosition() + 1) + '\n');
 
             try {
                 // Aguardar 2 segundos antes da próxima rodada
@@ -80,7 +81,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
             // Imprimir visualização do mapa após cada rodada
             // System.out.println(getMapPreviw());
 
-            if (checkEndGame(currentBot)) {
+            if (checkEndGame(currentBot, playerTurn)) {
                 winner = playerTurn;
                 break;
             }
