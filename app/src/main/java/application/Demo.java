@@ -15,7 +15,7 @@ public class Demo {
         Scanner scanner = new Scanner(System.in);
 
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(100, false, 0.9);
+        map.generateRandomMap(15, false, 0.4);
         map.exportMap("C:/Users/hugui/Desktop/export.txt");
 
         ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
@@ -25,8 +25,8 @@ public class Demo {
         
         
 
-        Flag flagPlayer1 = new Flag(0);
-        Flag flagPlayer2 = new Flag(12);
+        Flag flagPlayer1 = new Flag(1);
+        Flag flagPlayer2 = new Flag(15);
 
         Bot bot = new Bot("Raul", algorithm, flagPlayer2);
         Bot bot2 = new Bot("Raul2", algorithm2, flagPlayer2);

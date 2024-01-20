@@ -23,18 +23,6 @@ public class Player {
         enqueueBots(bots);
     }
 
-    
-    public Player(String name, int flagPosition, int enemyFlagPosition, Bot[] bots) {
-        this.name = name;
-        this.bots = new LinkedQueue<>();
-        this.flag = new Flag(flagPosition);
-        this.enemyFlag = new Flag(enemyFlagPosition);
-        
-        bots = assignBotInitialPositions(bots);
-        
-        enqueueBots(bots);
-    }
-
     /**
      * Atribui a posição inicial a todos os bots do jogador com base na posição da
      * bandeira.

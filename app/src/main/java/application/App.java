@@ -35,7 +35,7 @@ public class App {
         nameMap = in.nextLine();
         GameMap map = new GameMap(nameMap);
 
-        System.out.println("Para a contrução do mapa Voce pretende: ?");
+        System.out.println("Para a contrução do mapa pretende?");
         System.out.println("1. Importar");
         System.out.println("2. Gerar");
         opcao = in.nextInt();
@@ -50,7 +50,7 @@ public class App {
                 } catch (InvalidMapException e) {
                     System.err.println("Erro ao importar o mapa: " + e.getMessage());
                 } catch (FileNotFoundException e) {
-                    System.err.println("Arquivo não encontrado: " + e.getMessage());
+                    System.err.println("Ficheiro não encontrado: " + e.getMessage());
                 }
                 break;
             case 2:
@@ -62,7 +62,7 @@ public class App {
                 if (dir == 's' || dir == 'S') {
                     bidirectional = true;
                 }
-                System.out.println("Qual a densidade que deseja ? (entre 0 e 1)");
+                System.out.println("Qual a densidade que deseja? (entre 0 e 1)");
                 densidade = in.nextDouble();
                 map.generateRandomMap(numVertices, bidirectional, densidade);
                 break;
@@ -137,12 +137,12 @@ public class App {
         }
 
         // Solicita o nome do último bot do Player 1
-        System.out.println("Qual o nome que você deseja para o último Bot do Player 1?");
+        System.out.println("Qual o nome que você deseja para o ultimo Bot do Player 1?");
         botName = in.next();
         botsPlayer1[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer1, numBots - 1, numBots, map),
                 flagPlayer2);
 
-        Player player1 = new Player(nameplayer1, flagPlayer1.getPosition(), flagPlayer2.getPosition(), botsPlayer1);
+        Player player1 = new Player(nameplayer1, flagPlayer1, flagPlayer2, botsPlayer1);
 
         System.out.println("Qual o nome que você deseja para o Player 2?");
         String nameplayer2 = in.next();
@@ -164,7 +164,7 @@ public class App {
         botsPlayer2[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer2, numBots - 1, numBots, map),
                 flagPlayer1);
 
-        Player player2 = new Player(nameplayer2, flagPlayer2.getPosition(), flagPlayer1.getPosition(), botsPlayer2);
+        Player player2 = new Player(nameplayer2, flagPlayer2, flagPlayer1, botsPlayer2);
 
         CaptureTheFlagGame game = new CaptureTheFlagGame(map, player1, player2);
 
