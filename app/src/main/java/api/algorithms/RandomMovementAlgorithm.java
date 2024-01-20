@@ -10,10 +10,9 @@ import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
-import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
-public class RandomMovementAlgorithm implements MovementAlgorithm<GameEntity> {
+public class RandomMovementAlgorithm implements MovementAlgorithm {
 
     private GameMap map;
     private QueueADT<Integer> calculatedPath; // guardda os índices para onde o bot tem de se deslocar
@@ -45,6 +44,8 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<GameEntity> {
                 break;
             }
         }
+
+        calculatedPath.dequeue(); // remover do caminho o index onde o bot se encontra
 
     }
 
@@ -94,7 +95,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<GameEntity> {
         // System.out.println("\n");
 
         int nextIndex = -1;
-        if (!calculatedPath.isEmpty()) {
+        while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.dequeue();
 
             // Verifica se o vértice desenfileirado contém um bot
@@ -104,14 +105,28 @@ public class RandomMovementAlgorithm implements MovementAlgorithm<GameEntity> {
             } else {
                 // Se não contiver um bot, define a lógica padrão
                 nextIndex = dequeuedIndex;
-                map.setVertice(currentIndex, null); // define o vértice antigo a null
-                map.setVertice(nextIndex, currentBot); // vai para o novo vértice
+                updateBotLocation(currentIndex, nextIndex, currentBot);
                 return nextIndex;
             }
         }
 
         // Se não houver mais movimentos disponíveis, retorna o índice atual
         return currentIndex;
+    }
+
+    @Override
+    public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
+
+        if (currentIndex != nextIndex) {
+            if (bot.getTimesMoved() == 0) {
+                // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
+                // não apagar a bandeira
+                map.setVertice(nextIndex, bot);
+            } else {
+                map.setVertice(currentIndex, null); // define o vértice antigo a null
+                map.setVertice(nextIndex, bot); // vai para o novo vértice
+            }
+        }
     }
 
     @Override

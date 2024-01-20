@@ -9,7 +9,8 @@ import api.game.Bot;
 import api.game.interfaces.GameEntity;
 import api.map.GameMap;
 
-public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> { // TODO se calha tirar o genérico do movementAlgorithm
+public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se calha tirar o genérico do
+                                                                  // movementAlgorithm
 
     private GameMap map;
     private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão
@@ -106,7 +107,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> { //
             currentVertexIndex = parents[currentVertexIndex];
         }
 
-        // return path;
+        // remover do caminho o index onde o bot se encontra
+        this.calculatedPath.pop();
     }
 
     @Override
@@ -118,12 +120,12 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> { //
 
         // TODO while para testes para saber se fez bem o caminho
         // while (!this.calculatedPath.isEmpty()) {
-        //     System.out.print(calculatedPath.pop() + " ");
+        // System.out.print(calculatedPath.pop() + " ");
         // }
         // System.out.println("\n");
 
         int nextIndex = -1;
-        if(!calculatedPath.isEmpty()) {
+        while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.pop();
 
             // Verifica se o vértice removido contém um bot
@@ -134,14 +136,28 @@ public class ShortestPathAlgorithm implements MovementAlgorithm<GameEntity> { //
                 // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
                 // para onde ele foi
                 nextIndex = dequeuedIndex;
-                map.setVertice(currentIndex, null);
-                map.setVertice(nextIndex, currentBot);
+                updateBotLocation(currentIndex, nextIndex, currentBot);
                 return nextIndex;
             }
         }
 
         // Se não houver mais movimentos disponíveis, retorna o índice atual
         return currentIndex;
+    }
+
+    @Override
+    public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
+
+        if (currentIndex != nextIndex) {
+            if (bot.getTimesMoved() == 0) {
+                // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
+                // não apagar a bandeira
+                map.setVertice(nextIndex, bot);
+            } else {
+                map.setVertice(currentIndex, null);
+                map.setVertice(nextIndex, bot);
+            }
+        }
     }
 
     @Override

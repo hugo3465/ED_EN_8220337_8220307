@@ -36,7 +36,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @param bot O bot cuja posição será verificada em relação à bandeira inimiga.
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
-    public boolean checkEndGame(Bot bot) {
+    public boolean checkEndGame(Bot bot) {//TODO não está a fazer muito sentido
         return (player1.checkEndGame(bot) || player2.checkEndGame(bot));
     }
 

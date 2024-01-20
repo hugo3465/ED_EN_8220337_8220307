@@ -42,7 +42,7 @@ public class App {
         for (int i = 0; i < numBots - 1; i++) {
             System.out.println("Qual o nome que você deseja para o Bot " + (i + 1) + "?");
             botName = in.next(); // Solicita o nome do bot
-            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer1, i, numBots, map);
+            MovementAlgorithm algorithm = chooseAlgorithm(in, botsPlayer1, i, numBots, map);
             botsPlayer1[i] = new Bot(botName, algorithm, flagPlayer2);
         }
 
@@ -61,7 +61,7 @@ public class App {
         for (int i = 0; i < numBots - 1; i++) {
             System.out.println("Qual o nome que você deseja para o Bot " + (i + 1) + "?");
             botName = in.next(); // Solicita o nome do bot
-            MovementAlgorithm<GameEntity> algorithm = chooseAlgorithm(in, botsPlayer2, i, numBots, map);
+            MovementAlgorithm algorithm = chooseAlgorithm(in, botsPlayer2, i, numBots, map);
             botsPlayer2[i] = new Bot(botName, algorithm, flagPlayer1);
         }
 
@@ -81,8 +81,8 @@ public class App {
         game.startGame(player1, player2);
     }
 
-    private static MovementAlgorithm<GameEntity> chooseAlgorithm(Scanner in, Bot[] bots, int botIndex, int numBots, GameMap map) {
-        MovementAlgorithm<GameEntity> algorithm = null;
+    private static MovementAlgorithm chooseAlgorithm(Scanner in, Bot[] bots, int botIndex, int numBots, GameMap map) {
+        MovementAlgorithm algorithm = null;
         boolean algoritmoRepetido;
 
         // Verifica se todos os algoritmos já foram escolhidos
