@@ -3,6 +3,7 @@ package application;
 import java.util.Scanner;
 
 import api.algorithms.ShortestPathAlgorithm;
+import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.game.CaptureTheFlagGame;
@@ -21,7 +22,8 @@ public class App {
         GameMap map = new GameMap("unidirecional");
 
         map.generateRandomMap(15, false, 0.60);
-        map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
+        // map.exportMap("C:\\Users\\User\\Desktop\\" + map.getMapName() + ".txt");
+        map.exportMap("C:\\Users\\pedro\\Desktop\\" + map.getMapName() + ".txt");
         int positionPlayer1 = 0;
         int positionPlayer2 = 12;
 
@@ -49,7 +51,8 @@ public class App {
         // Solicita o nome do último bot do Player 1
         System.out.println("Qual o nome que você deseja para o último Bot do Player 1?");
         botName = in.next();
-        botsPlayer1[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer1, numBots - 1, numBots, map), flagPlayer2);
+        botsPlayer1[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer1, numBots - 1, numBots, map),
+                flagPlayer2);
 
         System.out.println("Qual o nome que você deseja para o Player 1");
         String nameplayer1 = in.next();
@@ -68,7 +71,8 @@ public class App {
         // Solicita o nome do último bot do Player 2
         System.out.println("Qual o nome que você deseja para o último Bot do Player 2?");
         botName = in.next();
-        botsPlayer2[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer2, numBots - 1, numBots, map), flagPlayer1);
+        botsPlayer2[numBots - 1] = new Bot(botName, chooseAlgorithm(in, botsPlayer2, numBots - 1, numBots, map),
+                flagPlayer1);
 
         System.out.println("Qual o nome que você deseja para o Player 2?");
         String nameplayer2 = in.next();
@@ -113,7 +117,7 @@ public class App {
                     algorithm = new ShortestPathAlgorithm(map);
                     break;
                 case 2:
-                    // algorithm = new RandomMovementAlgorithm(map);
+                    algorithm = new RandomMovementAlgorithm(map);
                     break;
                 default:
                     System.out.println("Escolha inválida. Tente novamente.");
