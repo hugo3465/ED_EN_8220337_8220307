@@ -14,6 +14,7 @@ public class BotOptionsDialog extends JDialog {
     private String name;
     private MovementAlgorithm movementAlgorithm;
     private GameMap map;
+    private boolean dialogCanceled;
 
     private JTextField nameTextField;
     private JComboBox<String> algorithmComboBox;
@@ -24,7 +25,7 @@ public class BotOptionsDialog extends JDialog {
         super(parent, modal);
         this.map = map;
         initComponents();
-        
+
     }
 
     private void initComponents() {
@@ -44,7 +45,7 @@ public class BotOptionsDialog extends JDialog {
         algorithmLabel.setBounds(20, 50, 150, 20);
         add(algorithmLabel);
 
-        String[] algorithmOptions = {"Shortest Path", "Random Path"};
+        String[] algorithmOptions = { "Shortest Path", "Random Path" };
         algorithmComboBox = new JComboBox<>(algorithmOptions);
         algorithmComboBox.setBounds(180, 50, 140, 20);
         add(algorithmComboBox);
@@ -57,9 +58,9 @@ public class BotOptionsDialog extends JDialog {
                 name = nameTextField.getText();
 
                 // com base na opcao vai instanciar o algoritmo
-                if(algorithmComboBox.getSelectedIndex() == 0) {
+                if (algorithmComboBox.getSelectedIndex() == 0) {
                     movementAlgorithm = new ShortestPathAlgorithm(map);
-                } else if(algorithmComboBox.getSelectedIndex() == 1) {
+                } else if (algorithmComboBox.getSelectedIndex() == 1) {
                     movementAlgorithm = new RandomMovementAlgorithm(map);
                 }
 
@@ -73,6 +74,8 @@ public class BotOptionsDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // para saber se o utilizador cancelou a operação
+                dialogCanceled = true;
                 dispose();
             }
         });
@@ -87,5 +90,9 @@ public class BotOptionsDialog extends JDialog {
 
     public MovementAlgorithm getMovementAlgorithm() {
         return movementAlgorithm;
+    }
+
+    public boolean isDialogCanceled() {
+        return dialogCanceled;
     }
 }

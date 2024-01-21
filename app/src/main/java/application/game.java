@@ -283,9 +283,17 @@ public class game extends javax.swing.JFrame {
 
         try {
             if (returnVal == jFileChooser1.APPROVE_OPTION) {
+                // abrir janela para escolher o ficheiro
                 path = jFileChooser1.getSelectedFile();
+
+                // importar mapa
                 map.importMap(path.getAbsolutePath());
+
+                // mensagem de sucesso
+                JOptionPane.showMessageDialog(null, "Mapa importado com sucesso", "Mapa importado",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
+
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Erro ao importar o mapa: " + e.getMessage(), "Erro de Importação",
                     JOptionPane.ERROR_MESSAGE);
@@ -293,9 +301,6 @@ public class game extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao importar o mapa: " + e.getMessage(), "Erro de Importação",
                     JOptionPane.ERROR_MESSAGE);
         }
-
-        JOptionPane.showMessageDialog(null, "Mapa importado com sucesso", "Mapa importado",
-                JOptionPane.INFORMATION_MESSAGE);
 
     }// GEN-LAST:event_importButtomActionPerformed
 
@@ -319,9 +324,6 @@ public class game extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao exportar o mapa: " + e.getMessage(), "Erro de Exportação",
                         JOptionPane.ERROR_MESSAGE);
             }
-
-            JOptionPane.showMessageDialog(null, "Mapa exportado com sucesso", "Mapa exportado",
-                    JOptionPane.INFORMATION_MESSAGE);
         }
     }// GEN-LAST:event_exportButtom1ActionPerformed
 
@@ -336,17 +338,19 @@ public class game extends javax.swing.JFrame {
 
         try {
             map.generateRandomMap(numVertices, bidirectional, density);
+
+            // mensagem de sucesso
+            JOptionPane.showMessageDialog(null, "Mapa gerado com sucesso", "Mapa gerado",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao gerar o mapa: " + e.getMessage(), "Erro de geração",
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        JOptionPane.showMessageDialog(null, "Mapa gerado com sucesso", "Mapa gerado",
-                JOptionPane.INFORMATION_MESSAGE);
-
     }// GEN-LAST:event_generateButtom2ActionPerformed
 
     private void InserirBotsPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer1ActionPerformed
+        boolean operationCanceled = false;
         Integer numeroBots = Integer.parseInt(numBots.getSelectedItem());
 
         botsPlayer1 = new Bot[numeroBots];
@@ -355,6 +359,15 @@ public class game extends javax.swing.JFrame {
             for (int i = 0; i < numeroBots; i++) {
                 BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map);
                 botOptionsDialog.setVisible(true);
+
+                // Verifica se o diálogo foi cancelado
+                if (botOptionsDialog.isDialogCanceled()) {
+                    operationCanceled = true;
+                    JOptionPane.showMessageDialog(null, "Operação cancelada, não serão inseridos bots",
+                            "Operação cancelada",
+                            JOptionPane.CANCEL_OPTION);
+                    break; // Sai do loop se o utilizador cancelou
+                }
 
                 // Obtém os parametros configurados pelo utilizador
                 String botName = botOptionsDialog.getName();
@@ -368,15 +381,16 @@ public class game extends javax.swing.JFrame {
                 botsPlayer1[i] = newBot;
             }
 
-            // player1.addBot(newBot); // TODO
-
-            // Exemplo: Exibe uma mensagem com as informações do bot inserido
-            JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
-                    JOptionPane.INFORMATION_MESSAGE);
+            // Exibe uma mensagem de sucesso caso não se tenha cancelado a operação
+            if (!operationCanceled) {
+                JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }// GEN-LAST:event_InserirBotsPlayer1ActionPerformed
 
     private void InserirBotsPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer2ActionPerformed
+        boolean operationCanceled = false;
         Integer numeroBots = Integer.parseInt(numBots.getSelectedItem());
 
         botsPlayer2 = new Bot[numeroBots];
@@ -385,6 +399,15 @@ public class game extends javax.swing.JFrame {
             for (int i = 0; i < numeroBots; i++) {
                 BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map);
                 botOptionsDialog.setVisible(true);
+
+                // Verifica se o diálogo foi cancelado
+                if (botOptionsDialog.isDialogCanceled()) {
+                    operationCanceled = true;
+                    JOptionPane.showMessageDialog(null, "Operação cancelada, não serão inseridos bots",
+                            "Operação cancelada",
+                            JOptionPane.CANCEL_OPTION);
+                    break; // Sai do loop se o utilizador cancelou
+                }
 
                 // Obtém os parametros configurados pelo utilizador
                 String botName = botOptionsDialog.getName();
@@ -397,9 +420,12 @@ public class game extends javax.swing.JFrame {
                 botsPlayer2[i] = newBot;
             }
 
-            // Exemplo: Exibe uma mensagem com as informações do bot inserido
-            JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
-                    JOptionPane.INFORMATION_MESSAGE);
+            // Exibe uma mensagem de sucesso caso não se tenha cancelado a operação
+            if (!operationCanceled) {
+                JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }// GEN-LAST:event_InserirBotsPlayer2ActionPerformed
 
