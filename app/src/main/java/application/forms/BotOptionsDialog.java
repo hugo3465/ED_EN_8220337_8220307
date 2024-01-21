@@ -2,6 +2,7 @@ package application.forms;
 
 import javax.swing.*;
 
+import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
@@ -14,6 +15,7 @@ public class BotOptionsDialog extends JDialog {
     private String name;
     private MovementAlgorithm movementAlgorithm;
     private GameMap map;
+    private String[] algorithmOptions;
     private boolean dialogCanceled;
 
     private JTextField nameTextField;
@@ -21,9 +23,10 @@ public class BotOptionsDialog extends JDialog {
     private JButton okButton;
     private JButton cancelButton;
 
-    public BotOptionsDialog(java.awt.Frame parent, boolean modal, GameMap map) {
+    public BotOptionsDialog(java.awt.Frame parent, boolean modal, GameMap map, String[] algorithmOptions) {
         super(parent, modal);
         this.map = map;
+        this.algorithmOptions = algorithmOptions;
         initComponents();
 
     }
@@ -45,7 +48,6 @@ public class BotOptionsDialog extends JDialog {
         algorithmLabel.setBounds(20, 50, 150, 20);
         add(algorithmLabel);
 
-        String[] algorithmOptions = { "Shortest Path", "Random Path" };
         algorithmComboBox = new JComboBox<>(algorithmOptions);
         algorithmComboBox.setBounds(180, 50, 140, 20);
         add(algorithmComboBox);
@@ -58,11 +60,14 @@ public class BotOptionsDialog extends JDialog {
                 name = nameTextField.getText();
 
                 // com base na opcao vai instanciar o algoritmo
-                if (algorithmComboBox.getSelectedIndex() == 0) {
+                if (algorithmComboBox.getSelectedItem().equals("Shortest Path")) {
                     movementAlgorithm = new ShortestPathAlgorithm(map);
-                } else if (algorithmComboBox.getSelectedIndex() == 1) {
+                } else if (algorithmComboBox.getSelectedItem().equals("Random Path")) {
                     movementAlgorithm = new RandomMovementAlgorithm(map);
+                } else if (algorithmComboBox.getSelectedItem().equals("Longest Path")) {
+                    movementAlgorithm = new LongestPathAlgorithm(map);
                 }
+
 
                 dispose();
             }

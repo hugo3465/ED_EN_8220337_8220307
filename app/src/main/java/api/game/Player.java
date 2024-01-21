@@ -8,7 +8,7 @@ import api.DataStructures.Queue.LinkedQueue.QueueADT;
  */
 public class Player {
     private String name;
-    private QueueADT<Bot> bots; // TODO: Trocar para queue
+    private QueueADT<Bot> bots;
     private Flag flag;
     private Flag enemyFlag;
 
@@ -41,24 +41,24 @@ public class Player {
     }
 
     private void enqueueBots(Bot[] bots) {
-        for(Bot bot : bots) {
+        for (Bot bot : bots) {
             this.bots.enqueue(bot);
         }
     }
-    
+
     public String getname() {
         return name;
     }
 
     // public Bot[] getBots() {
-    //     Bot[] botArray = new Bot[bots.size()];
-    //     int index = 0;
-    //     for (Bot bot : bots) {
-    //         botArray[index++] = bot;
-    //     }
-    //     return botArray;
+    // Bot[] botArray = new Bot[bots.size()];
+    // int index = 0;
+    // for (Bot bot : bots) {
+    // botArray[index++] = bot;
+    // }
+    // return botArray;
 
-    //     Iterator<Bot> bots = this.bots.
+    // Iterator<Bot> bots = this.bots.
     // }
 
     /**
@@ -79,8 +79,6 @@ public class Player {
         return enemyFlag;
     }
 
-    
-
     /**
      * Verifica se o jogo chegou ao fim, ou seja, se o bot alcançou a bandeira
      * inimiga.
@@ -96,11 +94,11 @@ public class Player {
     }
 
     public Bot getNextBot() {
-       Bot currenBot = this.bots.dequeue();
+        Bot currenBot = this.bots.dequeue();
 
-       this.bots.enqueue(currenBot);
+        this.bots.enqueue(currenBot);
 
-       return currenBot;
+        return currenBot;
     }
 
     /**

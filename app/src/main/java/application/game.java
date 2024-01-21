@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
+import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
@@ -12,6 +15,7 @@ import api.game.CaptureTheFlagGame;
 import api.game.Flag;
 import api.game.Player;
 import api.map.GameMap;
+import application.ExtendedDataStructures.ConvertibleUnnorderedArrayList;
 import application.forms.BotOptionsDialog;
 import application.forms.GameInterface;
 import application.forms.MapOptionsDialog;
@@ -452,9 +456,16 @@ public class game extends javax.swing.JFrame {
 
         botsPlayer1 = new Bot[numeroBots];
 
+        // Opções disponíveis para o algoritmo
+        ConvertibleUnnorderedArrayList<String> algorithmOptions = new ConvertibleUnnorderedArrayList<>();
+        addAlgorithmOptions(algorithmOptions);
+        String[] options;
+
         if (map != null) {
+
             for (int i = 0; i < numeroBots; i++) {
-                BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map);
+                options = algorithmOptions.toArray(String.class);
+                BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map, options);
                 botOptionsDialog.setVisible(true);
 
                 // Verifica se o diálogo foi cancelado
@@ -470,10 +481,16 @@ public class game extends javax.swing.JFrame {
                 String botName = botOptionsDialog.getName();
                 MovementAlgorithm botMovementAlgorithm = botOptionsDialog.getMovementAlgorithm();
 
+                // remove a opção escolhida
+                removeAlgorithmOption(botMovementAlgorithm, algorithmOptions);
+
                 // criar um bot para o player 1 com as informações introduzidas
                 Bot newBot = new Bot(botName, botMovementAlgorithm, flagPlayer2);
-
                 botsPlayer1[i] = newBot;
+
+                if(algorithmOptions.isEmpty()) {
+                    addAlgorithmOptions(algorithmOptions);
+                }
             }
 
             // Exibe uma mensagem de sucesso caso não se tenha cancelado a operação
@@ -487,15 +504,39 @@ public class game extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_InserirBotsPlayer1ActionPerformed
 
+    private void addAlgorithmOptions(ConvertibleUnnorderedArrayList<String> algorithmOptions) {
+        algorithmOptions.addToFront("Shortest Path");
+        algorithmOptions.addToFront("Random Path");
+        algorithmOptions.addToFront("Longest Path");
+    }
+
+    private void removeAlgorithmOption(MovementAlgorithm algorithm,
+            ConvertibleUnnorderedArrayList<String> algorithmOptions) {
+        if (algorithm instanceof ShortestPathAlgorithm) {
+            algorithmOptions.remove("Shortest Path");
+        } else if (algorithm instanceof RandomMovementAlgorithm) {
+            algorithmOptions.remove("Random Path");
+        } else if (algorithm instanceof LongestPathAlgorithm) {
+            algorithmOptions.remove("Longest Path");
+        }
+    }
+
     private void InserirBotsPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer2ActionPerformed
         boolean operationCanceled = false;
         Integer numeroBots = Integer.parseInt(numBots.getSelectedItem());
 
         botsPlayer2 = new Bot[numeroBots];
 
+        // Opções disponíveis para o algoritmo
+        ConvertibleUnnorderedArrayList<String> algorithmOptions = new ConvertibleUnnorderedArrayList<>();
+        addAlgorithmOptions(algorithmOptions);
+        String[] options;
+
+
         if (map != null) {
             for (int i = 0; i < numeroBots; i++) {
-                BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map);
+                options = algorithmOptions.toArray(String.class);
+                BotOptionsDialog botOptionsDialog = new BotOptionsDialog(this, true, map, options);
                 botOptionsDialog.setVisible(true);
 
                 // Verifica se o diálogo foi cancelado
@@ -514,6 +555,10 @@ public class game extends javax.swing.JFrame {
                 // criar um bot para o player 1 com as informações introduzidas
                 Bot newBot = new Bot(botName, botMovementAlgorithm, flagPlayer1);
                 botsPlayer2[i] = newBot;
+
+                if(algorithmOptions.isEmpty()) {
+                    addAlgorithmOptions(algorithmOptions);
+                }
             }
 
             // Exibe uma mensagem de sucesso caso não se tenha cancelado a operação
