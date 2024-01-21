@@ -16,8 +16,8 @@ public class Demo {
         Scanner scanner = new Scanner(System.in);
 
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(30, true, 0.6);
-        map.exportMap("C:/Users/hugui/Desktop/export.txt");
+        map.generateRandomMap(100, true, 0.6);
+        map.exportMap("C:/Users/User/Desktop/export.txt");
 
         ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
         RandomMovementAlgorithm algorithm2 = new RandomMovementAlgorithm(map);
