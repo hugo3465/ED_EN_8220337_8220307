@@ -64,7 +64,7 @@ public class MapOptionsDialog extends JDialog {
         densityLabel.setBounds(20, 80, 80, 20);
         add(densityLabel);
     
-        densitySlider = new JSlider(0, 100); // Intervalo da densidade
+        densitySlider = new JSlider(10, 90); // Intervalo da densidade
         densitySlider.setBounds(120, 80, 150, 20);
         densitySlider.addChangeListener(new ChangeListener() {
             @Override
