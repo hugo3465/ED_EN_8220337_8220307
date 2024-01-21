@@ -60,10 +60,10 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         }
 
         // Imprime o caminho calculado para fins de teste.
-        while (!calculatedPath.isEmpty()) {
-            System.out.print(calculatedPath.pop() + " ");
-        }
-        System.out.println("\n");
+        // while (!calculatedPath.isEmpty()) {
+        //     System.out.print(calculatedPath.pop() + " ");
+        // }
+        // System.out.println("\n");
 
 
         int nextIndex = currentIndex;

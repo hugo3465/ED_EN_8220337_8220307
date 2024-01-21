@@ -30,7 +30,7 @@ public class Flag implements GameEntity {
 
     @Override
     public int getPosition() {
-        return position;
+        return position + 1;
     }
 
     @Override

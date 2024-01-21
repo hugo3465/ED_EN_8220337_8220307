@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.DataStructures.ArrayList.UnorderedArrayList.ConvertibleUnnorderedArrayList;
 import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
@@ -15,7 +14,6 @@ import api.game.CaptureTheFlagGame;
 import api.game.Flag;
 import api.game.Player;
 import api.map.GameMap;
-import application.ExtendedDataStructures.ConvertibleUnnorderedArrayList;
 import application.forms.BotOptionsDialog;
 import application.forms.GameInterface;
 import application.forms.MapOptionsDialog;

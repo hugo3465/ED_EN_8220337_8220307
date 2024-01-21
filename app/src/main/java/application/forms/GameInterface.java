@@ -45,6 +45,7 @@ public class GameInterface implements Runnable {
 
         while (game.isGameOver() == -1) {
             addText("-------------Ronda " + round + ": -------------");
+            System.out.println("-------------Ronda " + round + ": -------------");
 
             // addText(currentPlayer.getname() + " tinha o bot " + currentBot.getName() + "
             // no vertice "
@@ -54,7 +55,10 @@ public class GameInterface implements Runnable {
 
             // Imprimir visualização do mapa após cada rodada
             addText(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + (currentBot.getPosition() + 1));
+                    + currentBot.getPosition());
+
+            System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+                    + currentBot.getPosition());
 
             currentPlayer = game.nextTurn();
 
@@ -70,6 +74,28 @@ public class GameInterface implements Runnable {
                 timer.stop();
             }
             round++;
+        }
+
+        switch (game.isGameOver()) {
+            case -1:
+                break;
+            case 0:
+                addText("\n-----Empate------\n");
+                System.out.println("\n-----Empate------\n");
+                break;
+            case 1:
+                System.out.println("\n-----Jogador 1 ganhou------\n");
+                addText("\n-----Jogador 1 ganhou------\n");
+                break;
+            case 2:
+                System.out.println("\n-----Jogador 2 ganhou------\n");
+                addText("\n-----Jogador 2 ganhou------\n");
+                break;
+
+            default:
+                System.out.println("Não é suposto vir para aqui");
+                addText("Não é suposto vir para aqui");
+                break;
         }
     }
 }
