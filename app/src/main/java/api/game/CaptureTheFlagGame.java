@@ -9,23 +9,14 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     private GameMap map;
     private Player player1, player2;
     private int currentPlayerTurn;
+    private Player winner;
 
     public CaptureTheFlagGame(GameMap map, Player player1, Player player2) {
-        newGame(map, player1, player2);
-    }
-
-    public void newGame(GameMap map, Player player1, Player player2) {
         this.map = map;
         this.player1 = player1;
         this.player2 = player2;
         this.currentPlayerTurn = 0;
-    }
-
-    @Override
-    public String getMapPreviw() {
-        // Implemente a lógica para obter uma visualização do mapa (pode ser um método
-        // na classe GameMap)
-        return map.getMap(); // Substitua por lógica real
+        this.winner = null;
     }
 
     /**
@@ -33,15 +24,14 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * inimiga.
      * Tópico 8 - O jogo termina quando um dos bots chega ao campo do adversário
      *
-     * @param bot O bot cuja posição será verificada em relação à bandeira inimiga.
+     * @param bot    O bot cuja posição será verificada em relação à bandeira
+     *               inimiga.
      * @param player o player a quem o bot pertence
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
-    public boolean checkEndGame(Bot bot, Player player) {//TODO não está a fazer muito sentido
+    private boolean checkEndGame(Bot bot, Player player) {// TODO não está a fazer muito sentido
         return player.checkEndGame(bot);
     }
-
-    // Implemente métodos para iniciar o jogo, avançar rodadas, etc.
 
     public void startGame(Player player1, Player player2) {
         // Inicializar o jogo, posicionar bots, etc.
@@ -49,9 +39,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         Player winner = null;
         Player playerTurn = player1;
         Bot currentBot = null;
-
-        // Imprimir visualização do mapa inicial
-        //System.out.println(getMapPreviw());
 
         int round = 1;
         // Enquanto o jogo não terminar, continuar rodadas
@@ -66,7 +53,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
 
             // Realizar a lógica da rodada
             // playRound(currentBot);
-            currentBot.move();
 
             // Imprimir visualização do mapa após cada rodada
             System.out.println(playerTurn.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
@@ -98,15 +84,20 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         System.out.println("--------------WINNER: " + winner.getname() + " ---------------");
     }
 
-    private void playRound(Bot bot) {
-        // Implemente a lógica da rodada aqui, como movimento de bots, verificação de
-        // vitória, etc.
-        Player currentPlayer = (currentPlayerTurn == 0) ? player1 : player2;
-        Player otherPlayer = (currentPlayerTurn == 0) ? player2 : player1;
+    @Override
+    public Bot playRound(Player player) {
+        Bot currentBot = null;
 
-        // Lógica de movimento de bots, etc.
-        // Exemplo:
-        bot.move();
+        currentBot = player.getNextBot();
+
+        currentBot.move();
+
+        if (checkEndGame(currentBot, player)) {
+            winner = player;
+        }
+
+        // retorna o bot que jogou
+        return currentBot;
     }
 
     public Player nextTurn() {
@@ -121,7 +112,43 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         } else if (currentPlayerTurn == 1) {
             playerTurn = player2;
         } else {
-            System.out.println("ERRO TESTE");
+            throw new RuntimeException("Ocurreu um erro ao processar a vez do jogador");
+        }
+
+        return playerTurn;
+    }
+
+    /**
+     * 
+     * @return -1 - não acabou
+     *         0 - empate
+     *         1 - jogador 1 ganhou
+     *         2 - jogador 2 ganhou
+     */
+    // TODO
+    @Override
+    public int isGameOver() {
+        if (winner == null) {
+            return -1;
+        } else if (winner == player1) {
+            return 1;
+        } else if (winner == player2) {
+            return 2;
+        }
+
+        return 0;
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        Player playerTurn = null;
+
+        if (currentPlayerTurn == 0) {
+            playerTurn = player1;
+        } else if (currentPlayerTurn == 1) {
+            playerTurn = player2;
+        } else {
+            throw new RuntimeException("Ocurreu um erro ao processar a vez do jogador");
         }
 
         return playerTurn;

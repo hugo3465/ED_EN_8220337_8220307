@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
+import api.algorithms.RandomMovementAlgorithm;
+import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
+import api.game.CaptureTheFlagGame;
+import api.game.Flag;
 import api.game.Player;
 import api.map.GameMap;
 import application.forms.BotOptionsDialog;
+import application.forms.GameInterface;
 import application.forms.MapOptionsDialog;
 import exceptions.InvalidMapException;
 
@@ -267,14 +272,57 @@ public class game extends javax.swing.JFrame {
     private void startGameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startGameActionPerformed
         String namePlayer1 = Player1Name.getText();
         String namePlayer2 = Player2Name.getText();
-        if (map != null && botsPlayer1 != null && botsPlayer2 != null && namePlayer1 != "" && namePlayer2 != "") {
-            player1 = new Player(namePlayer1, null, null, botsPlayer1);
-            player2 = new Player(namePlayer2, null, null, botsPlayer2);
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel inicair o jogo porque ainda ha campos por responder",
-                    "Falta de Informacao",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+
+
+
+        GameMap map = new GameMap("Meu mapa");
+        map.generateRandomMap(15, true, 0.4);
+        map.exportMap("C:/Users/hugui/Desktop/export.txt");
+
+        ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
+        RandomMovementAlgorithm algorithm2 = new RandomMovementAlgorithm(map);
+        ShortestPathAlgorithm algorithm3 = new ShortestPathAlgorithm(map);
+        RandomMovementAlgorithm algorithm4 = new RandomMovementAlgorithm(map);
+        
+        
+
+        Flag flagPlayer1 = new Flag(1);
+        Flag flagPlayer2 = new Flag(15);
+
+        Bot bot = new Bot("Raul", algorithm, flagPlayer2);
+        Bot bot2 = new Bot("Raul2", algorithm2, flagPlayer2);
+        Bot bot3 = new Bot("Casemiro", algorithm3, flagPlayer1);
+        Bot bot4 = new Bot("Casemiro2", algorithm4, flagPlayer1);
+
+        
+
+        Bot[] botsPlayer1 = {bot, bot2};
+        Bot[] botsPlayer2 = {bot3, bot4};
+
+        Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
+        Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);
+
+        CaptureTheFlagGame game = new CaptureTheFlagGame(map, player1, player2);
+
+
+        Thread gameInterface = new Thread(new GameInterface(game));
+        // GameInterface gameInterface = new GameInterface(game);
+        gameInterface.start();
+
+
+
+
+        
+        // if (map != null && botsPlayer1 != null && botsPlayer2 != null && namePlayer1 != "" && namePlayer2 != "") {
+        //     player1 = new Player(namePlayer1, null, null, botsPlayer1);
+        //     player2 = new Player(namePlayer2, null, null, botsPlayer2);
+
+        //     GameInterface gameInterface = new GameInterface(null); // TODO
+        // } else {
+        //     JOptionPane.showMessageDialog(null, "Não foi possivel inicair o jogo porque ainda ha campos por responder",
+        //             "Falta de Informacao",
+        //             JOptionPane.ERROR_MESSAGE);
+        // }
     }// GEN-LAST:event_startGameActionPerformed
 
     private void importButtomActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_importButtomActionPerformed
@@ -385,6 +433,9 @@ public class game extends javax.swing.JFrame {
             if (!operationCanceled) {
                 JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
                         JOptionPane.INFORMATION_MESSAGE);
+
+                // desligar o painel para escolha no numero de bots para segurança
+                numBots.setEnabled(false);
             }
         }
     }// GEN-LAST:event_InserirBotsPlayer1ActionPerformed
@@ -424,6 +475,9 @@ public class game extends javax.swing.JFrame {
             if (!operationCanceled) {
                 JOptionPane.showMessageDialog(this, "Bots inseridos com sucesso", "Bot Inserido",
                         JOptionPane.INFORMATION_MESSAGE);
+
+                // desligar o painel para escolha no numero de bots para segurança
+                numBots.setEnabled(false);
             }
 
         }
