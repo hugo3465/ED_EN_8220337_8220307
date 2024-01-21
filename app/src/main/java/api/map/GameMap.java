@@ -69,7 +69,9 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
         double totalEdges;
         if (bidirectional) {
-            totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
+            // totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
+            totalEdges = (numVertices * (numVertices - 1)) * density;
+
         } else {
             // totalEdges = (numVertices - 1) * density;
 
@@ -77,7 +79,8 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
             // totalEdges += (numVertices - 2) * density;
             // }
 
-            totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
+            // totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
+            totalEdges = (numVertices * (numVertices - 1)) * density;
 
             // Garante que cada vértice tenha pelo menos uma aresta
             totalEdges += numVertices * density;

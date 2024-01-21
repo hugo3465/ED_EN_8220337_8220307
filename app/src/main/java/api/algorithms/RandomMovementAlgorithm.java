@@ -19,8 +19,6 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
     }
 
     private boolean calculatePath(int startVertex, int endVertex) {
-        //OrderedListADT<Integer> visitedIndexes = new OrderedArrayList<>(); // serve
-        // para não repetir vértices
 
         int currentIndex = startVertex;
 
@@ -34,7 +32,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
 
             // System.out.println(neighbors.length);
 
-            if (randomNeighbor != -1) { // && !visitedIndexes.contains(randomNeighbor)
+            if (randomNeighbor != -1) {
                 currentIndex = randomNeighbor;
                 calculatedPath.enqueue(currentIndex);
                 //visitedIndexes.add(currentIndex);
@@ -59,7 +57,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         UnorderedListADT<Integer> neighborsList = new UnorderedArrayList<>();
 
         for (int i = 0; i < numVertices; i++) {
-            if (adjMatrix[index][i] > 0 && !hasBot(i)) { // TODO envés de > 0 acho que devo meter != de infinito
+            if (adjMatrix[index][i] > 0 && !hasBot(i)) {
                 neighborsList.addToFront(i);
             }
         }

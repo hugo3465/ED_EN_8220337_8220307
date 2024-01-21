@@ -1,39 +1,42 @@
 package application;
 
+import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
+import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.game.CaptureTheFlagGame;
 import api.game.Flag;
 import api.game.Player;
 import api.map.GameMap;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
-        Scanner scanner = new Scanner(System.in);
-
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(100, true, 0.6);
-        map.exportMap("C:/Users/User/Desktop/export.txt");
+        map.generateRandomMap(100, true, 0.1);
+        map.exportMap("C:/Users/hugui/Desktop/export.txt");
 
-        ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
-        RandomMovementAlgorithm algorithm2 = new RandomMovementAlgorithm(map);
-        ShortestPathAlgorithm algorithm3 = new ShortestPathAlgorithm(map);
-        RandomMovementAlgorithm algorithm4 = new RandomMovementAlgorithm(map);
+        MovementAlgorithm algorithmA1 = new ShortestPathAlgorithm(map);
+        MovementAlgorithm algorithmR1 = new RandomMovementAlgorithm(map);
+        MovementAlgorithm algorithmL1 = new LongestPathAlgorithm(map);
+        MovementAlgorithm algorithmA2 = new ShortestPathAlgorithm(map);
+        MovementAlgorithm algorithmR2 = new RandomMovementAlgorithm(map);
+        MovementAlgorithm algorithmL2 = new LongestPathAlgorithm(map);
 
         Flag flagPlayer1 = new Flag(1);
-        Flag flagPlayer2 = new Flag(15);
+        Flag flagPlayer2 = new Flag(60);
 
-        Bot bot = new Bot("Raul", algorithm, flagPlayer2);
-        Bot bot2 = new Bot("Raul2", algorithm2, flagPlayer2);
-        Bot bot3 = new Bot("Casemiro", algorithm3, flagPlayer1);
-        Bot bot4 = new Bot("Casemiro2", algorithm4, flagPlayer1);
+        Bot bot = new Bot("Raul", algorithmA1, flagPlayer2);
+        Bot bot2 = new Bot("Raul2", algorithmR1, flagPlayer2);
+        Bot bot3 = new Bot("Raul3", algorithmL1, flagPlayer2);
+        Bot bot4 = new Bot("Casemiro", algorithmA2, flagPlayer1);
+        Bot bot5 = new Bot("Casemiro2", algorithmR2, flagPlayer1);
+        Bot bot6 = new Bot("Casemiro3", algorithmL2, flagPlayer1);
 
-        Bot[] botsPlayer1 = { bot, bot2 };
-        Bot[] botsPlayer2 = { bot3, bot4 };
+        Bot[] botsPlayer1 = { bot, bot2, bot3 };
+        Bot[] botsPlayer2 = { bot4, bot5, bot6 };
 
         Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
         Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);
@@ -54,7 +57,7 @@ public class Demo {
 
             // Imprimir visualização do mapa após cada rodada
             System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + (currentBot.getPosition() + 1));
+                    + currentBot.getPosition());
 
             currentPlayer = game.nextTurn();
 

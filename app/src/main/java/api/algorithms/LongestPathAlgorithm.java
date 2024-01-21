@@ -11,7 +11,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
     // A classe implementa um algoritmo para encontrar o caminho mais longo num mapa de jogo.
 
     private GameMap map; // O mapa de jogo onde o algoritmo opera.
-    private StackADT<Integer> calculatedPath; // Pilha para armazenar o caminho calculado.
+    private StackADT<Integer> calculatedPath; // stack para armazenar o caminho calculado.
 
     // Construtor recebe o mapa de jogo.
     public LongestPathAlgorithm(GameMap map) {

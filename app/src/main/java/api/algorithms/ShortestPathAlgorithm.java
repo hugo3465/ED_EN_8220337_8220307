@@ -6,8 +6,7 @@ import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.map.GameMap;
 
-public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se calha tirar o genérico do
-                                                                  // movementAlgorithm
+public class ShortestPathAlgorithm implements MovementAlgorithm {
 
     private GameMap map;
     private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão
@@ -23,18 +22,17 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    private boolean dijkstra(int startVertex, int endVertex) { // TODO secalhar remover a
-                                                               // adjacencyMatrix
+    private boolean dijkstra(int startIndex, int endIndex) { 
         double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
         int numVertices = adjacencyMatrix[0].length;
 
-        // shortestDistances[i] conterá a distância mais curta de startVertex para i
+        // shortestDistances[i] conterá a distância mais curta de startIndex para i
         double[] shortestDistances = new double[numVertices];
 
         // added[i] será verdadeiro se o vértice i estiver
         // incluído no caminho mais curto / na árvore de caminho mais curto
-        // ou se a distância mais curta de startVertex para
+        // ou se a distância mais curta de startIndex para
         // i estiver finalizada
         boolean[] added = new boolean[numVertices];
 
@@ -46,14 +44,14 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
 
         // A distância do vértice de origem para
         // ele mesmo é sempre 0
-        shortestDistances[startVertex] = 0.0;
+        shortestDistances[startIndex] = 0.0;
 
         // Array de pais para armazenar a árvore de caminho mais curto
         int[] parents = new int[numVertices];
 
         // O vértice de início não
         // possui um pai
-        parents[startVertex] = NO_PARENT;
+        parents[startIndex] = NO_PARENT;
 
         // Encontrar o caminho mais curto para todos
         // os vértices
@@ -95,14 +93,11 @@ public class ShortestPathAlgorithm implements MovementAlgorithm { // TODO se cal
             }
         }
 
-        // Construir o caminho de endVertex para startVertex ele contém os índices dos
+        // Construir o caminho de endIndex para startIndex ele contém os índices dos
         // vértices, não o conteúdo do vértice.
-        // Como usa o addToFront ent o caminho é construído do startVertex para o
-        // endVertex
-        // UnorderedArrayList<Integer> path = new UnorderedArrayList<>(); // TODO ACHO
-        // QUE ISTO DEVIA SER UMA
-        // UNORDEREDLINKEDLIST ou uma LinkedStack
-        int currentVertexIndex = endVertex;
+        // Como usa o addToFront ent o caminho é construído do startIndex para o
+        // endIndex
+        int currentVertexIndex = endIndex;
         while (currentVertexIndex != NO_PARENT) {
             // path.addToFront(currentVertexIndex);
             this.calculatedPath.push(currentVertexIndex);

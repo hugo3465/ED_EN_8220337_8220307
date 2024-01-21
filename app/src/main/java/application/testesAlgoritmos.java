@@ -1,7 +1,6 @@
 package application;
 
 import api.algorithms.LongestPathAlgorithm;
-import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
 import api.game.Flag;

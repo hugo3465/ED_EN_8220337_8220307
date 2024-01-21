@@ -519,6 +519,7 @@ public class game extends javax.swing.JFrame {
 
     private void removeAlgorithmOption(MovementAlgorithm algorithm,
             ConvertibleUnnorderedArrayList<String> algorithmOptions) {
+                
         if (algorithm instanceof ShortestPathAlgorithm) {
             algorithmOptions.remove("Shortest Path");
         } else if (algorithm instanceof RandomMovementAlgorithm) {

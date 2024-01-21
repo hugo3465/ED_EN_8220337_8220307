@@ -76,6 +76,10 @@ public class GameInterface implements Runnable {
             round++;
         }
 
+        // Exibir mensagem de fim de jogo
+        System.out.println("Fim de jogo!!!");
+        addText("Fim de jogo!!!");
+        System.out.println("--------------WINNER: " + currentPlayer.getname() + " ---------------");
         switch (game.isGameOver()) {
             case -1:
                 break;
@@ -84,12 +88,9 @@ public class GameInterface implements Runnable {
                 System.out.println("\n-----Empate------\n");
                 break;
             case 1:
-                System.out.println("\n-----Jogador 1 ganhou------\n");
-                addText("\n-----Jogador 1 ganhou------\n");
-                break;
             case 2:
-                System.out.println("\n-----Jogador 2 ganhou------\n");
-                addText("\n-----Jogador 2 ganhou------\n");
+                System.out.println("\n--------------WINNER: " + currentPlayer.getname() + " ---------------\n");
+                addText("\n--------------WINNER: " + currentPlayer.getname() + " ---------------\n");
                 break;
 
             default:
