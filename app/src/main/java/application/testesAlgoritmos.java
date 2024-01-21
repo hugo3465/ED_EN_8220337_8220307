@@ -10,7 +10,7 @@ import api.map.GameMap;
 public class testesAlgoritmos {
     public static void main(String[] args) {
         GameMap map = new GameMap();
-        map.generateRandomMap(5, true, 0.6);
+        map.generateRandomMap(20, false, 0.1);
         map.exportMap("C:/Users/User/Desktop/cosa.txt");
 
         MovementAlgorithm algorithm = new LongestPathAlgorithm(map);

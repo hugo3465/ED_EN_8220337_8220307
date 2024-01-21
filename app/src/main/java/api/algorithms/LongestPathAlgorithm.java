@@ -54,7 +54,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
     // Implementação do método da interface para obter o próximo movimento do bot.
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
-        // Se a pilha do caminho calculado estiver vazia, calcula o caminho mais longo.
+        // Se a stack do caminho calculado estiver vazia, calcula o caminho mais longo.
         if (calculatedPath.isEmpty()) {
             longestPathDFS(currentIndex, endIndex);
         }
@@ -65,7 +65,31 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         }
         System.out.println("\n");
 
-        // TODO: Implemente a lógica para retornar o próximo índice com base no caminho calculado.
+
+        int nextIndex = currentIndex;
+        while (!calculatedPath.isEmpty()) {
+            int dequeuedIndex = calculatedPath.pop();
+
+            // Verifica se o vértice removido contém um bot
+            if (hasBot(dequeuedIndex)) {
+                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                        + " mas tem lá um bot, então vai ter de se recalcular o caminho");
+
+                // Recalcula o caminho se o vértice retirado contiver um bot
+                if (!longestPathDFS(currentIndex, endIndex)) {
+                    // se não conseguiu calcular o caminho vai devolver o vertice atual
+                    // break;
+                    return currentIndex;
+                }
+                continue; // isto funciona mas é espargette
+            } else {
+                // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
+                // para onde ele foi
+                nextIndex = dequeuedIndex;
+                updateBotLocation(currentIndex, nextIndex, currentBot);
+                return nextIndex;
+            }
+        }
 
         return currentIndex;
     }
