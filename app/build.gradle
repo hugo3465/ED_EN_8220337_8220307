@@ -33,6 +33,14 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
+
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:32.1.1-jre'
 }
 
 test {
@@ -55,25 +63,25 @@ jacocoTestReport {
 }
 
 // Na fase de inspeção de código
-pmd {
-    consoleOutput = true
-    toolVersion = "6.37.0" // 6.21.0
-    // rulesMinimumPriority = 5
+// pmd {
+//     consoleOutput = true
+//     toolVersion = "6.37.0" // 6.21.0
+//     // rulesMinimumPriority = 5
 
-    // categorias de informação que se quer
-    // ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+//     // categorias de informação que se quer
+//     // ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
 
-    // custom rulesets
-    ruleSetFiles = files("src/main/resources/ruleset.xml")
-    ruleSets = []
+//     // custom rulesets
+//     ruleSetFiles = files("src/main/resources/ruleset.xml")
+//     ruleSets = []
 
-    ignoreFailures = true
-}
+//     ignoreFailures = true
+// }
 
 
 application {
     // Define the main class for the application.
-    mainClass = 'application.App'
+    mainClass = 'application.game'
 }
 
 tasks.named('test') {
