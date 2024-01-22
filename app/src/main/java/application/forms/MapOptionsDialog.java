@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
 
+/**
+ * JDialog que representa uma caixa de diálogo para configurar o mapa no jogo.
+ */
 public class MapOptionsDialog extends JDialog {
     private boolean bidirectional;
     private int numVertices;
@@ -21,29 +24,38 @@ public class MapOptionsDialog extends JDialog {
     private JButton okButton;
     private JButton cancelButton;
 
+    /**
+     * Construtor da classe MapOptionsDialog.
+     *
+     * @param parent O JFrame pai da caixa de diálogo.
+     * @param modal  Indica se a caixa de diálogo deve ser modal.
+     */
     public MapOptionsDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+    /**
+     * Inicializa os componentes da caixa de diálogo.
+     */
     private void initComponents() {
         setTitle("Opções do Mapa");
         setLayout(null);
         setBounds(100, 100, 450, 200);
-    
+
         JLabel bidirectionalLabel = new JLabel("Bidirecional:");
         bidirectionalLabel.setBounds(20, 20, 80, 20);
         add(bidirectionalLabel);
-    
-        String[] bidirectionalOptions = {"Sim", "Não"};
+
+        String[] bidirectionalOptions = { "Sim", "Não" };
         bidirectionalComboBox = new JComboBox<>(bidirectionalOptions);
         bidirectionalComboBox.setBounds(120, 20, 80, 20);
         add(bidirectionalComboBox);
-    
+
         JLabel verticesLabel = new JLabel("Vértices:");
         verticesLabel.setBounds(20, 50, 80, 20);
         add(verticesLabel);
-    
+
         verticesSlider = new JSlider(5, 100); // Intevalo de vertices
         verticesSlider.setBounds(120, 50, 150, 20);
         verticesSlider.addChangeListener(new ChangeListener() {
@@ -54,16 +66,16 @@ public class MapOptionsDialog extends JDialog {
             }
         });
         add(verticesSlider);
-    
+
         verticesTextField = new JTextField();
         verticesTextField.setBounds(280, 50, 50, 20); // tamanho aqui
         verticesTextField.setEditable(false);
         add(verticesTextField);
-    
+
         JLabel densityLabel = new JLabel("Densidade:");
         densityLabel.setBounds(20, 80, 80, 20);
         add(densityLabel);
-    
+
         densitySlider = new JSlider(50, 90); // Intervalo da densidade
         densitySlider.setBounds(120, 80, 150, 20);
         densitySlider.addChangeListener(new ChangeListener() {
@@ -74,7 +86,7 @@ public class MapOptionsDialog extends JDialog {
             }
         });
         add(densitySlider);
-    
+
         NumberFormat doubleFormat = NumberFormat.getNumberInstance();
         doubleFormat.setMinimumFractionDigits(2);
         doubleFormat.setMaximumFractionDigits(2);
@@ -85,7 +97,7 @@ public class MapOptionsDialog extends JDialog {
         densityTextField = new JFormattedTextField(doubleFormatter);
         densityTextField.setBounds(280, 80, 50, 20);
         add(densityTextField);
-    
+
         okButton = new JButton("OK");
         okButton.setBounds(80, 120, 80, 30);
         okButton.addActionListener(new ActionListener() {
@@ -96,7 +108,7 @@ public class MapOptionsDialog extends JDialog {
             }
         });
         add(okButton);
-    
+
         cancelButton = new JButton("Cancelar");
         cancelButton.setBounds(180, 120, 100, 30);
         cancelButton.addActionListener(new ActionListener() {
@@ -107,18 +119,33 @@ public class MapOptionsDialog extends JDialog {
             }
         });
         add(cancelButton);
-    
+
         setLocationRelativeTo(null); // Centralizar a janela na tela
     }
 
+    /**
+     * Verifica se o mapa deve ser bidirecional.
+     *
+     * @return true se bidirecional, false caso contrário.
+     */
     public boolean isBidirectional() {
         return bidirectional;
     }
 
+    /**
+     * Obtém o número de vértices configurado para o mapa.
+     *
+     * @return O número de vértices.
+     */
     public int getNumVertices() {
         return numVertices;
     }
 
+    /**
+     * Obtém a densidade configurada para o mapa.
+     *
+     * @return A densidade do mapa.
+     */
     public double getDensity() {
         return density;
     }

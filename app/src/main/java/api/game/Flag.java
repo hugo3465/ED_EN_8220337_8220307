@@ -7,22 +7,36 @@ import api.game.interfaces.GameEntity;
  */
 public class Flag implements GameEntity {
 
+    /**
+     * Índice da bandeira no grafo.
+     */
     private int index;
 
     /**
      * Construtor da classe Flag.
      * Passamos o número de vertices logo temos de converter para o indice
+     * 
      * @param vertex O vértice inicial da bandeira no grafo.
      */
     public Flag(int vertex) {
         this.index = vertex - 1;
     }
 
+    /**
+     * Obtém o índice da bandeira no grafo.
+     *
+     * @return O índice da bandeira.
+     */
     @Override
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Define o índice da bandeira no grafo.
+     *
+     * @param index O novo índice da bandeira.
+     */
     @Override
     public void setIndex(int index) {
         this.index = index;

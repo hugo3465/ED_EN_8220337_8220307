@@ -11,6 +11,9 @@ import api.map.GameMap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * JDialog que representa uma caixa de diálogo para configurar os bots do jogo.
+ */
 public class BotOptionsDialog extends JDialog {
     private String name;
     private MovementAlgorithm movementAlgorithm;
@@ -23,6 +26,14 @@ public class BotOptionsDialog extends JDialog {
     private JButton okButton;
     private JButton cancelButton;
 
+    /**
+     * Construtor da classe BotOptionsDialog.
+     *
+     * @param parent           O JFrame pai da caixa de diálogo.
+     * @param modal            Indica se a caixa de diálogo deve ser modal.
+     * @param map              O mapa do jogo.
+     * @param algorithmOptions As opções de algoritmos disponíveis.
+     */
     public BotOptionsDialog(java.awt.Frame parent, boolean modal, GameMap map, String[] algorithmOptions) {
         super(parent, modal);
         this.map = map;
@@ -31,6 +42,9 @@ public class BotOptionsDialog extends JDialog {
 
     }
 
+    /**
+     * Inicializa os componentes da caixa de diálogo.
+     */
     private void initComponents() {
         setTitle("Opções do Bot");
         setLayout(null);
@@ -68,7 +82,6 @@ public class BotOptionsDialog extends JDialog {
                     movementAlgorithm = new LongestPathAlgorithm(map);
                 }
 
-
                 dispose();
             }
         });
@@ -89,14 +102,29 @@ public class BotOptionsDialog extends JDialog {
         setLocationRelativeTo(null); // Centralizar a janela na tela
     }
 
+    /**
+     * Obtém o nome do bot.
+     *
+     * @return O nome do bot.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Obtém o algoritmo de movimento configurado para o bot.
+     *
+     * @return O algoritmo de movimento do bot.
+     */
     public MovementAlgorithm getMovementAlgorithm() {
         return movementAlgorithm;
     }
 
+    /**
+     * Verifica se o utilizador cancelou a operação na caixa de diálogo.
+     *
+     * @return true se o utilizador cancelou, false caso contrário.
+     */
     public boolean isDialogCanceled() {
         return dialogCanceled;
     }

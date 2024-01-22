@@ -312,7 +312,6 @@ public class App extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null,
                             "Erro: O valor deve estar entre " + minVertex + " e " + maxVertex, "Erro",
                             JOptionPane.ERROR_MESSAGE);
-                    System.out.println(startingVertex);
                     flagPlaced = false;
                 }
 
@@ -359,7 +358,6 @@ public class App extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null,
                             "Erro: O valor deve estar entre " + minVertex + " e " + maxVertex, "Erro",
                             JOptionPane.ERROR_MESSAGE);
-                    System.out.println(startingVertex);
                     flagPlaced = false;
                 }
 
