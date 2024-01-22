@@ -29,6 +29,8 @@ public class game extends javax.swing.JFrame {
     public Bot[] botsPlayer1;
     public Bot[] botsPlayer2;
 
+    private int minVertex = 1, maxVertex = 0;
+
     /**
      * Creates new form game
      */
@@ -275,43 +277,96 @@ public class game extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlaceFlagPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PlaceFlagPlayer1ActionPerformed
-        try {
-            // solicitar ao utilizador para que insira a sua bandeira
-            int startingVertex = Integer.parseInt(
-                    JOptionPane.showInputDialog(this, "Insira o vértice onde a sua bandeira vai ficar."));
+        boolean flagPlaced = false;
+        while (!flagPlaced) {
 
-            flagPlayer1 = new Flag(startingVertex);
+            try {
+                // solicitar ao utilizador para que insira a sua bandeira
+                int startingVertex = Integer.parseInt(
+                        JOptionPane.showInputDialog(this, "Insira o vértice onde a sua bandeira vai ficar."));
 
-            // mensagem de sucesso
-            JOptionPane.showMessageDialog(null, "Bandeira introduzida com sucesso", "Bandeira inserida",
-                    JOptionPane.INFORMATION_MESSAGE);
+                // Verifica se o valor está dentro do intervalo desejado
+                if (startingVertex >= minVertex && startingVertex <= maxVertex) {
+                    // Verifica se o valor é diferente de flagPlayer2
+                    if (flagPlayer2 == null || startingVertex != flagPlayer2.getPosition()) {
 
-            // Colocar o botão de inserir bots como ativado
-            InserirBotsPlayer1.setEnabled(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+                        flagPlayer1 = new Flag(startingVertex);
+
+                        // mensagem de sucesso
+                        JOptionPane.showMessageDialog(null, "Bandeira introduzida com sucesso", "Bandeira inserida",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                        // Colocar o botão de inserir bots como ativado
+                        InserirBotsPlayer1.setEnabled(true);
+                        flagPlaced = true;
+                    }else {
+                        // Mensagem de erro se o valor for igual a flagPlayer1
+                        JOptionPane.showMessageDialog(null,
+                                "Erro: O valor deve ser diferente do vértice da bandeira do Player 2",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    // Mensagem de erro se o valor não estiver dentro do intervalo
+                    JOptionPane.showMessageDialog(null,
+                            "Erro: O valor deve estar entre " + minVertex + " e " + maxVertex, "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.out.println(startingVertex);
+                    flagPlaced = false;
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }// GEN-LAST:event_PlaceFlagPlayer1ActionPerformed
 
     private void PlaceFlagPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PlaceFlagPlayer2ActionPerformed
-        try {
-            // solicitar ao utilizador para que insira a sua bandeira
-            int startingVertex = Integer.parseInt(
-                    JOptionPane.showInputDialog(this, "Insira o vértice onde a sua bandeira vai ficar."));
+        boolean flagPlaced = false;
+        while (!flagPlaced) {
 
-            flagPlayer2 = new Flag(startingVertex);
+            try {
+                // solicitar ao utilizador para que insira a sua bandeira
+                int startingVertex = Integer.parseInt(
+                        JOptionPane.showInputDialog(this, "Insira o vértice onde a sua bandeira vai ficar."));
+                        
+                // Verifica se o valor está dentro do intervalo desejado
+                if (startingVertex >= minVertex && startingVertex <= maxVertex) {
+                    // Verifica se o valor é diferente de flagPlayer1
+                    if (flagPlayer1 == null || startingVertex != flagPlayer1.getPosition()) {
 
-            // mensagem de sucesso
-            JOptionPane.showMessageDialog(null, "Bandeira introduzida com sucesso", "Bandeira inserida",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        flagPlayer2 = new Flag(startingVertex);
 
-            // Colocar o botão de inserir bots como ativado
-            InserirBotsPlayer2.setEnabled(true);
+                        // mensagem de sucesso
+                        JOptionPane.showMessageDialog(null, "Bandeira introduzida com sucesso", "Bandeira inserida",
+                                JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+                        // Colocar o botão de inserir bots como ativado
+                        InserirBotsPlayer2.setEnabled(true);
+                        flagPlaced = true;
+                    } else {
+                        // Mensagem de erro se o valor for igual a flagPlayer1
+                        JOptionPane.showMessageDialog(null,
+                                "Erro: O valor deve ser diferente do vértice da bandeira do Player 1",
+                                "Erro",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    // Mensagem de erro se o valor não estiver dentro do intervalo
+                    JOptionPane.showMessageDialog(null,
+                            "Erro: O valor deve estar entre " + minVertex + " e " + maxVertex, "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.out.println(startingVertex);
+                    flagPlaced = false;
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }// GEN-LAST:event_PlaceFlagPlayer2ActionPerformed
 
@@ -429,6 +484,8 @@ public class game extends javax.swing.JFrame {
         // Opções selecionadas
         boolean bidirectional = optionsDialog.isBidirectional();
         int numVertices = optionsDialog.getNumVertices();
+        // Experiencia
+        maxVertex = numVertices;
         double density = optionsDialog.getDensity();
 
         try {
@@ -449,7 +506,7 @@ public class game extends javax.swing.JFrame {
     }// GEN-LAST:event_generateButtom2ActionPerformed
 
     private void InserirBotsPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer1ActionPerformed
-        botsPlayer1 =inserirBotsActionPerformed(botsPlayer1, flagPlayer2);
+        botsPlayer1 = inserirBotsActionPerformed(botsPlayer1, flagPlayer2);
     }// GEN-LAST:event_InserirBotsPlayer1ActionPerformed
 
     private void InserirBotsPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer2ActionPerformed
@@ -519,7 +576,7 @@ public class game extends javax.swing.JFrame {
 
     private void removeAlgorithmOption(MovementAlgorithm algorithm,
             ConvertibleUnnorderedArrayList<String> algorithmOptions) {
-                
+
         if (algorithm instanceof ShortestPathAlgorithm) {
             algorithmOptions.remove("Shortest Path");
         } else if (algorithm instanceof RandomMovementAlgorithm) {
