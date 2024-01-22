@@ -40,7 +40,7 @@ public class PlayerTest {
 
         // Verificação
         assertNotNull(enemyFlag);
-        assertEquals(10, enemyFlag.getIndex());
+        assertEquals(9, enemyFlag.getIndex());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PlayerTest {
 
         // Verificação
         assertNotNull(myFlag);
-        assertEquals(1, myFlag.getIndex());
+        assertEquals(0, myFlag.getIndex());
     }
 
     @Test

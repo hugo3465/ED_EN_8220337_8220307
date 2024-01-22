@@ -117,7 +117,7 @@ public class Player {
      *
      * @return O próximo bot da fila.
      */
-    public Bot getNextBot() {
+    protected Bot getNextBot() {
         Bot currenBot = this.bots.dequeue();
 
         this.bots.enqueue(currenBot);

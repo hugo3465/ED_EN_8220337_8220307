@@ -274,6 +274,12 @@ public class App extends javax.swing.JFrame {
         numBots.add("4");
 
         pack();
+
+        // aviso inicial
+        JOptionPane.showMessageDialog(null,
+                "Para melhor visualização do grafico, é aconselhado a exportar o mapa e colar a matriz de adjacencias no site seguinte:\nhttps://graphonline.ru/pt/",
+                "AVISO",
+                JOptionPane.INFORMATION_MESSAGE);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PlaceFlagPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PlaceFlagPlayer1ActionPerformed
@@ -299,7 +305,7 @@ public class App extends javax.swing.JFrame {
                         // Colocar o botão de inserir bots como ativado
                         InserirBotsPlayer1.setEnabled(true);
                         flagPlaced = true;
-                    }else {
+                    } else {
                         // Mensagem de erro se o valor for igual a flagPlayer1
                         JOptionPane.showMessageDialog(null,
                                 "Erro: O valor deve ser diferente do vértice da bandeira do Player 2",
@@ -330,7 +336,7 @@ public class App extends javax.swing.JFrame {
                 // solicitar ao utilizador para que insira a sua bandeira
                 int startingVertex = Integer.parseInt(
                         JOptionPane.showInputDialog(this, "Insira o vértice onde a sua bandeira vai ficar."));
-                        
+
                 // Verifica se o valor está dentro do intervalo desejado
                 if (startingVertex >= minVertex && startingVertex <= maxVertex) {
                     // Verifica se o valor é diferente de flagPlayer1
@@ -372,7 +378,6 @@ public class App extends javax.swing.JFrame {
         String namePlayer1 = Player1Name.getText();
         String namePlayer2 = Player2Name.getText();
 
-
         boolean condition = map != null && botsPlayer1 != null && botsPlayer2 != null
                 && !namePlayer1.isEmpty()
                 && !namePlayer2.isEmpty() && flagPlayer1 != null && flagPlayer2 != null;
@@ -411,7 +416,7 @@ public class App extends javax.swing.JFrame {
                 // colocar botões como ativos
                 PlaceFlagPlayer1.setEnabled(true);
                 PlaceFlagPlayer2.setEnabled(true);
-                
+
                 maxVertex = map.getVertices().length;
 
             }

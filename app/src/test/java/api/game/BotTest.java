@@ -3,12 +3,15 @@ package api.game;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.map.GameMap;
+import exceptions.InvalidMapException;
 
 public class BotTest {
 
@@ -18,6 +21,16 @@ public class BotTest {
 
     @BeforeEach
     void setUp() {
+        mockGameMap = new GameMap();
+        try {
+            mockGameMap.importMap("src/test/java/api/game/testMap.txt");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvalidMapException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         mockEnemyFlag = new Flag(1);
         bot = new Bot("BotName", new ShortestPathAlgorithm(mockGameMap), mockEnemyFlag);
     }
@@ -25,7 +38,7 @@ public class BotTest {
     @Test
     void testGetIndex() {
         // Configuração
-        int expectedIndex = 42;
+        int expectedIndex = 10;
         bot.setIndex(expectedIndex);
 
         // Execução
