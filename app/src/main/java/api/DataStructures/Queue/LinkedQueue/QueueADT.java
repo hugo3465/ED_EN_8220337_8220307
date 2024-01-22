@@ -1,5 +1,5 @@
-package api.DataStructures.Queue.LinkedQueue;
-import api.DataStructures.Exceptions.EmptyCollectionException;
+package api.dataStructures.Queue.LinkedQueue;
+import api.dataStructures.Exceptions.EmptyCollectionException;
 
 public interface QueueADT<T> {
     /**

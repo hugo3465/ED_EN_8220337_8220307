@@ -1,10 +1,10 @@
 package api.algorithms;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Queue.LinkedQueue.QueueADT;
 import api.game.Bot;
 import api.map.GameMap;
 

@@ -1,4 +1,4 @@
-package api.DataStructures.Exceptions;
+package api.dataStructures.Exceptions;
 
 public class EmptyCollectionException extends RuntimeException{
     public EmptyCollectionException() {

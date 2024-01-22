@@ -18,8 +18,8 @@ public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
         GameMap map = new GameMap("Meu mapa");
-        //map.generateRandomMap(90, false, 0.9);
-        //map.exportMap("C:/Users/hugui/Desktop/export.txt");
+        // map.generateRandomMap(10, false, 0.5);
+        // map.exportMap("C:/Users/hugui/Desktop/export.txt");
         try {
             map.importMap("C:/Users/hugui/Desktop/export.txt");
         } catch (FileNotFoundException e) {
@@ -47,8 +47,11 @@ public class Demo {
         Bot bot5 = new Bot("Casemiro2", algorithmR2, flagPlayer1);
         Bot bot6 = new Bot("Casemiro3", algorithmL2, flagPlayer1);
 
-        Bot[] botsPlayer1 = { bot, bot2, bot3 };
-        Bot[] botsPlayer2 = { bot4, bot5, bot6 };
+        // Bot[] botsPlayer1 = { bot, bot2, bot3 };
+        // Bot[] botsPlayer2 = { bot4, bot5, bot6 };
+
+        Bot[] botsPlayer1 = { bot };
+        Bot[] botsPlayer2 = { bot4 };
 
         Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
         Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);

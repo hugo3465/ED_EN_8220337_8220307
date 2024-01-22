@@ -1,6 +1,6 @@
-package api.DataStructures.ArrayList.OrderedArrayList;
+package api.dataStructures.ArrayList.OrderedArrayList;
 
-import api.DataStructures.ArrayList.ListADT;
+import api.dataStructures.ArrayList.ListADT;
 
 public interface OrderedListADT<T> extends ListADT<T> {
     /**

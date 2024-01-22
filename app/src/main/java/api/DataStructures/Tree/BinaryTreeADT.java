@@ -1,9 +1,9 @@
-package api.DataStructures.Tree;
+package api.dataStructures.Tree;
 
 import java.util.Iterator;
 
-import api.DataStructures.Exceptions.ElementNotFoundException;
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Exceptions.ElementNotFoundException;
+import api.dataStructures.Exceptions.EmptyCollectionException;
 
 public interface BinaryTreeADT<T> {
 

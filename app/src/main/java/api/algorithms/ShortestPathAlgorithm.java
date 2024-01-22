@@ -1,8 +1,8 @@
 package api.algorithms;
 
-import api.DataStructures.Stack.LinkedStack.LinkedStack;
-import api.DataStructures.Stack.LinkedStack.StackADT;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.dataStructures.Stack.LinkedStack.LinkedStack;
+import api.dataStructures.Stack.LinkedStack.StackADT;
 import api.game.Bot;
 import api.map.GameMap;
 

@@ -1,4 +1,4 @@
-package api.DataStructures.Tree.PriorityQueue;
+package api.dataStructures.Tree.PriorityQueue;
 /**
  * PriorityQueueNode represents a node in a priority queue
  * containing a comparable object, order, and a priority value.

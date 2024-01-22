@@ -1,4 +1,4 @@
-package api.DataStructures.Queue.LinkedQueue;
+package api.dataStructures.Queue.LinkedQueue;
 public class LinearNode<T> {
     private T element;
     private LinearNode<T> next;

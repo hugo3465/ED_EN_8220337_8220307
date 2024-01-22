@@ -2,7 +2,7 @@ package api.map;
 
 import java.util.Random;
 
-import api.DataStructures.Graph.WeightedGraph;
+import api.dataStructures.Graph.WeightedGraph;
 import api.game.interfaces.GameEntity;
 import api.map.interfaces.IGameMap;
 import exceptions.InvalidMapException;
@@ -64,6 +64,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     private void initializeGraph(int numVertices) {
         this.vertices = new GameEntity[numVertices];
         this.adjMatrix = new double[numVertices][numVertices];
+        this.numVertices = numVertices;
     }
 
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
@@ -71,7 +72,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
         double totalEdges;
         if (bidirectional) {
             // Grafo bidirecional
-            // a aresta a  dividir por 2 serve para evitar a contagem dupla de arestas 
+            // a aresta a dividir por 2 serve para evitar a contagem dupla de arestas
             totalEdges = (numVertices * (numVertices - 1)) * (density / 2);
 
         } else {
@@ -105,8 +106,6 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
                 generatedEdges++;
             }
         }
-
-        this.numVertices = numVertices;
     }
 
     @Override
@@ -121,12 +120,25 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
             String line;
             int i = 0;
 
-            while ((line = reader.readLine()) != null) {
+            line = reader.readLine();
+            initializeGraph(line.split(" ").length);
 
-                String[] values = line.split("\\s+");
+            do {
 
-                initializeGraph(values.length);
+                // String[] values = line.split("\\s+");
+                String[] values = line.split(" ");
 
+                // Verifica se a matriz de adjacência foi inicializada
+                if (adjMatrix == null || i >= adjMatrix.length) {
+                    throw new InvalidMapException("A matriz de adjacência não foi inicializada corretamente.");
+                }
+
+                // Verifica se a linha tem o número esperado de elementos
+                if (values.length != adjMatrix[i].length) {
+                    throw new InvalidMapException("Número incorreto de elementos na linha " + (i + 1));
+                }
+
+                
                 if (i >= adjMatrix.length) {
                     throw new InvalidMapException("O ficheiro é muito curto. Esperava menos linhas.");
                 }
@@ -142,14 +154,11 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
                 }
 
                 i++;
-            }
+            } while ((line = reader.readLine()) != null);
 
             if (i < adjMatrix.length) {
                 throw new InvalidMapException("O ficheiro é muito curto. Esperava mais linhas.");
             }
-
-            // Define numero de vertices depois de ler todas as linhas
-            this.numVertices = adjMatrix.length;
 
         } catch (IOException e) {
             throw new FileNotFoundException("Erro ao ler o ficheiro: " + e.getMessage());
@@ -181,8 +190,11 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
     @Override
     public String getMap() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exportMap'");
+        String map = "";
+        for (int i = 0; i < this.numVertices; i++) {
+            map += this.vertices[i] + " ";
+        }
+        return map + "\n";
     }
 
     @Override

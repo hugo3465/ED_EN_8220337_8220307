@@ -62,6 +62,9 @@ public class GameInterface implements Runnable {
             System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
                     + (currentBot.getIndex() + 1));
 
+            System.out.println(game.getGameMap().getMap());
+            addText(game.getGameMap().getMap());
+
             try {
                 // Aguardar 2 segundos antes da próxima rodada
                 TimeUnit.SECONDS.sleep(2);

@@ -1,7 +1,7 @@
-package api.DataStructures.Tree;
+package api.dataStructures.Tree;
 
-import api.DataStructures.Exceptions.EmptyCollectionException;
-import api.DataStructures.Tree.Heap.HeapADT;
+import api.dataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Tree.Heap.HeapADT;
 
 /**
  * Heap implements a heap.

@@ -1,11 +1,11 @@
-package api.DataStructures.Graph;
+package api.dataStructures.Graph;
 
 import java.util.Iterator;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Stack.LinkedStack.LinkedStack;
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Stack.LinkedStack.LinkedStack;
 
 /**
  * Graph represents an adjacency matrix implementation of a graph.

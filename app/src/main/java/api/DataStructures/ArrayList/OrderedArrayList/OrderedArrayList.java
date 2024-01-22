@@ -1,6 +1,6 @@
-package api.DataStructures.ArrayList.OrderedArrayList;
+package api.dataStructures.ArrayList.OrderedArrayList;
 
-import api.DataStructures.ArrayList.ArrayList;
+import api.dataStructures.ArrayList.ArrayList;
 
 public class OrderedArrayList<T> extends ArrayList<T> implements OrderedListADT<T>  {
     public OrderedArrayList() {

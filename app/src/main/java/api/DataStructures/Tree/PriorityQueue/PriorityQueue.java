@@ -1,4 +1,4 @@
-package api.DataStructures.Tree.PriorityQueue;
+package api.dataStructures.Tree.PriorityQueue;
 /**
  * PriorityQueue demonstrates a priority queue using a Heap.
  *

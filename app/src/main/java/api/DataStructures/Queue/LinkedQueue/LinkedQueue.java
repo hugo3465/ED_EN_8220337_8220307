@@ -1,8 +1,8 @@
-package api.DataStructures.Queue.LinkedQueue;
+package api.dataStructures.Queue.LinkedQueue;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Exceptions.EmptyCollectionException;
 
 /**
  * Vou adicionar pelo {@code Rear} e remover pelo {@code front}, para que não

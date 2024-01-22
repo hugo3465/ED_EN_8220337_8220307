@@ -1,7 +1,7 @@
 package api.game;
 
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Queue.LinkedQueue.QueueADT;
 
 /**
  * Representa um jogador no jogo Capture the Flag.

@@ -1,4 +1,4 @@
-package api.DataStructures.Tree;
+package api.dataStructures.Tree;
 
 /**
  * BinaryTreeNode represents a node in a binary tree with a left and right

@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.ConvertibleUnnorderedArrayList;
 import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.dataStructures.ArrayList.UnorderedArrayList.ConvertibleUnnorderedArrayList;
 import api.game.Bot;
 import api.game.CaptureTheFlagGame;
 import api.game.Flag;

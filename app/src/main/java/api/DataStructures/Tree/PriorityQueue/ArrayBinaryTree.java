@@ -1,10 +1,10 @@
-package api.DataStructures.Tree.PriorityQueue;
+package api.dataStructures.Tree.PriorityQueue;
 import java.util.Iterator;
 
-import api.DataStructures.Tree.BinaryTreeADT;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Exceptions.ElementNotFoundException;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.Exceptions.ElementNotFoundException;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Tree.BinaryTreeADT;
 
 public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     protected int count;

@@ -16,6 +16,10 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         this.player2 = player2;
         this.winner = null;
 
+        // colocar as flags no mapa
+        this.map.setVertice(player1.getEnemyFlag().getIndex(), player1.getEnemyFlag());
+        this.map.setVertice(player2.getEnemyFlag().getIndex(), player2.getEnemyFlag());
+
         this.currentPlayerTurn = Random.generateRandomNumber(0, 1);
     }
 
@@ -98,6 +102,11 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         }
 
         return playerTurn;
+    }
+
+    @Override
+    public GameMap getGameMap() {
+        return map;    
     }
 
 }
