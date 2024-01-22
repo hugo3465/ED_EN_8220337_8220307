@@ -22,7 +22,7 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    private boolean dijkstra(int startIndex, int endIndex) { 
+    private boolean dijkstra(int startIndex, int endIndex) {
         double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
         int numVertices = adjacencyMatrix[0].length;
@@ -117,19 +117,13 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
             dijkstra(currentIndex, endIndex);
         }
 
-        // TODO while para testes para saber se fez bem o caminho
-        // while (!this.calculatedPath.isEmpty()) {
-        //     System.out.print(calculatedPath.pop() + " ");
-        // }
-        // System.out.println("\n");
-
         int nextIndex = currentIndex;
         while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.pop();
 
             // Verifica se o vértice removido contém um bot
             if (hasBot(dequeuedIndex)) {
-                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                System.out.println("bot " + currentBot.getName() + " tentou ir para o índice " + dequeuedIndex
                         + " mas tem lá um bot, então vai ter de se recalcular o caminho");
 
                 // Recalcula o caminho se o vértice retirado contiver um bot

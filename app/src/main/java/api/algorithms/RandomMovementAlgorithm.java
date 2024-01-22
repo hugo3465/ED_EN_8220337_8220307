@@ -90,19 +90,13 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
             calculatePath(currentIndex, endIndex);
         }
 
-        // TODO while para testes para saber se fez bem o caminho
-        // while (!this.calculatedPath.isEmpty()) {
-        // System.out.print(calculatedPath.dequeue() + " ");
-        // }
-        // System.out.println("\n");
-
         int nextIndex = currentIndex;
         while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.dequeue();
 
             // Verifica se o vértice retirado contém um bot
             if (hasBot(dequeuedIndex)) {
-                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                System.out.println("bot " + currentBot.getName() + " tentou ir para o índice " + dequeuedIndex
                         + " mas tem lá um bot, então vai ter de se recalcular o caminho");
 
                 // Recalcula o caminho se o vértice retirado contiver um bot

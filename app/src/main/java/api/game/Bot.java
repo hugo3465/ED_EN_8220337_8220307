@@ -2,18 +2,22 @@ package api.game;
 
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.interfaces.GameEntity;
+import api.game.interfaces.IBot;
 
 /**
  * Representa um bot no jogo, caracterizado pelo seu índice no grafo e algoritmo
  * de movimentação.
  */
-public class Bot implements GameEntity {
+public class Bot implements GameEntity, IBot {
 
     /** Nome do bot. */
     private String name;
 
-    /** Índice do bot no grafo. */
-    private int index;
+    /** Índice antigo do bot no grafo. */
+    private int lastIndex;
+
+    /** Índice atual do bot no grafo. */
+    private int currentIndex;
 
     /** Algoritmo de movimentação associado ao bot. */
     private MovementAlgorithm movementAlgorithm;
@@ -43,18 +47,19 @@ public class Bot implements GameEntity {
      * 
      * @return O índice para onde foi atribuída a nova posição do bot.
      */
+    @Override
     public int move() {
         if (movementAlgorithm != null) {
 
-            int newLocation = movementAlgorithm.getNextMovement(index,
-                    enemyFlag.getIndex(), this);
+            int newLocation = movementAlgorithm.getNextMovement(currentIndex,
+                    enemyFlag.getCurrentIndex(), this);
 
-            if (newLocation != index) {
+            if (newLocation != currentIndex) {
                 timesMoved++;
-                this.index = newLocation;
+                setCurrentIndex(newLocation);
             }
 
-            return index;
+            return currentIndex;
 
         }
 
@@ -66,6 +71,7 @@ public class Bot implements GameEntity {
      *
      * @return O algoritmo de movimentação do bot.
      */
+    @Override
     public MovementAlgorithm getMovementAlgorithm() {
         return movementAlgorithm;
     }
@@ -75,6 +81,7 @@ public class Bot implements GameEntity {
      *
      * @param algorithm O novo algoritmo de movimentação do bot.
      */
+    @Override
     public void setMovementAlgorithm(MovementAlgorithm algorithm) {
         this.movementAlgorithm = algorithm;
     }
@@ -84,6 +91,7 @@ public class Bot implements GameEntity {
      *
      * @return O nome do bot.
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -93,6 +101,7 @@ public class Bot implements GameEntity {
      *
      * @param enemyFlag A nova bandeira inimiga.
      */
+    @Override
     public void setEnemyFlag(Flag enemyFlag) {
         this.enemyFlag = enemyFlag;
     }
@@ -102,6 +111,7 @@ public class Bot implements GameEntity {
      *
      * @return O número de vezes que o bot foi movido.
      */
+    @Override
     public int getTimesMoved() {
         return timesMoved;
     }
@@ -112,18 +122,36 @@ public class Bot implements GameEntity {
      * @return O índice do bot no grafo.
      */
     @Override
-    public int getIndex() {
-        return index;
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 
     /**
      * Define o índice do bot no grafo.
      *
-     * @param index O novo índice do bot.
+     * @param currentIndex O novo índice do bot.
      */
     @Override
-    public void setIndex(int index) {
-        this.index = index;
+    public void setCurrentIndex(int currentIndex) {
+        // se o bot ainda não se mexeu, então o antigo índice é igual ao atual
+        if (timesMoved == 0) {
+            this.lastIndex = currentIndex;
+            this.currentIndex = currentIndex;
+        } else {
+            this.lastIndex = this.currentIndex;
+            this.currentIndex = currentIndex;
+        }
+
+    }
+
+    /**
+     * Obtém o índice antigo do bot no grafo.
+     *
+     * @return O índice do bot no grafo.
+     */
+    @Override
+    public int getLastIndex() {
+        return lastIndex;
     }
 
 }

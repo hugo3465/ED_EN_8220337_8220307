@@ -25,10 +25,8 @@ public class BotTest {
         try {
             mockGameMap.importMap("src/test/java/api/game/testMap.txt");
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidMapException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         mockEnemyFlag = new Flag(1);
@@ -39,10 +37,10 @@ public class BotTest {
     void testGetIndex() {
         // Configuração
         int expectedIndex = 10;
-        bot.setIndex(expectedIndex);
+        bot.setCurrentIndex(expectedIndex);
 
         // Execução
-        int actualIndex = bot.getIndex();
+        int actualIndex = bot.getCurrentIndex();
 
         // Verificação
         assertEquals(expectedIndex, actualIndex);
@@ -66,7 +64,7 @@ public class BotTest {
     void testMove() {
         // Configuração
         int initialIndex = 0;
-        bot.setIndex(initialIndex);
+        bot.setCurrentIndex(initialIndex);
 
         // Execução
         int newIndex = bot.move();
@@ -81,8 +79,8 @@ public class BotTest {
         int newIndex = 99;
 
         // Execução
-        bot.setIndex(newIndex);
-        int actualIndex = bot.getIndex();
+        bot.setCurrentIndex(newIndex);
+        int actualIndex = bot.getCurrentIndex();
 
         // Verificação
         assertEquals(newIndex, actualIndex);

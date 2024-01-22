@@ -80,14 +80,20 @@ public class GameInterface implements Runnable {
             currentBot = game.playRound(currentPlayer);
 
             // Imprimir visualização do mapa após cada rodada
+            addText(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + " no vertice "
+                    + (currentBot.getLastIndex() + 1));
+
+            System.out.println(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + " no vertice "
+            + (currentBot.getLastIndex() + 1));
+
             addText(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + (currentBot.getIndex() + 1));
+                    + (currentBot.getCurrentIndex() + 1) + "\n");
 
             System.out.println(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + (currentBot.getIndex() + 1));
+                    + (currentBot.getCurrentIndex() + 1) + "\n");
 
-            System.out.println(game.getGameMap().getMap());
-            addText(game.getGameMap().getMap());
+            // System.out.println(game.getGameMap().getMap());
+            // addText(game.getGameMap().getMap());
 
             try {
                 // Aguardar 2 segundos antes da próxima rodada

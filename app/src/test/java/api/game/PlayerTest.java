@@ -25,7 +25,7 @@ public class PlayerTest {
     void testCheckEndGame() {
         // Configuração
         Bot bot = bots[0];
-        bot.setIndex(player.getEnemyFlag().getIndex()); // Posiciona o bot na bandeira inimiga
+        bot.setCurrentIndex(player.getEnemyFlag().getCurrentIndex()); // Posiciona o bot na bandeira inimiga
 
         // Execução e Verificação
         assertTrue(player.checkEndGame(bot));
@@ -38,7 +38,7 @@ public class PlayerTest {
 
         // Verificação
         assertNotNull(enemyFlag);
-        assertEquals(9, enemyFlag.getIndex());
+        assertEquals(9, enemyFlag.getCurrentIndex());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class PlayerTest {
 
         // Verificação
         assertNotNull(myFlag);
-        assertEquals(0, myFlag.getIndex());
+        assertEquals(0, myFlag.getCurrentIndex());
     }
 
     @Test

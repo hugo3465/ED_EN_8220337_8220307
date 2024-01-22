@@ -36,8 +36,8 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
         this.winner = null;
 
         // colocar as flags no mapa
-        this.map.setVertice(player1.getEnemyFlag().getIndex(), player1.getEnemyFlag());
-        this.map.setVertice(player2.getEnemyFlag().getIndex(), player2.getEnemyFlag());
+        this.map.setVertice(player1.getEnemyFlag().getCurrentIndex(), player1.getEnemyFlag());
+        this.map.setVertice(player2.getEnemyFlag().getCurrentIndex(), player2.getEnemyFlag());
 
         this.currentPlayerTurn = Random.generateRandomNumber(0, 1);
     }

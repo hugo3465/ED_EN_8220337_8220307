@@ -89,10 +89,10 @@ public class Player implements IPlayer {
      * @return O array de bots com as posições iniciais atribuídas.
      */
     private Bot[] assignBotInitialPositions(Bot[] bots) {
-        int flagPosition = flag.getIndex();
+        int flagPosition = flag.getCurrentIndex();
 
         for (Bot bot : bots) {
-            bot.setIndex(flagPosition);
+            bot.setCurrentIndex(flagPosition);
         }
 
         return bots;
@@ -149,9 +149,9 @@ public class Player implements IPlayer {
      */
     @Override
     public boolean checkEndGame(Bot bot) {
-        int enemyFlagPosition = enemyFlag.getIndex();
+        int enemyFlagPosition = enemyFlag.getCurrentIndex();
 
-        return bot.getIndex() == enemyFlagPosition;
+        return bot.getCurrentIndex() == enemyFlagPosition;
     }
 
     /**

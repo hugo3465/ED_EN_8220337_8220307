@@ -294,7 +294,7 @@ public class App extends javax.swing.JFrame {
                 // Verifica se o valor está dentro do intervalo desejado
                 if (startingVertex >= minVertex && startingVertex <= maxVertex) {
                     // Verifica se o valor é diferente de flagPlayer2
-                    if (flagPlayer2 == null || startingVertex != (flagPlayer2.getIndex() + 1)) {
+                    if (flagPlayer2 == null || startingVertex != (flagPlayer2.getCurrentIndex() + 1)) {
 
                         flagPlayer1 = new Flag(startingVertex);
 
@@ -340,7 +340,7 @@ public class App extends javax.swing.JFrame {
                 // Verifica se o valor está dentro do intervalo desejado
                 if (startingVertex >= minVertex && startingVertex <= maxVertex) {
                     // Verifica se o valor é diferente de flagPlayer1
-                    if (flagPlayer1 == null || startingVertex != (flagPlayer1.getIndex() + 1)) {
+                    if (flagPlayer1 == null || startingVertex != (flagPlayer1.getCurrentIndex() + 1)) {
 
                         flagPlayer2 = new Flag(startingVertex);
 

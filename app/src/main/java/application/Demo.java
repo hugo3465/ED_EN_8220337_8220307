@@ -18,7 +18,7 @@ public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(15, false, 0.2);
+        map.generateRandomMap(30, false, 0.4);
         // map.exportMap("C:/Users/hugui/Desktop/export.txt");
         // try {
         //     map.importMap("C:/Users/hugui/Desktop/export.txt");
@@ -50,8 +50,8 @@ public class Demo {
         // Bot[] botsPlayer1 = { bot, bot2, bot3 };
         // Bot[] botsPlayer2 = { bot4, bot5, bot6 };
 
-        Bot[] botsPlayer1 = { bot };
-        Bot[] botsPlayer2 = { bot4 };
+        Bot[] botsPlayer1 = { bot2 };
+        Bot[] botsPlayer2 = { bot5 };
 
         Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
         Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);

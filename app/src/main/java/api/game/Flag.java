@@ -28,7 +28,7 @@ public class Flag implements GameEntity {
      * @return O índice da bandeira.
      */
     @Override
-    public int getIndex() {
+    public int getCurrentIndex() {
         return index;
     }
 
@@ -38,7 +38,7 @@ public class Flag implements GameEntity {
      * @param index O novo índice da bandeira.
      */
     @Override
-    public void setIndex(int index) {
+    public void setCurrentIndex(int index) {
         this.index = index;
     }
 

@@ -16,7 +16,7 @@ public class FlagTest {
 
         Flag flag = new Flag(vertex);
 
-        assertEquals(vertex - 1, flag.getIndex());
+        assertEquals(vertex - 1, flag.getCurrentIndex());
     }
 
     @Test
@@ -26,8 +26,8 @@ public class FlagTest {
         int newIndex = 7;
 
         Flag flag = new Flag(initialVertex);
-        flag.setIndex(newIndex);
+        flag.setCurrentIndex(newIndex);
 
-        assertEquals(newIndex, flag.getIndex());
+        assertEquals(newIndex, flag.getCurrentIndex());
     }
 }
