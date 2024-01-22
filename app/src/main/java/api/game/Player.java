@@ -31,10 +31,10 @@ public class Player {
      * mesma posição que a bandeira do seu jogador.
      */
     private Bot[] assignBotInitialPositions(Bot[] bots) {
-        int flagPosition = flag.getPosition();
+        int flagPosition = flag.getIndex();
 
         for (Bot bot : bots) {
-            bot.setPosition(flagPosition);
+            bot.setIndex(flagPosition);
         }
 
         return bots;
@@ -88,9 +88,9 @@ public class Player {
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
     public boolean checkEndGame(Bot bot) {
-        int enemyFlagPosition = enemyFlag.getPosition();
+        int enemyFlagPosition = enemyFlag.getIndex();
 
-        return bot.getPosition() == enemyFlagPosition;
+        return bot.getIndex() == enemyFlagPosition;
     }
 
     public Bot getNextBot() {

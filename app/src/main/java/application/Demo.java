@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileNotFoundException;
+
 import api.algorithms.LongestPathAlgorithm;
 import api.algorithms.RandomMovementAlgorithm;
 import api.algorithms.ShortestPathAlgorithm;
@@ -9,14 +11,24 @@ import api.game.CaptureTheFlagGame;
 import api.game.Flag;
 import api.game.Player;
 import api.map.GameMap;
-import java.util.concurrent.TimeUnit;
+import application.forms.GameInterface;
+import exceptions.InvalidMapException;
 
 public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(100, true, 0.1);
-        map.exportMap("C:/Users/hugui/Desktop/export.txt");
+        //map.generateRandomMap(90, false, 0.9);
+        //map.exportMap("C:/Users/hugui/Desktop/export.txt");
+        try {
+            map.importMap("C:/Users/hugui/Desktop/export.txt");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvalidMapException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         MovementAlgorithm algorithmA1 = new ShortestPathAlgorithm(map);
         MovementAlgorithm algorithmR1 = new RandomMovementAlgorithm(map);
@@ -26,7 +38,7 @@ public class Demo {
         MovementAlgorithm algorithmL2 = new LongestPathAlgorithm(map);
 
         Flag flagPlayer1 = new Flag(1);
-        Flag flagPlayer2 = new Flag(60);
+        Flag flagPlayer2 = new Flag(10);
 
         Bot bot = new Bot("Raul", algorithmA1, flagPlayer2);
         Bot bot2 = new Bot("Raul2", algorithmR1, flagPlayer2);
@@ -43,38 +55,9 @@ public class Demo {
 
         CaptureTheFlagGame game = new CaptureTheFlagGame(map, player1, player2);
 
-        int round = 1;
-        Bot currentBot = null;
-        Player currentPlayer = game.getCurrentPlayer();
-        while (game.isGameOver() == -1) {
-            System.out.println("-------------Ronda " + round + ": -------------");
 
-            // addText(currentPlayer.getname() + " tinha o bot " + currentBot.getName() + "
-            // no vertice "
-            // + (currentBot.getPosition() + 1));
-
-            currentBot = game.playRound(currentPlayer);
-
-            // Imprimir visualização do mapa após cada rodada
-            System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + currentBot.getPosition());
-
-            currentPlayer = game.nextTurn();
-
-
-            try {
-                // Aguardar 2 segundos antes da próxima rodada
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            round++;
-        }
-
-        // Exibir mensagem de fim de jogo
-        System.out.println("Fim de jogo!!!");
-        System.out.println("--------------WINNER: " + currentPlayer.getname() + " ---------------");
+        Thread gameInterface = new Thread(new GameInterface(game));
+        gameInterface.start();
 
         // do {
         // //System.out.println(algorithm.getNextMovement(0, 5));

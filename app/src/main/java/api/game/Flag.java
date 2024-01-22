@@ -7,15 +7,15 @@ import api.game.interfaces.GameEntity;
  */
 public class Flag implements GameEntity {
 
-    private int position;
+    private int index;
 
     /**
      * Construtor da classe Flag.
      * Passamos o número de vertices logo temos de converter para o indice
-     * @param position O índice inicial da bandeira no grafo.
+     * @param index O índice inicial da bandeira no grafo.
      */
-    public Flag(int position) {
-        this.position = position - 1;
+    public Flag(int index) {
+        this.index = index - 1;
     }
 
     /**
@@ -29,13 +29,13 @@ public class Flag implements GameEntity {
     }
 
     @Override
-    public int getPosition() {
-        return position + 1;
+    public int getIndex() {
+        return index;
     }
 
     @Override
-    public void setPosition(int position) {
-        this.position = position;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
 }

@@ -43,7 +43,9 @@ public class GameInterface implements Runnable {
         Bot currentBot = null;
         Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
 
-        while (game.isGameOver() == -1) {
+        do {
+            currentPlayer = game.nextTurn();
+
             addText("-------------Ronda " + round + ": -------------");
             System.out.println("-------------Ronda " + round + ": -------------");
 
@@ -55,12 +57,10 @@ public class GameInterface implements Runnable {
 
             // Imprimir visualização do mapa após cada rodada
             addText(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + currentBot.getPosition());
+                    + (currentBot.getIndex() + 1));
 
             System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + currentBot.getPosition());
-
-            currentPlayer = game.nextTurn();
+                    + (currentBot.getIndex() + 1));
 
             try {
                 // Aguardar 2 segundos antes da próxima rodada
@@ -74,12 +74,17 @@ public class GameInterface implements Runnable {
                 timer.stop();
             }
             round++;
-        }
+        } while (game.isGameOver() == -1);
 
+        showEndGameMessages(currentPlayer);
+
+    }
+
+    private void showEndGameMessages(Player currentPlayer) {
         // Exibir mensagem de fim de jogo
         System.out.println("Fim de jogo!!!");
         addText("Fim de jogo!!!");
-        System.out.println("--------------WINNER: " + currentPlayer.getname() + " ---------------");
+
         switch (game.isGameOver()) {
             case -1:
                 break;

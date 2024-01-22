@@ -29,7 +29,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @param player o player a quem o bot pertence
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
-    private boolean checkEndGame(Bot bot, Player player) {// TODO não está a fazer muito sentido
+    private boolean checkEndGame(Bot bot, Player player) {
         return player.checkEndGame(bot);
     }
 
@@ -72,7 +72,6 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      *         1 - jogador 1 ganhou
      *         2 - jogador 2 ganhou
      */
-    // TODO
     @Override
     public int isGameOver() {
         if (winner == null) {

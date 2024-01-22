@@ -81,7 +81,7 @@ jacocoTestReport {
 
 application {
     // Define the main class for the application.
-    mainClass = 'application.game'
+    mainClass = 'application.App'
 }
 
 tasks.named('test') {

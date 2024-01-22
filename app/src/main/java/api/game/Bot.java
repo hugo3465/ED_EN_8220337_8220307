@@ -9,9 +9,8 @@ import api.game.interfaces.GameEntity;
  */
 public class Bot implements GameEntity {
 
-    // Todo Colocar a Entity
     private String name;
-    private int position;
+    private int index;
     private MovementAlgorithm movementAlgorithm;
     private Flag enemyFlag;
     private int timesMoved;
@@ -31,16 +30,16 @@ public class Bot implements GameEntity {
     public int move() {
         if (movementAlgorithm != null) {
 
-            int newLocation = movementAlgorithm.getNextMovement(position,
-                    enemyFlag.getPosition(), this);
+            int newLocation = movementAlgorithm.getNextMovement(index,
+                    enemyFlag.getIndex(), this);
 
 
-            if (newLocation != position) {
+            if (newLocation != index) {
                 timesMoved++;
-                this.position = newLocation;
+                this.index = newLocation;
             }
 
-            return position;
+            return index;
 
         }
 
@@ -69,13 +68,13 @@ public class Bot implements GameEntity {
     }
 
     @Override
-    public int getPosition() {
-        return position;
+    public int getIndex() {
+        return index;
     }
 
     @Override
-    public void setPosition(int position) {
-        this.position = position;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
 }

@@ -67,17 +67,15 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     }
 
     private double calculateTotalEdges(int numVertices, boolean bidirectional, double density) {
+        // Fórmula geral (N*(N-1))
         double totalEdges;
         if (bidirectional) {
-            // totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
-            totalEdges = (numVertices * (numVertices - 1)) * density;
+            // Grafo bidirecional
+            // a aresta a  dividir por 2 serve para evitar a contagem dupla de arestas 
+            totalEdges = (numVertices * (numVertices - 1)) * (density / 2);
 
         } else {
-            // totalEdges = (numVertices - 1) * density;
-
-            // if (numVertices > 2) {
-            // totalEdges += (numVertices - 2) * density;
-            // }
+            // Grafo direcionado
 
             // totalEdges = (numVertices * (numVertices - 1)) * 0.5 * density;
             totalEdges = (numVertices * (numVertices - 1)) * density;
@@ -127,7 +125,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
 
                 String[] values = line.split("\\s+");
 
-                // initializeGraph(numVertices); // numVertices era o que estava
+                initializeGraph(values.length);
 
                 if (i >= adjMatrix.length) {
                     throw new InvalidMapException("O ficheiro é muito curto. Esperava menos linhas.");
