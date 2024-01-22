@@ -1,8 +1,8 @@
-package api.DataStructures.Tree.PriorityQueue;
+package api.dataStructures.Tree.PriorityQueue;
 import java.util.Arrays;
 
-import api.DataStructures.Exceptions.EmptyCollectionException;
-import api.DataStructures.Tree.Heap.HeapADT;
+import api.dataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Tree.Heap.HeapADT;
 
 public class ArrayHeap<T> extends ArrayBinaryTree<T>
         implements HeapADT<T> {

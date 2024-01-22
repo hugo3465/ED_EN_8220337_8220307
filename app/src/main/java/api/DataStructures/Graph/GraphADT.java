@@ -1,4 +1,4 @@
-package api.DataStructures.Graph;
+package api.dataStructures.Graph;
 import java.util.Iterator;
 
 /**

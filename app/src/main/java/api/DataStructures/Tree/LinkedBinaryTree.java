@@ -1,12 +1,12 @@
-package api.DataStructures.Tree;
+package api.dataStructures.Tree;
 
 import java.util.Iterator;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Exceptions.ElementNotFoundException;
-import api.DataStructures.Exceptions.EmptyCollectionException;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.Exceptions.ElementNotFoundException;
+import api.dataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Queue.LinkedQueue.QueueADT;
 
 /**
  * LinkedBinaryTree implements the BinaryTreeADT interface

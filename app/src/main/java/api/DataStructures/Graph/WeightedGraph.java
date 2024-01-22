@@ -1,13 +1,13 @@
-package api.DataStructures.Graph;
+package api.dataStructures.Graph;
 
 import java.util.Iterator;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Stack.LinkedStack.LinkedStack;
-import api.DataStructures.Tree.LinkedHeap;
-import api.DataStructures.Tree.Heap.HeapADT;
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Stack.LinkedStack.LinkedStack;
+import api.dataStructures.Tree.LinkedHeap;
+import api.dataStructures.Tree.Heap.HeapADT;
 
 public class WeightedGraph<T> extends NonWeightedGraph<T> implements NetworkADT<T> {
     protected double[][] adjMatrix;    // adjacency matrix

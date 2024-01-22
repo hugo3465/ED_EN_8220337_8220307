@@ -1,4 +1,4 @@
-package api.DataStructures.ArrayList.UnorderedArrayList;
+package api.dataStructures.ArrayList.UnorderedArrayList;
 
 public class ConvertibleUnnorderedArrayList<T> extends UnorderedArrayList<T> {
     public ConvertibleUnnorderedArrayList() {

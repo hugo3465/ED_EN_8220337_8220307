@@ -9,13 +9,25 @@ import javax.swing.Timer;
 import api.game.Bot;
 import api.game.Player;
 import api.game.interfaces.ICaptureTheFlag;
+import api.game.interfaces.IPlayer;
 
+/**
+ * Classe responsável pela interface gráfica do jogo "Capture the Flag".
+ * Implementa a interface Runnable para possibilitar a execução em uma thread
+ * separada.
+ * Sem essa thread não seria possivel usar o thread.sleep
+ */
 public class GameInterface implements Runnable {
     private JFrame frame;
     private JTextArea textArea;
 
     private ICaptureTheFlag game;
 
+    /**
+     * Construtor da classe GameInterface.
+     *
+     * @param game Instância da interface ICaptureTheFlag que representa o jogo.
+     */
     public GameInterface(ICaptureTheFlag game) {
         frame = new JFrame("Capture the flag");
         textArea = new JTextArea(10, 30);
@@ -28,39 +40,60 @@ public class GameInterface implements Runnable {
         this.game = game;
     }
 
+    /**
+     * Adiciona texto à área de texto da interface gráfica.
+     *
+     * @param message Mensagem a ser adicionada.
+     */
     private void addText(String message) {
         textArea.append("\n" + message + "\n");
     }
 
+    /**
+     * Fecha a interface gráfica.
+     */
     public void close() {
         frame.dispose();
     }
 
+    /**
+     * Método run da interface Runnable. Executa a janela as informações do decorrer
+     * do jogo.
+     */
     @Override
     public void run() {
         int round = 1;
-        Player currentPlayer = game.getCurrentPlayer();
+        IPlayer currentPlayer = game.getCurrentPlayer();
         Bot currentBot = null;
         Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
 
-        while (game.isGameOver() == -1) {
+        do {
+            currentPlayer = game.nextTurn();
+
             addText("-------------Ronda " + round + ": -------------");
             System.out.println("-------------Ronda " + round + ": -------------");
 
-            // addText(currentPlayer.getname() + " tinha o bot " + currentBot.getName() + "
+            // addText(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + "
             // no vertice "
             // + (currentBot.getPosition() + 1));
 
             currentBot = game.playRound(currentPlayer);
 
             // Imprimir visualização do mapa após cada rodada
-            addText(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + currentBot.getPosition());
+            addText(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + " no vertice "
+                    + (currentBot.getLastIndex() + 1));
 
-            System.out.println(currentPlayer.getname() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
-                    + currentBot.getPosition());
+            System.out.println(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + " no vertice "
+            + (currentBot.getLastIndex() + 1));
 
-            currentPlayer = game.nextTurn();
+            addText(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+                    + (currentBot.getCurrentIndex() + 1) + "\n");
+
+            System.out.println(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+                    + (currentBot.getCurrentIndex() + 1) + "\n");
+
+            // System.out.println(game.getGameMap().getMap());
+            // addText(game.getGameMap().getMap());
 
             try {
                 // Aguardar 2 segundos antes da próxima rodada
@@ -74,12 +107,22 @@ public class GameInterface implements Runnable {
                 timer.stop();
             }
             round++;
-        }
+        } while (game.isGameOver() == -1);
 
+        showEndGameMessages(currentPlayer);
+
+    }
+
+    /**
+     * Mostra mensagens de fim de jogo na interface gráfica.
+     *
+     * @param currentPlayer O jogador que venceu o jogo.
+     */
+    private void showEndGameMessages(IPlayer currentPlayer) {
         // Exibir mensagem de fim de jogo
         System.out.println("Fim de jogo!!!");
         addText("Fim de jogo!!!");
-        System.out.println("--------------WINNER: " + currentPlayer.getname() + " ---------------");
+
         switch (game.isGameOver()) {
             case -1:
                 break;
@@ -89,8 +132,8 @@ public class GameInterface implements Runnable {
                 break;
             case 1:
             case 2:
-                System.out.println("\n--------------WINNER: " + currentPlayer.getname() + " ---------------\n");
-                addText("\n--------------WINNER: " + currentPlayer.getname() + " ---------------\n");
+                System.out.println("\n--------------WINNER: " + currentPlayer.getName() + " ---------------\n");
+                addText("\n--------------WINNER: " + currentPlayer.getName() + " ---------------\n");
                 break;
 
             default:

@@ -1,6 +1,6 @@
-package api.DataStructures.Graph;
+package api.dataStructures.Graph;
 
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Exceptions.EmptyCollectionException;
 
 /**
  * 

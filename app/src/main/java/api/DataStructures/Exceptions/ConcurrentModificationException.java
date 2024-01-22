@@ -1,4 +1,4 @@
-package api.DataStructures.Exceptions;
+package api.dataStructures.Exceptions;
 
 /**
  * extend RunTimeException para não ser obrigado a dizer na função throws

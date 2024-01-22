@@ -1,7 +1,7 @@
-package api.DataStructures.ArrayList.UnorderedArrayList;
+package api.dataStructures.ArrayList.UnorderedArrayList;
 
-import api.DataStructures.ArrayList.ListADT;
-import api.DataStructures.Exceptions.ElementNotFoundException;
+import api.dataStructures.ArrayList.ListADT;
+import api.dataStructures.Exceptions.ElementNotFoundException;
 
 public interface UnorderedListADT<T> extends ListADT<T> {
     /**

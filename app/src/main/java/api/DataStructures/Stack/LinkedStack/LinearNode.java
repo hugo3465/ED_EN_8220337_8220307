@@ -1,4 +1,4 @@
-package api.DataStructures.Stack.LinkedStack;
+package api.dataStructures.Stack.LinkedStack;
 
 public class LinearNode<T> {
     /** reference to next node in list */

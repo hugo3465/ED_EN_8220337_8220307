@@ -2,18 +2,18 @@ package api.game.interfaces;
 
 public interface GameEntity {
     /**
-     * Obtém a posição atual da entidade.
-     * A posição é o indice onde a entidade está no array de vértices do grafo
+     * Obtém o índice atual da entidade no array de vértices.
      *
-     * @return A posição atual da entidade.
+     * @return O índice atual da entidade no array de vértices.
      */
-    public int getPosition();
+    int getCurrentIndex();
 
     /**
-     * Define a posição da entidade.
+     * Define o índic atual da entidade no array de vértices.
      * A posição é o indice onde a entidade está no array de vértices do grafo
      *
      * @param position A nova posição da entidade.
      */
-    public void setPosition(int position);
+    void setCurrentIndex(int index);
+
 }

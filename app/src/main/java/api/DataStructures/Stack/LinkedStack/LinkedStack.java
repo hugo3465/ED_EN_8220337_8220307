@@ -1,6 +1,6 @@
-package api.DataStructures.Stack.LinkedStack;
+package api.dataStructures.Stack.LinkedStack;
 
-import api.DataStructures.Exceptions.EmptyCollectionException;
+import api.dataStructures.Exceptions.EmptyCollectionException;
 
 public class LinkedStack<T> implements StackADT<T> {
     /**

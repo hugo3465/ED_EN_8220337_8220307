@@ -1,10 +1,10 @@
 package api.algorithms;
 
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
-import api.DataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
-import api.DataStructures.Queue.LinkedQueue.LinkedQueue;
-import api.DataStructures.Queue.LinkedQueue.QueueADT;
 import api.algorithms.interfaces.MovementAlgorithm;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedArrayList;
+import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
+import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
+import api.dataStructures.Queue.LinkedQueue.QueueADT;
 import api.game.Bot;
 import api.map.GameMap;
 
@@ -90,19 +90,13 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
             calculatePath(currentIndex, endIndex);
         }
 
-        // TODO while para testes para saber se fez bem o caminho
-        // while (!this.calculatedPath.isEmpty()) {
-        // System.out.print(calculatedPath.dequeue() + " ");
-        // }
-        // System.out.println("\n");
-
         int nextIndex = currentIndex;
         while (!calculatedPath.isEmpty()) {
             int dequeuedIndex = calculatedPath.dequeue();
 
             // Verifica se o vértice retirado contém um bot
             if (hasBot(dequeuedIndex)) {
-                System.out.println("bot " + currentBot.getName() + "tentou ir para o índice " + dequeuedIndex
+                System.out.println("bot " + currentBot.getName() + " tentou ir para o índice " + dequeuedIndex
                         + " mas tem lá um bot, então vai ter de se recalcular o caminho");
 
                 // Recalcula o caminho se o vértice retirado contiver um bot
@@ -111,7 +105,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
                     // break;
                     return currentIndex;
                 }
-                continue; // isto funciona mas é espargette
+                continue; 
 
             } else {
                 // Se não contiver um bot, define a lógica padrão
