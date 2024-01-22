@@ -111,7 +111,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
                     // break;
                     return currentIndex;
                 }
-                continue; // isto funciona mas é espargette
+                continue; 
 
             } else {
                 // Se não contiver um bot, define a lógica padrão

@@ -2,12 +2,18 @@ package api.game;
 
 import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.dataStructures.Queue.LinkedQueue.QueueADT;
-
+import api.game.interfaces.IPlayer;
 
 /**
  * Representa um jogador no jogo Capture the Flag.
  */
-public class Player {
+public class Player implements IPlayer {
+
+    /**
+     * Representa o intervalo máximo do {@code stuckCount}, que é incrementado
+     * sempre que um bot não se conseguir mexer, e decrementado se conseguir
+     */
+    private int STUCK_RANGE;
 
     /** Nome do jogador. */
     private String name;
@@ -20,6 +26,12 @@ public class Player {
 
     /** Bandeira do jogador inimigo. */
     private Flag enemyFlag;
+
+    /**
+     * contador de bots presos, sempre que um bot não se conseguir mexer ele é
+     * incrementado, se conseguir ele desce, mas nunca desce a baixo de 0
+     */
+    private int stuckCount;
 
     /**
      * Construtor da classe Player.
@@ -35,9 +47,35 @@ public class Player {
         this.flag = myflag;
         this.enemyFlag = enemyFlag;
 
+        defineStuckRange(bots.length);
+
         assignBotInitialPositions(bots);
 
         enqueueBots(bots);
+    }
+
+    private void defineStuckRange(int numBots) {
+        int stuckRange;
+
+        switch (numBots) {
+            case 1:
+                stuckRange = 2;
+                break;
+            case 2:
+                stuckRange = 4;
+                break;
+            case 3:
+                stuckRange = 7;
+                break;
+            case 4:
+                stuckRange = 10;
+                break;
+            default:
+                stuckRange = 10;
+                break;
+        }
+
+        this.STUCK_RANGE = stuckRange;
     }
 
     /**
@@ -76,6 +114,7 @@ public class Player {
      *
      * @return O nome do jogador.
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -85,6 +124,7 @@ public class Player {
      *
      * @return A bandeira do jogador.
      */
+    @Override
     public Flag getFlag() {
         return flag;
     }
@@ -94,6 +134,7 @@ public class Player {
      *
      * @return A bandeira do jogador inimigo.
      */
+    @Override
     public Flag getEnemyFlag() {
         return enemyFlag;
     }
@@ -106,6 +147,7 @@ public class Player {
      * @param bot O bot cuja posição será verificada em relação à bandeira inimiga.
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
+    @Override
     public boolean checkEndGame(Bot bot) {
         int enemyFlagPosition = enemyFlag.getIndex();
 
@@ -117,7 +159,8 @@ public class Player {
      *
      * @return O próximo bot da fila.
      */
-    protected Bot getNextBot() {
+    @Override
+    public Bot getNextBot() {
         Bot currenBot = this.bots.dequeue();
 
         this.bots.enqueue(currenBot);
@@ -130,8 +173,48 @@ public class Player {
      *
      * @param name O novo nome do jogador.
      */
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Obtém o número atual de vezes que um bot ficou "preso".
+     *
+     * @return O número atual de vezes que um bot ficou "preso".
+     */
+    @Override
+    public int getStuckCount() {
+        return stuckCount;
+    }
+
+    /**
+     * Incrementa o contador de vezes que um bot ficou "preso".
+     */
+    @Override
+    public void incrementStuckCount() {
+        stuckCount++;
+    }
+
+    /**
+     * Decrementa o contador de vezes que um bot ficou "preso", se o contador for
+     * maior que zero.
+     */
+    @Override
+    public void decrementStuckCount() {
+        if (stuckCount > 0) {
+            stuckCount--;
+        }
+    }
+
+    /**
+     * Verifica se o contador de bots "presos" ultrapassou o limite permitido.
+     *
+     * @return true se o contador ultrapassou o limite, false caso contrário.
+     */
+    @Override
+    public boolean isStuckCountReached() {
+        return stuckCount >= STUCK_RANGE;
     }
 
 }

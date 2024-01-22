@@ -18,17 +18,17 @@ public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
         GameMap map = new GameMap("Meu mapa");
-        // map.generateRandomMap(10, false, 0.5);
+        map.generateRandomMap(15, false, 0.2);
         // map.exportMap("C:/Users/hugui/Desktop/export.txt");
-        try {
-            map.importMap("C:/Users/hugui/Desktop/export.txt");
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidMapException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // try {
+        //     map.importMap("C:/Users/hugui/Desktop/export.txt");
+        // } catch (FileNotFoundException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // } catch (InvalidMapException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
 
         MovementAlgorithm algorithmA1 = new ShortestPathAlgorithm(map);
         MovementAlgorithm algorithmR1 = new RandomMovementAlgorithm(map);

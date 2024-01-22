@@ -81,7 +81,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
                     // break;
                     return currentIndex;
                 }
-                continue; // isto funciona mas é espargette
+                continue;
             } else {
                 // Se não contiver um bot, vai atualizar a posição do bot no vetor e retornar
                 // para onde ele foi

@@ -12,14 +12,14 @@ public interface ICaptureTheFlag {
      * @param player O jogador que está jogando a rodada.
      * @return O bot que jogou na rodada.
      */
-    Bot playRound(Player player);
+    Bot playRound(IPlayer player);
 
     /**
      * Vai definir o próximo jogador a jogar.
      *
      * @return o jogador que vai jogar.
      */
-    Player nextTurn();
+    IPlayer nextTurn();
 
     /**
      * Verifica se o jogo chegou ao fim e quem é o vencedor.
@@ -34,7 +34,7 @@ public interface ICaptureTheFlag {
      *
      * @return o jogador atual.
      */
-    Player getCurrentPlayer();
+    IPlayer getCurrentPlayer();
 
     /**
      * Obtém o mapa do jogo.

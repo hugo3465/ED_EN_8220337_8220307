@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import api.game.Bot;
 import api.game.Player;
 import api.game.interfaces.ICaptureTheFlag;
+import api.game.interfaces.IPlayer;
 
 /**
  * Classe responsável pela interface gráfica do jogo "Capture the Flag".
@@ -62,7 +63,7 @@ public class GameInterface implements Runnable {
     @Override
     public void run() {
         int round = 1;
-        Player currentPlayer = game.getCurrentPlayer();
+        IPlayer currentPlayer = game.getCurrentPlayer();
         Bot currentBot = null;
         Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
 
@@ -111,7 +112,7 @@ public class GameInterface implements Runnable {
      *
      * @param currentPlayer O jogador que venceu o jogo.
      */
-    private void showEndGameMessages(Player currentPlayer) {
+    private void showEndGameMessages(IPlayer currentPlayer) {
         // Exibir mensagem de fim de jogo
         System.out.println("Fim de jogo!!!");
         addText("Fim de jogo!!!");

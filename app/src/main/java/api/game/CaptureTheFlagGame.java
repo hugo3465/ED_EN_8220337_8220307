@@ -1,6 +1,7 @@
 package api.game;
 
 import api.game.interfaces.ICaptureTheFlag;
+import api.game.interfaces.IPlayer;
 import api.map.GameMap;
 import api.util.Random;
 
@@ -13,13 +14,13 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
     private GameMap map;
 
     /** Jogador 1 e Jogador 2 */
-    private Player player1, player2;
+    private IPlayer player1, player2;
 
     /** Índice do jogador cuja vez é a atual. */
     private int currentPlayerTurn;
 
     /** Jogador vencedor. */
-    private Player winner;
+    private IPlayer winner;
 
     /**
      * Construtor da classe CaptureTheFlagGame.
@@ -28,7 +29,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @param player1 O primeiro jogador.
      * @param player2 O segundo jogador.
      */
-    public CaptureTheFlagGame(GameMap map, Player player1, Player player2) {
+    public CaptureTheFlagGame(GameMap map, IPlayer player1, IPlayer player2) {
         this.map = map;
         this.player1 = player1;
         this.player2 = player2;
@@ -51,7 +52,7 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @param player O jogador a quem o bot pertence.
      * @return true se o bot alcançou a bandeira inimiga, false caso contrário.
      */
-    private boolean checkEndGame(Bot bot, Player player) {
+    private boolean checkEndGame(Bot bot, IPlayer player) {
         return player.checkEndGame(bot);
     }
 
@@ -62,12 +63,22 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @return O bot que jogou na rodada.
      */
     @Override
-    public Bot playRound(Player player) {
+    public Bot playRound(IPlayer player) {
         Bot currentBot = null;
+        int currentBotMoves;
 
         currentBot = player.getNextBot();
 
+        currentBotMoves = currentBot.getTimesMoved();
+
         currentBot.move();
+
+        // se entrar aqui foi porque o bot não se moveu
+        if (currentBotMoves == currentBot.getTimesMoved()) {
+            player.incrementStuckCount();
+        } else {
+            player.decrementStuckCount();
+        }
 
         if (checkEndGame(currentBot, player)) {
             winner = player;
@@ -83,10 +94,10 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @return o jogador que vai jogar.
      */
     @Override
-    public Player nextTurn() {
+    public IPlayer nextTurn() {
         currentPlayerTurn = (currentPlayerTurn + 1) % 2; // Alternar entre jogador 1 e jogador 2
 
-        Player playerTurn = null;
+        IPlayer playerTurn = null;
 
         if (currentPlayerTurn == 0) {
             playerTurn = player1;
@@ -107,15 +118,17 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      */
     @Override
     public int isGameOver() {
-        if (winner == null) {
-            return -1;
+        if (player1.isStuckCountReached() && player2.isStuckCountReached()) {
+            // se o stuck count de cada player ultrapassar o limite máximo permitido, então
+            // é empate
+            return 0;
         } else if (winner == player1) {
             return 1;
         } else if (winner == player2) {
             return 2;
         }
 
-        return 0;
+        return -1;
     }
 
     /**
@@ -124,8 +137,8 @@ public class CaptureTheFlagGame implements ICaptureTheFlag {
      * @return o jogador atual.
      */
     @Override
-    public Player getCurrentPlayer() {
-        Player playerTurn = null;
+    public IPlayer getCurrentPlayer() {
+        IPlayer playerTurn = null;
 
         if (currentPlayerTurn == 0) {
             playerTurn = player1;

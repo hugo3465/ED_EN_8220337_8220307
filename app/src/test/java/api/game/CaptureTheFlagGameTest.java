@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import api.game.interfaces.IPlayer;
 import api.map.GameMap;
 import exceptions.InvalidMapException;
 
@@ -45,28 +46,22 @@ public class CaptureTheFlagGameTest {
 
     @Test
     void testGetCurrentPlayer() {
-        // Execução
-        Player currentPlayer = game.getCurrentPlayer();
+        IPlayer currentPlayer = game.getCurrentPlayer();
 
-        // Verificação
         assertEquals(player1, currentPlayer);
     }
 
     @Test
     void testGetGameMap() {
-        // Execução
         GameMap gameMap = game.getGameMap();
 
-        // Verificação
         assertEquals(map, gameMap);
     }
 
     @Test
     void testIsGameOver_NoWinner() {
-        // Execução
         int result = game.isGameOver();
 
-        // Verificação
         assertEquals(-1, result);
     }
 }
