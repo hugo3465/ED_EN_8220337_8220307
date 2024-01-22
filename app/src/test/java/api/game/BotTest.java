@@ -1,81 +1,91 @@
 package api.game;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * Testes unitários para a classe Bot.
- */
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import api.algorithms.RandomMovementAlgorithm;
+import api.algorithms.ShortestPathAlgorithm;
+import api.map.GameMap;
+
 public class BotTest {
-//    private static Bot bot;
-//    private static Bot[] otherBots;
-//
-//    @BeforeAll
-//    public static void setUp() {
-//        Position initialPosition = new Position(0);
-//        bot = new Bot(initialPosition);
-//
-//        otherBots = new Bot[] {
-//                new Bot(new Position(1)),
-//                new Bot(new Position(2)),
-//                new Bot(new Position(3))
-//        };
-//    }
-//
-//    @Test
-//    public void testMoveWithBFS() {
-//        Position initialPosition = new Position(0);
-//
-//        Bot bot = new Bot(initialPosition);
-//        bot.setMovementAlgorithm(new BreadthFirstSearchAlgorithm());
-//
-//        Bot[] otherBots = { new Bot(new Position(1)), new Bot(new Position(2)) };
-//
-//        bot.move(otherBots);
-//
-//        assertNotNull(bot.getPosition());
-//    }
-//
-//    @Test
-//    public void testMoveWithDFS() {
-//        Position initialPosition = new Position(0);
-//
-//        Bot bot = new Bot(initialPosition);
-//        bot.setMovementAlgorithm(new DepthFirstSearchAlgorithm());
-//
-//        Bot[] otherBots = { new Bot(new Position(1)), new Bot(new Position(2)) };
-//
-//        bot.move(otherBots);
-//
-//        assertNotNull(bot.getPosition());
-//    }
-//
-//    @Test
-//    public void testCanMoveToValidPosition() {
-//        Position initialPosition = new Position(0);
-//        Bot bot = new Bot(initialPosition);
-//        Bot otherBot = new Bot(new Position(1));
-//
-//        assertTrue(bot.canMoveTo(new Position(2), new Bot[] { otherBot }));
-//    }
-//
-//    @Test
-//    public void testCanMoveToInvalidPosition() {
-//        Position initialPosition = new Position(0);
-//        Bot bot = new Bot(initialPosition);
-//        Bot otherBot = new Bot(new Position(1));
-//
-//        assertFalse(bot.canMoveTo(new Position(1), new Bot[] { otherBot }));
-//    }
-//    @Test
-//    public void testRecalculateMove() {
-//        Position initialPosition = new Position(0);
-//        Bot bot = new Bot(initialPosition);
-//        bot.setMovementAlgorithm(new ShortestPathAlgorithm<>());
-//        bot.setEnemyFlagPosition(new Position(5));
-//
-//        Bot[] otherBots = { new Bot(new Position(1)), new Bot(new Position(2)) };
-//
-//        bot.recalculateMove(otherBots, new Position(1));
-//
-//        assertNotNull(bot.getPosition());
-//    }
+
+    private Bot bot;
+    private Flag mockEnemyFlag;
+    private GameMap mockGameMap;
+
+    @BeforeEach
+    void setUp() {
+        mockEnemyFlag = new Flag(1);
+        bot = new Bot("BotName", new ShortestPathAlgorithm(mockGameMap), mockEnemyFlag);
+    }
+
+    @Test
+    void testGetIndex() {
+        // Configuração
+        int expectedIndex = 42;
+        bot.setIndex(expectedIndex);
+
+        // Execução
+        int actualIndex = bot.getIndex();
+
+        // Verificação
+        assertEquals(expectedIndex, actualIndex);
+    }
+
+    @Test
+    void testGetMovementAlgorithm() {
+        // Configuração
+        RandomMovementAlgorithm expectedAlgorithm = new RandomMovementAlgorithm(mockGameMap);
+        bot.setMovementAlgorithm(expectedAlgorithm);
+
+        // Execução
+        RandomMovementAlgorithm actualAlgorithm = (RandomMovementAlgorithm) bot.getMovementAlgorithm();
+
+        // Verificação
+        assertNotNull(actualAlgorithm);
+        assertEquals(expectedAlgorithm, actualAlgorithm);
+    }
+
+    @Test
+    void testMove() {
+        // Configuração
+        int initialIndex = 0;
+        bot.setIndex(initialIndex);
+
+        // Execução
+        int newIndex = bot.move();
+
+        // Verificação
+        assertEquals(initialIndex, newIndex);
+    }
+
+    @Test
+    void testSetIndex() {
+        // Configuração
+        int newIndex = 99;
+
+        // Execução
+        bot.setIndex(newIndex);
+        int actualIndex = bot.getIndex();
+
+        // Verificação
+        assertEquals(newIndex, actualIndex);
+    }
+
+    @Test
+    void testSetMovementAlgorithm() {
+        // Configuração
+        ShortestPathAlgorithm newAlgorithm = new ShortestPathAlgorithm(mockGameMap);
+
+        // Execução
+        bot.setMovementAlgorithm(newAlgorithm);
+        ShortestPathAlgorithm actualAlgorithm = (ShortestPathAlgorithm) bot.getMovementAlgorithm();
+
+        // Verificação
+        assertNotNull(actualAlgorithm);
+        assertEquals(newAlgorithm, actualAlgorithm);
+    }
 }
