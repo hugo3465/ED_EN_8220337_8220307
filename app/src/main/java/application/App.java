@@ -374,34 +374,6 @@ public class App extends javax.swing.JFrame {
         String namePlayer1 = Player1Name.getText();
         String namePlayer2 = Player2Name.getText();
 
-        // GameMap map = new GameMap("Meu mapa");
-        // map.generateRandomMap(15, true, 0.4);
-        // map.exportMap("C:/Users/hugui/Desktop/export.txt");
-
-        // ShortestPathAlgorithm algorithm = new ShortestPathAlgorithm(map);
-        // RandomMovementAlgorithm algorithm2 = new RandomMovementAlgorithm(map);
-        // ShortestPathAlgorithm algorithm3 = new ShortestPathAlgorithm(map);
-        // RandomMovementAlgorithm algorithm4 = new RandomMovementAlgorithm(map);
-
-        // Flag flagPlayer1 = new Flag(1);
-        // Flag flagPlayer2 = new Flag(15);
-
-        // Bot bot = new Bot("Raul", algorithm, flagPlayer2);
-        // Bot bot2 = new Bot("Raul2", algorithm2, flagPlayer2);
-        // Bot bot3 = new Bot("Casemiro", algorithm3, flagPlayer1);
-        // Bot bot4 = new Bot("Casemiro2", algorithm4, flagPlayer1);
-
-        // Bot[] botsPlayer1 = { bot, bot2 };
-        // Bot[] botsPlayer2 = { bot3, bot4 };
-
-        // Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
-        // Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);
-
-        // CaptureTheFlagGame game = new CaptureTheFlagGame(map, player1, player2);
-
-        // Thread gameInterface = new Thread(new GameInterface(game));
-        // // GameInterface gameInterface = new GameInterface(game);
-        // gameInterface.start();
 
         boolean condition = map != null && botsPlayer1 != null && botsPlayer2 != null
                 && !namePlayer1.isEmpty()
@@ -441,6 +413,8 @@ public class App extends javax.swing.JFrame {
                 // colocar botões como ativos
                 PlaceFlagPlayer1.setEnabled(true);
                 PlaceFlagPlayer2.setEnabled(true);
+                
+                maxVertex = map.getVertices().length;
 
             }
 
