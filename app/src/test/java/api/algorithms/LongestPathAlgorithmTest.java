@@ -1,13 +1,13 @@
 package api.algorithms;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
@@ -15,8 +15,7 @@ import api.game.Flag;
 import api.map.GameMap;
 import exceptions.InvalidMapException;
 
-public class ShortestPathAlgorithmTest {
-
+public class LongestPathAlgorithmTest {
     private GameMap map;
     private Bot bot1;
     private MovementAlgorithm algorithmForTheTests;
@@ -38,12 +37,11 @@ public class ShortestPathAlgorithmTest {
         enemyFlag = new Flag(10);
 
         // cria o álgoritmo que vai ser usado para os testes
-        algorithmForTheTests = new ShortestPathAlgorithm(map);
+        algorithmForTheTests = new LongestPathAlgorithm(map);
 
         // Cria bots para teste
         bot1 = new Bot("Bot1", algorithmForTheTests, enemyFlag);
 
-        
     }
 
     @Test
@@ -92,6 +90,5 @@ public class ShortestPathAlgorithmTest {
 
         assertTrue(algorithmForTheTests.hasBot(bot1NewPositionIndex),
                 "testUpdateBotLocation  nao conseguiu localizar o bot");
-
     }
 }

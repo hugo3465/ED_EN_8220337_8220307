@@ -9,8 +9,8 @@ import api.map.GameMap;
 public class ShortestPathAlgorithm implements MovementAlgorithm {
 
     private GameMap map;
-    private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão
-                                              // sei se o professor Óscar aprova
+    private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas não
+                                              // sei se o tem o selo Oscar de aprovacao
 
     public ShortestPathAlgorithm(GameMap map) {
         this.map = map;

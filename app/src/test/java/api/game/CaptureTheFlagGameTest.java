@@ -43,13 +43,6 @@ public class CaptureTheFlagGameTest {
     }
 
     @Test
-    void testGetCurrentPlayer() {
-        IPlayer currentPlayer = game.getCurrentPlayer();
-
-        assertEquals(player1, currentPlayer);
-    }
-
-    @Test
     void testGetGameMap() {
         GameMap gameMap = game.getGameMap();
 

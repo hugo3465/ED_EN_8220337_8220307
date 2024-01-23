@@ -1,13 +1,13 @@
 package api.algorithms;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import api.algorithms.interfaces.MovementAlgorithm;
 import api.game.Bot;
@@ -15,8 +15,7 @@ import api.game.Flag;
 import api.map.GameMap;
 import exceptions.InvalidMapException;
 
-public class ShortestPathAlgorithmTest {
-
+public class RandomMovementAlgorithmTest {
     private GameMap map;
     private Bot bot1;
     private MovementAlgorithm algorithmForTheTests;
@@ -38,30 +37,32 @@ public class ShortestPathAlgorithmTest {
         enemyFlag = new Flag(10);
 
         // cria o álgoritmo que vai ser usado para os testes
-        algorithmForTheTests = new ShortestPathAlgorithm(map);
+        algorithmForTheTests = new RandomMovementAlgorithm(map);
 
         // Cria bots para teste
         bot1 = new Bot("Bot1", algorithmForTheTests, enemyFlag);
 
-        
     }
+
+    // @Test
+    // void testGenerateRandomNumber() {
+    //     int bot1VerticeIndex = 0;
+    //     int bot1EndIndex = enemyFlag.getCurrentIndex();
+    //     int[] bot1PossibleIndexes = {1, 4, 6};
+
+    //     // Define a posição inicial do bot
+    //     bot1.setCurrentIndex(bot1VerticeIndex);
+
+    //     // Testa se o próximo movimento do Bot1 é o esperado
+    //     int nextMovementBot1 = algorithmForTheTests.getNextMovement(bot1VerticeIndex, bot1EndIndex, bot1);
+    //     System.out.println(nextMovementBot1);
+    //     assertTrue(Arrays.asList(bot1PossibleIndexes).contains(nextMovementBot1),
+    //         "O próximo movimento do Bot1 não está dentro dos índices possíveis.");
+
+    // }
 
     @Test
     void testGetNextMovement() {
-        int bot1VerticeIndex = 0;
-        int bot1EndIndex = enemyFlag.getCurrentIndex();
-        int bot1ExpectedVerticeIndex = 1;
-
-        // Define a posição inicial do bot
-        bot1.setCurrentIndex(bot1VerticeIndex);
-
-        // Testa se o próximo movimento do Bot1 é o esperado
-        int nextMovementBot1 = algorithmForTheTests.getNextMovement(bot1VerticeIndex, bot1EndIndex, bot1);
-        assertEquals(bot1ExpectedVerticeIndex, nextMovementBot1);
-    }
-
-    @Test
-    void testGetNextMovementShouldNotHaveCurrentIndex() {
         int bot1InitialVerticeIndex = 0;
         int bot1EndIndex = enemyFlag.getCurrentIndex();
 
@@ -92,6 +93,5 @@ public class ShortestPathAlgorithmTest {
 
         assertTrue(algorithmForTheTests.hasBot(bot1NewPositionIndex),
                 "testUpdateBotLocation  nao conseguiu localizar o bot");
-
     }
 }

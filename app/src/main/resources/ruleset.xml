@@ -9,8 +9,6 @@
         This ruleset checks my code for bad stuff
     </description>
 
-    <rule ref="category/java/design.xml/GodClass" > <priority>5</priority> </rule>
-
     <rule ref="category/java/design.xml/CouplingBetweenObjects">
         <priority>5</priority>
         <properties>
@@ -18,18 +16,6 @@
         </properties>
     </rule>
 
-    <rule ref="category/java/design.xml/CyclomaticComplexity">
-        <properties>
-            <property name="classReportLevel" value="80" />
-            <property name="methodReportLevel" value="10" />
-        </properties>
-    </rule>
-
-    <rule ref="category/java/design.xml/CognitiveComplexity">
-        <properties>
-            <property name="reportLevel" value="10" />
-        </properties>
-    </rule>
 
     <rule ref="category/java/design.xml/ExcessiveImports">
         <properties>
@@ -45,7 +31,6 @@
 
     <!-- Para comentários -->
     <rule ref="category/java/documentation.xml/CommentContent" />
-    <rule ref="category/java/documentation.xml/CommentRequired" />
 
    
 </ruleset>

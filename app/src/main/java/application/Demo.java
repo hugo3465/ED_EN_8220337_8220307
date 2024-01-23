@@ -50,8 +50,8 @@ public class Demo {
         // Bot[] botsPlayer1 = { bot, bot2, bot3 };
         // Bot[] botsPlayer2 = { bot4, bot5, bot6 };
 
-        Bot[] botsPlayer1 = { bot };
-        Bot[] botsPlayer2 = { bot4 };
+        Bot[] botsPlayer1 = { bot2 };
+        Bot[] botsPlayer2 = { bot6 };
 
         Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
         Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);
