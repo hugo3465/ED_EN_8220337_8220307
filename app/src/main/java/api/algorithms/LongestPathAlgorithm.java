@@ -16,7 +16,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
     private GameMap map;
 
     /**
-     * Stack para armazenar o caminho calculado.
+     * Stack para armazenar o caminho calculado. Guarda os índices para onde o bot tem de se deslocar
      * Como o algoritmo retorna o camunho mais curto de y a x e não de x a y, uma
      * stack é a melhor maneira de armazenar o caminho
      */
@@ -139,9 +139,10 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         // Se o índice atual for diferente do próximo índice, atualiza a posição do bot
         // no mapa.
         if (currentIndex != nextIndex) {
-            // Se for o primeiro movimento do bot, não coloca o vértice anterior a null para
-            // não apagar a bandeira.
-            if (bot.getTimesMoved() == 0 || map.getVertices()[currentIndex] instanceof Flag) {
+
+            if (map.getVertices()[currentIndex] instanceof Flag) {
+                // se ele estiver em cima da bandeira, não coloca o vértice anterior a null para
+                // não apagar a bandeira.
                 map.setVertice(nextIndex, bot);
             } else {
                 map.setVertice(currentIndex, null);

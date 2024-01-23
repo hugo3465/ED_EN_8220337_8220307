@@ -7,22 +7,41 @@ import api.game.Bot;
 import api.game.Flag;
 import api.map.GameMap;
 
+/**
+ * Algoritmo do caminho mais curto
+ */
 public class ShortestPathAlgorithm implements MovementAlgorithm {
-
+    /** Mapa de jogo onde o algoritmo opera. */
     private GameMap map;
-    private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas não
-                                              // sei se o tem o selo Oscar de aprovacao
 
+    /**
+     * Stack para armazenar o caminho calculado. Guarda os índices para onde o bot tem de se deslocar
+     * Como o algoritmo retorna o camunho mais curto de y a x e não de x a y, uma
+     * stack é a melhor maneira de armazenar o caminho.
+     */
+    private StackADT<Integer> calculatedPath; 
+
+    /**
+     * Construtor que recebe o mapa do jogo
+     * 
+     * @param map
+     */
     public ShortestPathAlgorithm(GameMap map) {
         this.map = map;
         calculatedPath = new LinkedStack<>();
     }
 
-    // Function that implements Dijkstra's
-    // single source shortest path
-    // algorithm for a graph represented
-    // using adjacency matrix
-    // representation
+    /**
+     * Aplica o algoritmo de Dijkstra para encontrar o caminho mais curto a partir
+     * do vértice de início
+     * especificado até o vértice de destino fornecido no grafo representado pela
+     * matriz de adjacência do {@code GameMap}.
+     *
+     * @param startIndex o índice do vértice de início.
+     * @param endIndex   o índice do vértice de destino.
+     * @return {@code true} se um caminho válido for encontrado, {@code false} caso
+     *         contrário.
+     */
     private boolean dijkstra(int startIndex, int endIndex) {
         double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
@@ -67,6 +86,9 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
             double shortestDistance = Double.POSITIVE_INFINITY;
             for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
                 if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance && !hasBot(vertexIndex)) {
+                    // se o vértice ainda não foi adicionado, o caminho até ele for menor que o
+                    // menor caminho armazenado e não estiver um bot lá, vai guardar esse vértice e
+                    // a distância até ele
                     nearestVertex = vertexIndex;
                     shortestDistance = shortestDistances[vertexIndex];
                 }
@@ -86,12 +108,16 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
             for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
                 double edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex];
 
+                // se não tiver bot e edgeDistance > 0
                 if (!hasBot(vertexIndex) && edgeDistance > 0
                         && (shortestDistance + edgeDistance) < shortestDistances[vertexIndex]) {
                     parents[vertexIndex] = nearestVertex;
                     shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
                 }
             }
+            // se 0 fosse um peso válido nos grafos, então edgeDistance < 0 dentro do if
+            // tinha
+            // de ser edgeDistance < Double.POSITIVE_INFINITY
         }
 
         // Construir o caminho de endIndex para startIndex ele contém os índices dos
@@ -169,8 +195,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
 
         if (currentIndex != nextIndex) {
-            if (bot.getTimesMoved() == 0 || map.getVertices()[currentIndex] instanceof Flag) {
-                // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
+            if (map.getVertices()[currentIndex] instanceof Flag) {
+                // se ele estiver em cima da bandeira, não coloca o antigo vértice a null, para
                 // não apagar a bandeira
                 map.setVertice(nextIndex, bot);
             } else {
