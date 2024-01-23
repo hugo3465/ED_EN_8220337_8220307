@@ -4,30 +4,56 @@ import api.algorithms.interfaces.MovementAlgorithm;
 import api.dataStructures.Stack.LinkedStack.LinkedStack;
 import api.dataStructures.Stack.LinkedStack.StackADT;
 import api.game.Bot;
+import api.game.Flag;
 import api.map.GameMap;
 
+/**
+ * Algoritmo do caminho mais longo
+ */
 public class LongestPathAlgorithm implements MovementAlgorithm {
 
-    // A classe implementa um algoritmo para encontrar o caminho mais longo num mapa
-    // de jogo.
+    /** Mapa de jogo onde o algoritmo opera. */
+    private GameMap map;
 
-    private GameMap map; // O mapa de jogo onde o algoritmo opera.
-    private StackADT<Integer> calculatedPath; // stack para armazenar o caminho calculado.
+    /**
+     * Stack para armazenar o caminho calculado.
+     * Como o algoritmo retorna o camunho mais curto de y a x e não de x a y, uma
+     * stack é a melhor maneira de armazenar o caminho
+     */
+    private StackADT<Integer> calculatedPath;
 
-    // Construtor recebe o mapa de jogo.
+    /**
+     * Construtor que recebe o mapa do jogo
+     * 
+     * @param map
+     */
     public LongestPathAlgorithm(GameMap map) {
         this.map = map;
         calculatedPath = new LinkedStack<>();
     }
 
-    // Método privado para realizar uma busca em profundidade (DFS) para encontrar o
-    // caminho mais longo.
+    /**
+     * Método privado para realizar uma busca em profundidade (DFS) para encontrar o
+     * caminho mais longo.
+     * 
+     * @param startVertex vértice onde começa
+     * @param endVertex   vértice onnde quer chegar
+     * @return true se conseguiu encontrar um caminho, false se não conseguiu
+     */
     private boolean longestPathDFS(int startVertex, int endVertex) {
         boolean[] visited = new boolean[map.getVertices().length];
         return longestPathDFSUtil(startVertex, endVertex, visited);
     }
 
-    // Função auxiliar recursiva para a busca em profundidade (DFS).
+    /**
+     * Função auxiliar da {@code longestPathDFS} recursiva para a busca em
+     * profundidade (DFS).
+     * 
+     * @param currentVertex
+     * @param endVertex
+     * @param visited
+     * @return true se conseguiu encontrar um caminho, false se não conseguiu
+     */
     private boolean longestPathDFSUtil(int currentVertex, int endVertex, boolean[] visited) {
         visited[currentVertex] = true;
 
@@ -43,7 +69,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
             // Verifica se o vizinho não foi visitado, não contém um bot e há uma aresta
             // entre eles.
             if (!visited[neighbor] && !hasBot(neighbor) && map.getAdjacencyMatrix()[currentVertex][neighbor] > 0) {
-                // Se encontrar um caminho, adiciona o vértice atual à pilha do caminho
+                // Se encontrar um caminho, adiciona o vértice atual à fila do caminho
                 // calculado.
                 if (longestPathDFSUtil(neighbor, endVertex, visited)) {
                     calculatedPath.push(neighbor);
@@ -55,7 +81,16 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         return pathFound;
     }
 
-    // Implementação do método da interface para obter o próximo movimento do bot.
+    /**
+     * vai calcular um caminho segundo o algoritmo associado, caso já não tenha
+     * calculado, e retorna o próximo índice que o bot tem de ir
+     * 
+     * @param currentIndex
+     * @param endIndex
+     * @param currentBot
+     * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
+     *         lado nenhum retorna o índice onde está
+     */
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
         // Se a stack do caminho calculado estiver vazia, calcula o caminho mais longo.
@@ -91,8 +126,14 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         return currentIndex;
     }
 
-    // Implementação do método da interface para atualizar a localização do bot no
-    // mapa.
+    /**
+     * Atualiza a posição do bot no mapa. Atualizar no mapa significa atualizar no
+     * vetoor de vértices da super class
+     * 
+     * @param currentIndex
+     * @param nextIndex
+     * @param bot
+     */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
         // Se o índice atual for diferente do próximo índice, atualiza a posição do bot
@@ -100,7 +141,7 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         if (currentIndex != nextIndex) {
             // Se for o primeiro movimento do bot, não coloca o vértice anterior a null para
             // não apagar a bandeira.
-            if (bot.getTimesMoved() == 0) {
+            if (bot.getTimesMoved() == 0 || map.getVertices()[currentIndex] instanceof Flag) {
                 map.setVertice(nextIndex, bot);
             } else {
                 map.setVertice(currentIndex, null);
@@ -109,8 +150,12 @@ public class LongestPathAlgorithm implements MovementAlgorithm {
         }
     }
 
-    // Implementação do método da interface para verificar se há um bot num
-    // determinado vértice.
+    /**
+     * Verifica se no índice passado tem um bot
+     * 
+     * @param vertex
+     * @return true se houver um bot nessa posição, false caso contrário
+     */
     @Override
     public boolean hasBot(int vertex) {
         return (map.getVertices()[vertex] != null && map.getVertices()[vertex] instanceof Bot);

@@ -56,8 +56,8 @@ public class MapOptionsDialog extends JDialog {
         verticesLabel.setBounds(20, 50, 80, 20);
         add(verticesLabel);
 
-        verticesSlider = new JSlider(5, 100); // Intevalo de vertices
-        verticesSlider.setBounds(120, 50, 150, 20);
+        verticesSlider = new JSlider(15, 100); // Intevalo de vertices
+        verticesSlider.setBounds(120, 50, 150, 25);
         verticesSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -68,7 +68,7 @@ public class MapOptionsDialog extends JDialog {
         add(verticesSlider);
 
         verticesTextField = new JTextField();
-        verticesTextField.setBounds(280, 50, 50, 20); // tamanho aqui
+        verticesTextField.setBounds(280, 50, 50, 25); // tamanho aqui
         verticesTextField.setEditable(false);
         add(verticesTextField);
 
@@ -76,8 +76,8 @@ public class MapOptionsDialog extends JDialog {
         densityLabel.setBounds(20, 80, 80, 20);
         add(densityLabel);
 
-        densitySlider = new JSlider(50, 90); // Intervalo da densidade
-        densitySlider.setBounds(120, 80, 150, 20);
+        densitySlider = new JSlider(50, 80); // Intervalo da densidade
+        densitySlider.setBounds(120, 80, 150, 25);
         densitySlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -95,7 +95,7 @@ public class MapOptionsDialog extends JDialog {
         doubleFormatter.setMinimum(0.00);
         doubleFormatter.setMaximum(1.00);
         densityTextField = new JFormattedTextField(doubleFormatter);
-        densityTextField.setBounds(280, 80, 50, 20);
+        densityTextField.setBounds(280, 80, 50, 25);
         add(densityTextField);
 
         okButton = new JButton("OK");

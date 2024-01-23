@@ -6,6 +6,7 @@ import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.dataStructures.Queue.LinkedQueue.QueueADT;
 import api.game.Bot;
+import api.game.Flag;
 import api.map.GameMap;
 
 public class RandomMovementAlgorithm implements MovementAlgorithm {
@@ -35,7 +36,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
             if (randomNeighbor != -1) {
                 currentIndex = randomNeighbor;
                 calculatedPath.enqueue(currentIndex);
-                //visitedIndexes.add(currentIndex);
+                // visitedIndexes.add(currentIndex);
             } else {
                 // Se não houver vizinhos disponíveis, o cálculo vai parar e vai limpar o
                 // caminho que calculou
@@ -82,6 +83,16 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         return neighbors[randomIndex];
     }
 
+    /**
+     * vai calcular um caminho segundo o algoritmo associado, caso já não tenha
+     * calculado, e retorna o próximo índice que o bot tem de ir
+     * 
+     * @param currentIndex
+     * @param endIndex
+     * @param currentBot
+     * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
+     *         lado nenhum retorna o índice onde está
+     */
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
 
@@ -105,7 +116,10 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
                     // break;
                     return currentIndex;
                 }
-                continue; 
+
+                // caso consiga calcular o caminho depois de encontrar o bot, vai vltar a iterar
+                // para mover para a próxima casa
+                continue;
 
             } else {
                 // Se não contiver um bot, define a lógica padrão
@@ -119,11 +133,19 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         return currentIndex;
     }
 
+    /**
+     * Atualiza a posição do bot no mapa. Atualizar no mapa significa atualizar no
+     * vetoor de vértices da super class
+     * 
+     * @param currentIndex
+     * @param nextIndex
+     * @param bot
+     */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
 
         if (currentIndex != nextIndex) {
-            if (bot.getTimesMoved() == 0) {
+            if (bot.getTimesMoved() == 0 || map.getVertices()[currentIndex] instanceof Flag) {
                 // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
                 // não apagar a bandeira
                 map.setVertice(nextIndex, bot);
@@ -134,6 +156,12 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         }
     }
 
+    /**
+     * Verifica se no índice passado tem um bot
+     * 
+     * @param vertex
+     * @return true se houver um bot nessa posição, false caso contrário
+     */
     @Override
     public boolean hasBot(int vertex) {
         // se o vértice for diferente de null, e o que estiver lá for um bot e não uma

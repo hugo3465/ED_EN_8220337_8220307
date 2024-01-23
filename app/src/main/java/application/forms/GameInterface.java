@@ -64,7 +64,7 @@ public class GameInterface implements Runnable {
         int round = 1;
         IPlayer currentPlayer = game.getCurrentPlayer();
         Bot currentBot = null;
-        Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
+        //Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
 
         do {
             currentPlayer = game.nextTurn();
@@ -101,10 +101,10 @@ public class GameInterface implements Runnable {
                 e.printStackTrace();
             }
 
-            if (game.isGameOver() != -1) {
-                // Stop the timer when the game is over
-                timer.stop();
-            }
+            // if (game.isGameOver() != -1) {
+            //     // Stop the timer when the game is over
+            //     timer.stop();
+            // }
             round++;
         } while (game.isGameOver() == -1);
 
