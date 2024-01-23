@@ -11,6 +11,9 @@ import api.map.GameMap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  * JDialog que representa uma caixa de diálogo para configurar os bots do jogo.
  */
@@ -38,7 +41,18 @@ public class BotOptionsDialog extends JDialog {
         super(parent, modal);
         this.map = map;
         this.algorithmOptions = algorithmOptions;
+        this.dialogCanceled = false;
+        
         initComponents();
+
+        // Adicionar um WindowListener para detectar o fechamento da janela
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // tratar o fechamento da janela
+                dialogCanceled = true;
+            }
+        });
 
     }
 

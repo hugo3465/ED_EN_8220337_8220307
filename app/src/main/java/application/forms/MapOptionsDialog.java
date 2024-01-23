@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  * JDialog que representa uma caixa de diálogo para configurar o mapa no jogo.
  */
@@ -15,6 +18,7 @@ public class MapOptionsDialog extends JDialog {
     private boolean bidirectional;
     private int numVertices;
     private double density;
+    private boolean wasPannelCancel;
 
     private JComboBox<String> bidirectionalComboBox;
     private JSlider verticesSlider;
@@ -33,6 +37,16 @@ public class MapOptionsDialog extends JDialog {
     public MapOptionsDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.wasPannelCancel = false;
+
+        // Adicionar um WindowListener para detectar o fechamento da janela
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // tratar o fechamento da janela
+                wasPannelCancel = true;
+            }
+        });
     }
 
     /**
@@ -114,6 +128,8 @@ public class MapOptionsDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                wasPannelCancel = true;
+
                 bidirectional = false;
                 dispose();
             }
@@ -148,5 +164,14 @@ public class MapOptionsDialog extends JDialog {
      */
     public double getDensity() {
         return density;
+    }
+
+    /**
+     * Verifica se o utilizador cancelou a operação na caixa de diálogo.
+     *
+     * @return true se o utilizador cancelou, false caso contrário.
+     */
+    public boolean getWasPannelCancel() {
+        return wasPannelCancel;
     }
 }
