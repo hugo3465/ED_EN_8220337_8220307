@@ -18,17 +18,17 @@ public class Demo {
     public static void main(String[] args) throws InterruptedException {
 
         GameMap map = new GameMap("Meu mapa");
-        map.generateRandomMap(30, false, 0.4);
+        // map.generateRandomMap(30, false, 0.4);
         // map.exportMap("C:/Users/hugui/Desktop/export.txt");
-        // try {
-        //     map.importMap("C:/Users/hugui/Desktop/export.txt");
-        // } catch (FileNotFoundException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // } catch (InvalidMapException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
+        try {
+            // map.importMap("C:/Users/hugui/Desktop/export.txt");
+            map.importMap("C:/Users/User/GitHub/ED_EN_8220337_8220307/app/src/test/java/api/algorithms/testMap.txt");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvalidMapException e) {
+            e.printStackTrace();
+        }
 
         MovementAlgorithm algorithmA1 = new ShortestPathAlgorithm(map);
         MovementAlgorithm algorithmR1 = new RandomMovementAlgorithm(map);
@@ -50,8 +50,8 @@ public class Demo {
         // Bot[] botsPlayer1 = { bot, bot2, bot3 };
         // Bot[] botsPlayer2 = { bot4, bot5, bot6 };
 
-        Bot[] botsPlayer1 = { bot2 };
-        Bot[] botsPlayer2 = { bot5 };
+        Bot[] botsPlayer1 = { bot };
+        Bot[] botsPlayer2 = { bot4 };
 
         Player player1 = new Player("Hugo", flagPlayer1, flagPlayer2, botsPlayer1);
         Player player2 = new Player("Pedro", flagPlayer2, flagPlayer1, botsPlayer2);

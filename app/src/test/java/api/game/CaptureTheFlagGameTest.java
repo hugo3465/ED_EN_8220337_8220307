@@ -34,10 +34,8 @@ public class CaptureTheFlagGameTest {
         try {
             map.importMap("src/test/java/api/game/testMap.txt");
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidMapException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
