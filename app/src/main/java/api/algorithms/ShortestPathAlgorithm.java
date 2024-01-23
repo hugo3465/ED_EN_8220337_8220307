@@ -66,7 +66,7 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         // ele mesmo é sempre 0
         shortestDistances[startIndex] = 0.0;
 
-        // Array de pais para armazenar a árvore de caminho mais curto
+        // Array de pais para armazenar o de caminho mais curto
         int[] parents = new int[numVertices];
 
         // O vértice de início não
