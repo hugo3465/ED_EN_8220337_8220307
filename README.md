@@ -3,7 +3,7 @@ Capture the flag in java
 
 ## Como executar
 ```
-gralde build run
+gradle build run
 ```
 
 ## Autores
