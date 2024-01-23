@@ -10,7 +10,7 @@ public interface IGameMap {
     /**
      * Gera um mapa aleatório com as especificações fornecidas.
      *
-     * @param numVertices   Número de vértices no mapa.
+     * @param numLocations   Número de vértices no mapa.
      * @param bidirectional Indica se o mapa é bidirecional.
      * @param density       Densidade do mapa (entre 0 e 1).
      * @throws IllegalArgumentException Se a densidade estiver fora do intervalo

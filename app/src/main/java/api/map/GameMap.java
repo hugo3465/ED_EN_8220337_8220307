@@ -312,7 +312,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
     /**
      * Obtém o índice do vértice especificado.
      *
-     * @param entity O vértice cujo índice deve ser obtido.
+     * @param entity O vertice cujo índice deve ser obtido.
      * @return O índice do vértice especificado.
      * @throws IllegalArgumentException Se o GameEntity especificado não for
      *                                  encontrado no mapa.
@@ -332,6 +332,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
      *
      * @param index  Índice onde o vértice deve ser definido.
      * @param entity O vértice a ser definido.
+     * 
      */
     @Override
     public void setVertice(int index, GameEntity entety) {

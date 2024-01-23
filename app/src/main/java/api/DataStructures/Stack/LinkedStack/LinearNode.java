@@ -26,7 +26,7 @@ public class LinearNode<T> {
     /**
      * Returns the node that follows this one.
      * 
-     * @return LinearNode<T> reference to next node
+     * @return reference to next node
      */
     public LinearNode<T> getNext() {
         return next;
@@ -44,7 +44,7 @@ public class LinearNode<T> {
     /**
      * Returns the element stored in this node.
      * 
-     * @return T element stored at this node
+     * @return element stored at this node
      */
     public T getElement() {
         return element;
