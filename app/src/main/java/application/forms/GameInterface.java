@@ -90,7 +90,9 @@ public class GameInterface implements Runnable {
             System.out.println(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " para o vertice "
                     + (currentBot.getCurrentIndex() + 1) + "\n");
 
-            System.out.println(game.getGameMap().getMap());
+               
+                    
+            // System.out.println(game.getGameMap().getMap());
             // addText(game.getGameMap().getMap());
 
             try {
