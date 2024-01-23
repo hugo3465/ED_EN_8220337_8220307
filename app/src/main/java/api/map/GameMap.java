@@ -331,7 +331,7 @@ public class GameMap extends WeightedGraph<GameEntity> implements IGameMap {
      * Define um vértice no índice especificado.
      *
      * @param index  Índice onde o vértice deve ser definido.
-     * @param entity O vértice a ser definido.
+     * @param entety O vertice a ser definido.
      * 
      */
     @Override

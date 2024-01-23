@@ -15,11 +15,12 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
     private GameMap map;
 
     /**
-     * Stack para armazenar o caminho calculado. Guarda os índices para onde o bot tem de se deslocar
+     * Stack para armazenar o caminho calculado. Guarda os índices para onde o bot
+     * tem de se deslocar
      * Como o algoritmo retorna o camunho mais curto de y a x e não de x a y, uma
      * stack é a melhor maneira de armazenar o caminho.
      */
-    private StackADT<Integer> calculatedPath; 
+    private StackADT<Integer> calculatedPath;
 
     /**
      * Construtor que recebe o mapa do jogo
@@ -94,8 +95,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
                 }
             }
 
+            // se o nearestVertex não saiar do -1, ent não conseguiu encontrar um caminho
             if (nearestVertex == -1) {
-                // se o nearestVertex não saiar do -1, ent não conseguiu encontrar um caminho
                 return false;
             }
 
@@ -126,7 +127,6 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         // endIndex
         int currentVertexIndex = endIndex;
         while (currentVertexIndex != NO_PARENT) {
-            // path.addToFront(currentVertexIndex);
             this.calculatedPath.push(currentVertexIndex);
             currentVertexIndex = parents[currentVertexIndex];
         }
@@ -142,8 +142,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
      * calculado, e retorna o próximo índice que o bot tem de ir
      * 
      * @param currentIndex vertice atual do bot
-     * @param endIndex vertice para onde o bot tem de ir
-     * @param currentBot bot que se vai mover
+     * @param endIndex     vertice para onde o bot tem de ir
+     * @param currentBot   bot que se vai mover
      * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
      *         lado nenhum retorna o índice onde está
      */
@@ -188,8 +188,8 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
      * vetoor de vértices da super class
      * 
      * @param currentIndex vertice atual do bot
-     * @param nextIndex vertice para onde o bot vai
-     * @param bot bot que se vai mexer
+     * @param nextIndex    vertice para onde o bot vai
+     * @param bot          bot que se vai mexer
      */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {

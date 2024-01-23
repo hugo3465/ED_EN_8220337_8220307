@@ -87,7 +87,7 @@ public interface IGameMap {
      * Define um vértice no índice especificado.
      *
      * @param index  Índice onde o vértice deve ser definido.
-     * @param entity O vértice a ser definido.
+     * @param entety O vertice a ser definido.
      */
     public void setVertice(int index, GameEntity entety);
 }
