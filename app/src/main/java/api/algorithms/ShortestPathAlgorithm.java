@@ -4,24 +4,45 @@ import api.algorithms.interfaces.MovementAlgorithm;
 import api.dataStructures.Stack.LinkedStack.LinkedStack;
 import api.dataStructures.Stack.LinkedStack.StackADT;
 import api.game.Bot;
+import api.game.Flag;
 import api.map.GameMap;
 
+/**
+ * Algoritmo do caminho mais curto
+ */
 public class ShortestPathAlgorithm implements MovementAlgorithm {
-
+    /** Mapa de jogo onde o algoritmo opera. */
     private GameMap map;
-    private StackADT<Integer> calculatedPath; // faz sentido ser Stack na maneira como o algoritmo foi feito, mas nnão
-                                              // sei se o professor Óscar aprova
 
+    /**
+     * Stack para armazenar o caminho calculado. Guarda os índices para onde o bot
+     * tem de se deslocar
+     * Como o algoritmo retorna o camunho mais curto de y a x e não de x a y, uma
+     * stack é a melhor maneira de armazenar o caminho.
+     */
+    private StackADT<Integer> calculatedPath;
+
+    /**
+     * Construtor que recebe o mapa do jogo
+     * 
+     * @param map mapa do jogo
+     */
     public ShortestPathAlgorithm(GameMap map) {
         this.map = map;
         calculatedPath = new LinkedStack<>();
     }
 
-    // Function that implements Dijkstra's
-    // single source shortest path
-    // algorithm for a graph represented
-    // using adjacency matrix
-    // representation
+    /**
+     * Aplica o algoritmo de Dijkstra para encontrar o caminho mais curto a partir
+     * do vértice de início
+     * especificado até o vértice de destino fornecido no grafo representado pela
+     * matriz de adjacência do {@code GameMap}.
+     *
+     * @param startIndex o índice do vértice de início.
+     * @param endIndex   o índice do vértice de destino.
+     * @return {@code true} se um caminho válido for encontrado, {@code false} caso
+     *         contrário.
+     */
     private boolean dijkstra(int startIndex, int endIndex) {
         double[][] adjacencyMatrix = map.getAdjacencyMatrix();
         final int NO_PARENT = -1;
@@ -46,7 +67,7 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         // ele mesmo é sempre 0
         shortestDistances[startIndex] = 0.0;
 
-        // Array de pais para armazenar a árvore de caminho mais curto
+        // Array de pais para armazenar o de caminho mais curto
         int[] parents = new int[numVertices];
 
         // O vértice de início não
@@ -66,13 +87,16 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
             double shortestDistance = Double.POSITIVE_INFINITY;
             for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
                 if (!added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance && !hasBot(vertexIndex)) {
+                    // se o vértice ainda não foi adicionado, o caminho até ele for menor que o
+                    // menor caminho armazenado e não estiver um bot lá, vai guardar esse vértice e
+                    // a distância até ele
                     nearestVertex = vertexIndex;
                     shortestDistance = shortestDistances[vertexIndex];
                 }
             }
 
+            // se o nearestVertex não saiar do -1, ent não conseguiu encontrar um caminho
             if (nearestVertex == -1) {
-                // se o nearestVertex não saiar do -1, ent não conseguiu encontrar um caminho
                 return false;
             }
 
@@ -85,12 +109,16 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
             for (int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
                 double edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex];
 
+                // se não tiver bot e edgeDistance > 0
                 if (!hasBot(vertexIndex) && edgeDistance > 0
                         && (shortestDistance + edgeDistance) < shortestDistances[vertexIndex]) {
                     parents[vertexIndex] = nearestVertex;
                     shortestDistances[vertexIndex] = shortestDistance + edgeDistance;
                 }
             }
+            // se 0 fosse um peso válido nos grafos, então edgeDistance < 0 dentro do if
+            // tinha
+            // de ser edgeDistance < Double.POSITIVE_INFINITY
         }
 
         // Construir o caminho de endIndex para startIndex ele contém os índices dos
@@ -99,7 +127,6 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         // endIndex
         int currentVertexIndex = endIndex;
         while (currentVertexIndex != NO_PARENT) {
-            // path.addToFront(currentVertexIndex);
             this.calculatedPath.push(currentVertexIndex);
             currentVertexIndex = parents[currentVertexIndex];
         }
@@ -110,6 +137,16 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         return true;
     }
 
+    /**
+     * vai calcular um caminho segundo o algoritmo associado, caso já não tenha
+     * calculado, e retorna o próximo índice que o bot tem de ir
+     * 
+     * @param currentIndex vertice atual do bot
+     * @param endIndex     vertice para onde o bot tem de ir
+     * @param currentBot   bot que se vai mover
+     * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
+     *         lado nenhum retorna o índice onde está
+     */
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
         if (calculatedPath.isEmpty()) {
@@ -146,12 +183,20 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         return currentIndex;
     }
 
+    /**
+     * Atualiza a posição do bot no mapa. Atualizar no mapa significa atualizar no
+     * vetoor de vértices da super class
+     * 
+     * @param currentIndex vertice atual do bot
+     * @param nextIndex    vertice para onde o bot vai
+     * @param bot          bot que se vai mexer
+     */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
 
         if (currentIndex != nextIndex) {
-            if (bot.getTimesMoved() == 0) {
-                // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
+            if (map.getVertices()[currentIndex] instanceof Flag) {
+                // se ele estiver em cima da bandeira, não coloca o antigo vértice a null, para
                 // não apagar a bandeira
                 map.setVertice(nextIndex, bot);
             } else {
@@ -161,6 +206,12 @@ public class ShortestPathAlgorithm implements MovementAlgorithm {
         }
     }
 
+    /**
+     * Verifica se no índice passado tem um bot
+     * 
+     * @param vertex vertice onde se vai verificar a existencia de um bot
+     * @return true se houver um bot nessa posição, false caso contrário
+     */
     @Override
     public boolean hasBot(int vertex) {
         // Tópico 7 - Excetuando na localização das bandeiras, um bot não se pode

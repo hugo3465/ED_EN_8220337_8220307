@@ -12,7 +12,7 @@ public interface GameEntity {
      * Define o índic atual da entidade no array de vértices.
      * A posição é o indice onde a entidade está no array de vértices do grafo
      *
-     * @param position A nova posição da entidade.
+     * @param index A nova posição da entidade.
      */
     void setCurrentIndex(int index);
 

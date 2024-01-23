@@ -55,11 +55,11 @@ public class BotOptionsDialog extends JDialog {
         add(nameLabel);
 
         nameTextField = new JTextField();
-        nameTextField.setBounds(120, 20, 200, 20);
+        nameTextField.setBounds(120, 20, 200, 25);
         add(nameTextField);
 
         JLabel algorithmLabel = new JLabel("Algoritmo de Movimento:");
-        algorithmLabel.setBounds(20, 50, 150, 20);
+        algorithmLabel.setBounds(20, 50, 150, 25);
         add(algorithmLabel);
 
         algorithmComboBox = new JComboBox<>(algorithmOptions);

@@ -35,7 +35,7 @@ public class LinkedStack<T> implements StackADT<T> {
     /**
      * Pushes an element onto the stack.
      *
-     * @param data The data to push onto the stack.
+     * @param element The element to push onto the stack.
      */
     @Override
     public void push(T element) {

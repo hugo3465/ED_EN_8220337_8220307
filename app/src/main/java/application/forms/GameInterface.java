@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.Timer;
 
 import api.game.Bot;
-import api.game.Player;
 import api.game.interfaces.ICaptureTheFlag;
 import api.game.interfaces.IPlayer;
 
@@ -65,7 +64,6 @@ public class GameInterface implements Runnable {
         int round = 1;
         IPlayer currentPlayer = game.getCurrentPlayer();
         Bot currentBot = null;
-        Timer timer = new Timer(2000, null); // 2000 milliseconds (2 seconds)
 
         do {
             currentPlayer = game.nextTurn();
@@ -86,12 +84,14 @@ public class GameInterface implements Runnable {
             System.out.println(currentPlayer.getName() + " tinha o bot " + currentBot.getName() + " no vertice "
             + (currentBot.getLastIndex() + 1));
 
-            addText(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+            addText(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " para o vertice "
                     + (currentBot.getCurrentIndex() + 1) + "\n");
 
-            System.out.println(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " foi para o vertice "
+            System.out.println(currentPlayer.getName() + " moveu o bot " + currentBot.getName() + " para o vertice "
                     + (currentBot.getCurrentIndex() + 1) + "\n");
 
+               
+                    
             // System.out.println(game.getGameMap().getMap());
             // addText(game.getGameMap().getMap());
 
@@ -102,10 +102,6 @@ public class GameInterface implements Runnable {
                 e.printStackTrace();
             }
 
-            if (game.isGameOver() != -1) {
-                // Stop the timer when the game is over
-                timer.stop();
-            }
             round++;
         } while (game.isGameOver() == -1);
 

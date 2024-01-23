@@ -6,18 +6,39 @@ import api.dataStructures.ArrayList.UnorderedArrayList.UnorderedListADT;
 import api.dataStructures.Queue.LinkedQueue.LinkedQueue;
 import api.dataStructures.Queue.LinkedQueue.QueueADT;
 import api.game.Bot;
+import api.game.Flag;
 import api.map.GameMap;
 
+/**
+ * Algoritmo do caminho aleatório
+ */
 public class RandomMovementAlgorithm implements MovementAlgorithm {
-
+    /** Mapa de jogo onde o algoritmo opera. */
     private GameMap map;
-    private QueueADT<Integer> calculatedPath; // guarda os índices para onde o bot tem de se deslocar
+    /**
+     * Queue para guardar o caminho calculado. Guarda os índices para onde o bot tem
+     * de se deslocar
+     */
+    private QueueADT<Integer> calculatedPath;
 
+    /**
+     * Construtor que recebe o mapa do jogo
+     * 
+     * @param map mapa do jogo
+     */
     public RandomMovementAlgorithm(GameMap map) {
         this.map = map;
         calculatedPath = new LinkedQueue<>();
     }
 
+    /**
+     * Calcula um caminho aleatório entre dois vértices no mapa.
+     * 
+     * @param startVertex índice do vértice de início.
+     * @param endVertex   índice do vértice de destino.
+     * @return {@code true} se um caminho válido for encontrado, {@code false} caso
+     *         contrário.
+     */
     private boolean calculatePath(int startVertex, int endVertex) {
 
         int currentIndex = startVertex;
@@ -35,7 +56,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
             if (randomNeighbor != -1) {
                 currentIndex = randomNeighbor;
                 calculatedPath.enqueue(currentIndex);
-                //visitedIndexes.add(currentIndex);
+                // visitedIndexes.add(currentIndex);
             } else {
                 // Se não houver vizinhos disponíveis, o cálculo vai parar e vai limpar o
                 // caminho que calculou
@@ -51,6 +72,12 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
 
     }
 
+    /**
+     * Obtém os vizinhos válidos de um vértice no mapa.
+     * 
+     * @param index índice do vértice.
+     * @return um array contendo os índices dos vizinhos válidos.
+     */
     private int[] getNeighbors(int index) {
         double[][] adjMatrix = map.getAdjacencyMatrix();
         int numVertices = adjMatrix.length;
@@ -73,6 +100,13 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         return neighbors;
     }
 
+    /**
+     * Escolhe aleatoriamente um vizinho de um array de vizinhos.
+     * 
+     * @param neighbors array contendo os índices dos vizinhos.
+     * @return o índice de um vizinho escolhido aleatoriamente, ou -1 se nenhum
+     *         vizinho estiver disponível.
+     */
     private int getRandomNeighbor(int[] neighbors) {
         if (neighbors.length == 0) {
             return -1; // Sem vizinhos disponíveis
@@ -82,6 +116,16 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         return neighbors[randomIndex];
     }
 
+    /**
+     * vai calcular um caminho segundo o algoritmo associado, caso já não tenha
+     * calculado, e retorna o próximo índice que o bot tem de ir
+     * 
+     * @param currentIndex vertice atual
+     * @param endIndex vertice para onde o bot tem de ir
+     * @param currentBot bot que se vai mover
+     * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
+     *         lado nenhum retorna o índice onde está
+     */
     @Override
     public int getNextMovement(int currentIndex, int endIndex, Bot currentBot) {
 
@@ -105,7 +149,10 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
                     // break;
                     return currentIndex;
                 }
-                continue; 
+
+                // caso consiga calcular o caminho depois de encontrar o bot, vai vltar a iterar
+                // para mover para a próxima casa
+                continue;
 
             } else {
                 // Se não contiver um bot, define a lógica padrão
@@ -119,13 +166,21 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         return currentIndex;
     }
 
+    /**
+     * Atualiza a posição do bot no mapa. Atualizar no mapa significa atualizar no
+     * vetoor de vértices da super class
+     * 
+     * @param currentIndex vertice atual do bot
+     * @param nextIndex vertice para onde o bot vai
+     * @param bot bot que se vai mover
+     */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
 
         if (currentIndex != nextIndex) {
-            if (bot.getTimesMoved() == 0) {
-                // se for a primeira vez que se mexe, não coloca o antigo vértice a null, para
-                // não apagar a bandeira
+            if (map.getVertices()[currentIndex] instanceof Flag) {
+                // se ele estiver em cima da bandeira, não coloca o vértice anterior a null para
+                // não apagar a bandeira.
                 map.setVertice(nextIndex, bot);
             } else {
                 map.setVertice(currentIndex, null); // define o vértice antigo a null
@@ -134,6 +189,12 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
         }
     }
 
+    /**
+     * Verifica se no índice passado tem um bot
+     * 
+     * @param vertex vertice onde se vai verificar a existencia de um bot
+     * @return true se houver um bot nessa posição, false caso contrário
+     */
     @Override
     public boolean hasBot(int vertex) {
         // se o vértice for diferente de null, e o que estiver lá for um bot e não uma

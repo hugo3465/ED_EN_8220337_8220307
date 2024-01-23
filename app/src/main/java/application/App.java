@@ -20,16 +20,35 @@ import application.forms.MapOptionsDialog;
 import exceptions.InvalidMapException;
 
 public class App extends javax.swing.JFrame {
-
+    /** mapa do jogos */
     public GameMap map;
-    public Player player1;
-    public Player player2;
-    public Flag flagPlayer1;
-    public Flag flagPlayer2;
-    public Bot[] botsPlayer1;
-    public Bot[] botsPlayer2;
 
-    private int minVertex = 1, maxVertex = 0;
+    /** primeiro jogador */
+    public Player player1;
+
+    /** segundo jogador */
+    public Player player2;
+
+    /** bandeira do primeiro jogador */
+    public Flag flagPlayer1;
+
+    /** bandeira do segundo jogador */
+    public Flag flagPlayer2;
+
+    /** bots do primeito jogador */
+    public Bot[] botsPlayer1;
+
+    /** bots do segundo jogador */
+    public Bot[] botsPlayer2;
+    
+    /** vértice mínimo da bandeira */
+    private int minVertex;
+
+    /**
+     * vértice máximo onde se pode inserir a bandeira, ele é iniciado a 0, mas
+     * quando é criado o mapa este atributo fica com o valor do numero de vértices
+     */
+    private int maxVertex;
 
     /**
      * Creates new form game
@@ -44,6 +63,9 @@ public class App extends javax.swing.JFrame {
         this.flagPlayer2 = null;
         this.botsPlayer1 = null;
         this.botsPlayer2 = null;
+
+        this.minVertex = 1;
+        this.maxVertex = 0;
     }
 
     /**
@@ -56,6 +78,9 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
+    /**
+     * Método para iniciar os componentes da interface
+     */
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
@@ -282,6 +307,11 @@ public class App extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Botão para inserir a bandeira do Player1
+     * 
+     * @param evt
+     */
     private void PlaceFlagPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PlaceFlagPlayer1ActionPerformed
         boolean flagPlaced = false;
         while (!flagPlaced) {
@@ -328,6 +358,11 @@ public class App extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_PlaceFlagPlayer1ActionPerformed
 
+    /**
+     * Botão para inserir a bandeira do Player2
+     * 
+     * @param evt
+     */
     private void PlaceFlagPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PlaceFlagPlayer2ActionPerformed
         boolean flagPlaced = false;
         while (!flagPlaced) {
@@ -374,6 +409,11 @@ public class App extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_PlaceFlagPlayer2ActionPerformed
 
+    /**
+     * Botão para começar o jogo
+     * 
+     * @param evt
+     */
     private void startGameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_startGameActionPerformed
         String namePlayer1 = Player1Name.getText();
         String namePlayer2 = Player2Name.getText();
@@ -397,6 +437,11 @@ public class App extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_startGameActionPerformed
 
+    /**
+     * Botão para importar o mapa de um ficheiro txt
+     * 
+     * @param evt
+     */
     private void importButtomActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_importButtomActionPerformed
         int returnVal = jFileChooser1.showOpenDialog(null);
         File path = null;
@@ -431,6 +476,11 @@ public class App extends javax.swing.JFrame {
 
     }// GEN-LAST:event_importButtomActionPerformed
 
+    /**
+     * Botão para exportar o mapa
+     * 
+     * @param evt
+     */
     private void exportButtom1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_exportButtom1ActionPerformed
         int returnVal = jFileChooser1.showSaveDialog(null);
 
@@ -454,6 +504,11 @@ public class App extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_exportButtom1ActionPerformed
 
+    /**
+     * Botão para gerar o mapa
+     * 
+     * @param evt
+     */
     private void generateButtom2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_generateButtom2ActionPerformed
         MapOptionsDialog optionsDialog = new MapOptionsDialog(this, true);
         optionsDialog.setVisible(true);
@@ -482,14 +537,32 @@ public class App extends javax.swing.JFrame {
 
     }// GEN-LAST:event_generateButtom2ActionPerformed
 
+    /**
+     * Botão para inserir os bots do Player1
+     * 
+     * @param evt
+     */
     private void InserirBotsPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer1ActionPerformed
         botsPlayer1 = inserirBotsActionPerformed(botsPlayer1, flagPlayer2);
     }// GEN-LAST:event_InserirBotsPlayer1ActionPerformed
 
+    /**
+     * Botão para inserir os bots do Player2
+     * 
+     * @param evt
+     */
     private void InserirBotsPlayer2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InserirBotsPlayer2ActionPerformed
         botsPlayer2 = inserirBotsActionPerformed(botsPlayer2, flagPlayer1);
     }// GEN-LAST:event_InserirBotsPlayer2ActionPerformed
 
+    /**
+     * Método auciliar para inseir os bots, é usado para não repetir código nos
+     * botões de inserir bots do player 1 e player 2
+     * 
+     * @param botsPlayer array com os bots do jogador
+     * @param enemyFlag  flag enimiga
+     * @return array com os bots já introduzidos
+     */
     private Bot[] inserirBotsActionPerformed(Bot[] botsPlayer, Flag enemyFlag) {
         boolean operationCanceled = false;
         Integer numeroBots = Integer.parseInt(numBots.getSelectedItem());
@@ -545,12 +618,26 @@ public class App extends javax.swing.JFrame {
         return botsPlayer; // retorna o array modificado
     }
 
+    /**
+     * Método auxiliar do {@code inserirBotsActionPerformed()} para adicionar as
+     * opções de algoritmos para quando forem adicionados os bots
+     * 
+     * @param algorithmOptions
+     */
     private void addAlgorithmOptions(ConvertibleUnnorderedArrayList<String> algorithmOptions) {
         algorithmOptions.addToFront("Shortest Path");
         algorithmOptions.addToFront("Random Path");
         algorithmOptions.addToFront("Longest Path");
     }
 
+    /**
+     * Método auxiliar do {@code inserirBotsActionPerformed()} para remover o
+     * álgoritmo que o utilizado selecionou para um bot, pois os álgoritmos não se
+     * devem repetir, a menos que tenham sido adicionados 4 bots
+     * 
+     * @param algorithm
+     * @param algorithmOptions
+     */
     private void removeAlgorithmOption(MovementAlgorithm algorithm,
             ConvertibleUnnorderedArrayList<String> algorithmOptions) {
 
