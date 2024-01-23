@@ -24,7 +24,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
     /**
      * Construtor que recebe o mapa do jogo
      * 
-     * @param map
+     * @param map mapa do jogo
      */
     public RandomMovementAlgorithm(GameMap map) {
         this.map = map;
@@ -120,9 +120,9 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
      * vai calcular um caminho segundo o algoritmo associado, caso já não tenha
      * calculado, e retorna o próximo índice que o bot tem de ir
      * 
-     * @param currentIndex
-     * @param endIndex
-     * @param currentBot
+     * @param currentIndex vertice atual
+     * @param endIndex vertice para onde o bot tem de ir
+     * @param currentBot bot que se vai mover
      * @return próximo índice para onde o bot tem de ir, caso não consiga ir para
      *         lado nenhum retorna o índice onde está
      */
@@ -170,9 +170,9 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
      * Atualiza a posição do bot no mapa. Atualizar no mapa significa atualizar no
      * vetoor de vértices da super class
      * 
-     * @param currentIndex
-     * @param nextIndex
-     * @param bot
+     * @param currentIndex vertice atual do bot
+     * @param nextIndex vertice para onde o bot vai
+     * @param bot bot que se vai mover
      */
     @Override
     public void updateBotLocation(int currentIndex, int nextIndex, Bot bot) {
@@ -192,7 +192,7 @@ public class RandomMovementAlgorithm implements MovementAlgorithm {
     /**
      * Verifica se no índice passado tem um bot
      * 
-     * @param vertex
+     * @param vertex vertice onde se vai verificar a existencia de um bot
      * @return true se houver um bot nessa posição, false caso contrário
      */
     @Override
